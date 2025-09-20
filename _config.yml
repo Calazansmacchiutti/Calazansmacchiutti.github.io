@@ -13,8 +13,9 @@ title                    : "Macchiutti's Page"
 title_separator          : "-"
 name                     : &name "Calazans Macchiutti"
 description              : &description "Researcher / Data Scientist"
-url                      : https://calazansmacchiutti.github.io
-baseurl                  : calazansmacchiutti.github.io
+theme                    : jekyll-theme-primer
+url                      : "https://calazansmacchiutti.github.io"
+baseurl                  : ""
 repository               : "macchiutti/macchiutti.github.io"
 
 # Site Author - The following control what appear as part of the author content on the side bar.
