@@ -1,0 +1,58 @@
+- year: "2024"
+  papers:
+    - id: "macchiutti2024example1"
+      title: "Machine Learning Applications in Complex Systems Analysis"
+      authors:
+        - name: "Calazans Macchiutti"
+        - name: "Co-author Name"
+        - name: "Another Co-author"
+      journal: "Journal of Complex Systems"
+      journal_abbr: "JCS"
+      year: "2024"
+      abstract: "This paper presents novel applications of machine learning techniques in the analysis of complex systems, demonstrating significant improvements in pattern recognition and prediction accuracy."
+      doi: "https://doi.org/10.1000/example"
+      arxiv: "https://arxiv.org/abs/2401.00000"
+      pdf: "/files/paper1.pdf"
+      preview_image: "/images/publication_preview/example2024.png"
+
+- year: "2023"
+  papers:
+    - id: "macchiutti2023example2"
+      title: "Data-Driven Approaches to Population Dynamics"
+      authors:
+        - name: "Co-author Name"
+        - name: "Calazans Macchiutti"
+        - name: "Senior Author"
+      journal: "Physical Review E"
+      journal_abbr: "PhysRevE"
+      year: "2023"
+      abstract: "We investigate data-driven methods for understanding population dynamics in complex environments, revealing new insights into spatial pattern formation."
+      doi: "https://doi.org/10.1103/PhysRevE.107.000000"
+      arxiv: "https://arxiv.org/abs/2301.00000"
+      pdf: "/files/paper2.pdf"
+      preview_image: "/images/publication_preview/example2023.png"
+
+    - id: "macchiutti2023example3"
+      title: "Statistical Analysis of Environmental Flows"
+      authors:
+        - name: "Calazans Macchiutti"
+        - name: "Collaborator Name"
+      journal: "Nature Communications"
+      journal_abbr: "NatComm"
+      year: "2023"
+      abstract: "This study presents a comprehensive statistical analysis of environmental flows and their impact on ecological systems."
+      doi: "https://doi.org/10.1038/s41467-023-00000-0"
+      pdf: "/files/paper3.pdf"
+
+- year: "2022"
+  papers:
+    - id: "macchiutti2022example4"
+      title: "Computational Methods in Data Science"
+      authors:
+        - name: "Calazans Macchiutti"
+      journal: "Computational Statistics & Data Analysis"
+      journal_abbr: "CSDA"
+      year: "2022"
+      abstract: "A comprehensive review of computational methods used in modern data science applications."
+      doi: "https://doi.org/10.1016/j.csda.2022.000000"
+      arxiv: "https://arxiv.org/abs/2201.00000"

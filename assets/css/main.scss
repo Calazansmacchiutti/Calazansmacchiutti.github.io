@@ -1,0 +1,35 @@
+---
+---
+
+@import "minima";
+
+// Import publications styles
+@import "publications";
+
+// Import repositories styles
+@import "repositories";
+
+// Custom variables
+:root {
+  --global-text-color: #333;
+  --global-text-color-light: #666;
+  --global-bg-color: #fff;
+  --global-bg-color-secondary: #f8f9fa;
+  --global-bg-color-dark: #1a1a1a;
+  --global-bg-color-secondary-dark: #2d2d2d;
+  --global-border-color: #e9ecef;
+  --global-border-color-dark: #404040;
+  --global-link-color: #2f7f93;
+  --global-link-color-hover: #1a5a6b;
+}
+
+// Dark theme variables
+@media (prefers-color-scheme: dark) {
+  :root {
+    --global-text-color: #e9ecef;
+    --global-text-color-light: #adb5bd;
+    --global-bg-color: #1a1a1a;
+    --global-bg-color-secondary: #2d2d2d;
+    --global-border-color: #404040;
+  }
+}

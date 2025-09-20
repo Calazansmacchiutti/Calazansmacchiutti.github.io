@@ -1,0 +1,102 @@
+---
+layout: default
+---
+
+<div class="post">
+  <header class="post-header">
+    <h1 class="post-title">{{ page.title }}</h1>
+    <p class="post-description">{{ page.description }}</p>
+  </header>
+
+  <article>
+    <div class="repositories">
+      {% for category in site.data.repositories %}
+        <h2 class="repository-category">{{ category.category }}</h2>
+        <div class="repository-grid">
+          {% for repo in category.repos %}
+            <div class="repository-card">
+              <div class="repository-header">
+                <div class="repository-icon">
+                  {% if repo.language == 'Python' %}
+                    <i class="fab fa-python" style="color: #3776ab;"></i>
+                  {% elsif repo.language == 'R' %}
+                    <i class="fab fa-r-project" style="color: #276dc3;"></i>
+                  {% elsif repo.language == 'JavaScript' %}
+                    <i class="fab fa-js-square" style="color: #f7df1e;"></i>
+                  {% elsif repo.language == 'Jupyter' %}
+                    <i class="fas fa-book" style="color: #f37626;"></i>
+                  {% else %}
+                    <i class="fas fa-code" style="color: #6c757d;"></i>
+                  {% endif %}
+                </div>
+                <div class="repository-title">
+                  <a href="{{ repo.github_url }}" target="_blank" rel="noopener noreferrer">
+                    {{ repo.name }}
+                  </a>
+                </div>
+              </div>
+              
+              <div class="repository-description">
+                {{ repo.description }}
+              </div>
+              
+              <div class="repository-meta">
+                <span class="language">
+                  <i class="fas fa-circle" style="color: {{ repo.language_color }};"></i>
+                  {{ repo.language }}
+                </span>
+                <span class="stars">
+                  <i class="fas fa-star"></i>
+                  {{ repo.stars }}
+                </span>
+                <span class="forks">
+                  <i class="fas fa-code-branch"></i>
+                  {{ repo.forks }}
+                </span>
+              </div>
+              
+              {% if repo.topics %}
+                <div class="repository-topics">
+                  {% for topic in repo.topics %}
+                    <span class="topic-tag">{{ topic }}</span>
+                  {% endfor %}
+                </div>
+              {% endif %}
+              
+              <div class="repository-links">
+                {% if repo.github_url %}
+                  <a href="{{ repo.github_url }}" class="btn btn-sm" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-github"></i> GitHub
+                  </a>
+                {% endif %}
+                {% if repo.demo_url %}
+                  <a href="{{ repo.demo_url }}" class="btn btn-sm" target="_blank" rel="noopener noreferrer">
+                    <i class="fas fa-external-link-alt"></i> Demo
+                  </a>
+                {% endif %}
+                {% if repo.paper_url %}
+                  <a href="{{ repo.paper_url }}" class="btn btn-sm" target="_blank" rel="noopener noreferrer">
+                    <i class="fas fa-file-alt"></i> Paper
+                  </a>
+                {% endif %}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% endfor %}
+    </div>
+  </article>
+</div>
+
+<script>
+// Add click tracking for repository links
+document.addEventListener('DOMContentLoaded', function() {
+  const repoLinks = document.querySelectorAll('.repository-card a');
+  repoLinks.forEach(link => {
+    link.addEventListener('click', function() {
+      // You can add analytics tracking here if needed
+      console.log('Repository link clicked:', this.href);
+    });
+  });
+});
+</script>
