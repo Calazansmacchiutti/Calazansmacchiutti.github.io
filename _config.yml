@@ -13,8 +13,8 @@ title                    : "Macchiutti's Page"
 title_separator          : "-"
 name                     : &name "Calazans Macchiutti"
 description              : &description "Researcher / Data Scientist"
-url                      : https://macchiutti.github.io # the base hostname & protocol for your site e.g. "https://[your GitHub username].github.io"
-baseurl                  : "" # the subpath of your site, e.g. "/blog"
+url                      : https://calazansmacchiutti.github.io
+baseurl                  : "/macchiutti.github.io-master"
 repository               : "macchiutti/macchiutti.github.io"
 
 # Site Author - The following control what appear as part of the author content on the side bar.
