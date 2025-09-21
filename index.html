@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calazans Macchiutti - Academic Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('images/homepage.png');
+            background-size: cover;
+            background-position: center;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-content h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            padding: 2rem 0;
+        }
+
+        .content {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .sidebar {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            height: fit-content;
+        }
+
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: block;
+            object-fit: cover;
+        }
+
+        .social-links {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .social-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .social-links a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        .social-links a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .hero-content h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Calazans Macchiutti</h1>
+            <p>Researcher & Data Scientist</p>
+        </div>
+    </header>
+
+    <div class="hero">
+        <div class="hero-content">
+            <h2>Welcome to my Academic Portfolio</h2>
+            <div class="nav-buttons">
+                <a href="academic.html" class="btn">Academic</a>
+                <a href="datascience.html" class="btn">Data Science</a>
+                <a href="publications.html" class="btn">Publications</a>
+                <a href="repositories.html" class="btn">Repositories</a>
+                <a href="portfolio.html" class="btn">Portfolio</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="main-content">
+            <div class="content">
+                <h2>About Me</h2>
+                <p>Welcome to my academic website! I am a Researcher and Data Scientist with expertise in complex systems and data analysis.</p>
+
+                <h3>Research Interests</h3>
+                <ul>
+                    <li>Data Science & Machine Learning</li>
+                    <li>Complex Systems Analysis</li>
+                    <li>Statistical Modeling</li>
+                    <li>Computational Methods</li>
+                </ul>
+
+                <h3>Current Focus</h3>
+                <p>I specialize in applying advanced analytical techniques to understand complex phenomena and develop data-driven solutions for real-world problems.</p>
+            </div>
+
+            <div class="sidebar">
+                <img src="images/profile-perfil.JPG" alt="Calazans Macchiutti" class="profile-img">
+                <h3>Calazans Macchiutti</h3>
+                <p><strong>Position:</strong> Researcher / Data Scientist</p>
+                <p><strong>Location:</strong> Brazil</p>
+                <p><strong>Institution:</strong> Academic Institution</p>
+
+                <h4>Connect with me:</h4>
+                <ul class="social-links">
+                    <li>📧 <a href="mailto:calazans.macchiutti@email.com">Email</a></li>
+                    <li>🔗 <a href="https://br.linkedin.com/in/calazans-macchiutti-ph-d-a48591237">LinkedIn</a></li>
+                    <li>📚 <a href="https://scholar.google.com.br/citations?user=v5qKbyEAAAAJ&hl=pt-BR">Google Scholar</a></li>
+                    <li>🔬 <a href="https://www.researchgate.net/profile/Calazans-Macchiutti-2">ResearchGate</a></li>
+                    <li>💻 <a href="https://github.com/Calazansmacchiutti">GitHub</a></li>
+                    <li>📋 <a href="http://lattes.cnpq.br/6086240272240823">Lattes CV</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Calazans Macchiutti. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
