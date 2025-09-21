@@ -1,5 +1,6 @@
 ---
 title: "Academic"
+layout: single
 permalink: /academic/
 author_profile: true
 ---

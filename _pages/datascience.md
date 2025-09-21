@@ -1,5 +1,6 @@
 ---
 title: "Data Science"
+layout: single
 permalink: /datascience/
 author_profile: true
 ---

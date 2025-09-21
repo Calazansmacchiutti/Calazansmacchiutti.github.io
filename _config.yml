@@ -13,7 +13,7 @@ title                    : "Macchiutti's Page"
 title_separator          : "-"
 name                     : &name "Calazans Macchiutti"
 description              : &description "Researcher / Data Scientist"
-theme                    : jekyll-theme-primer
+# theme                    : jekyll-theme-primer
 url                      : "https://calazansmacchiutti.github.io"
 baseurl                  : ""
 repository               : "Calazansmacchiutti/Calazansmacchiutti.github.io"

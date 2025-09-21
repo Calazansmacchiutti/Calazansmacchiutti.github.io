@@ -1,0 +1,45 @@
+---
+layout: default
+---
+
+<div class="home">
+  {% if page.header.overlay_image %}
+  <div class="hero" style="background-image: url('{{ page.header.overlay_image | relative_url }}');">
+    <div class="hero-overlay" style="opacity: {{ page.header.overlay_filter | default: 0.5 }};">
+      <div class="hero-content">
+        {% if page.header.actions %}
+        <div class="hero-actions">
+          {% for action in page.header.actions %}
+          <a href="{{ action.url | relative_url }}" class="btn">{{ action.label }}</a>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  {% if page.author_profile %}
+  <aside class="author-profile">
+    <h2>{{ site.author.name }}</h2>
+    <p>{{ site.author.bio }}</p>
+    <p>{{ site.author.location }}</p>
+
+    {% if site.author.email %}
+    <p>Email: <a href="mailto:{{ site.author.email }}">{{ site.author.email }}</a></p>
+    {% endif %}
+
+    {% if site.author.github %}
+    <p>GitHub: <a href="https://github.com/{{ site.author.github }}">{{ site.author.github }}</a></p>
+    {% endif %}
+
+    {% if site.author.linkedin %}
+    <p>LinkedIn: <a href="https://linkedin.com/in/{{ site.author.linkedin }}">{{ site.author.linkedin }}</a></p>
+    {% endif %}
+  </aside>
+  {% endif %}
+
+  <div class="content">
+    {{ content }}
+  </div>
+</div>

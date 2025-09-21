@@ -4,7 +4,7 @@ This is my personal academic website built with Jekyll and the Academic Pages te
 
 ## 🚀 Live Website
 
-Visit the live website at: [https://macchiutti.github.io](https://macchiutti.github.io)
+Visit the live website at: [https://calazansmacchiutti.github.io](https://calazansmacchiutti.github.io)
 
 ## 📁 Project Structure
 
@@ -64,8 +64,8 @@ Visit the live website at: [https://macchiutti.github.io](https://macchiutti.git
 ### Setup
 1. Clone the repository:
    ```bash
-   git clone https://github.com/macchiutti/macchiutti.github.io.git
-   cd macchiutti.github.io
+   git clone https://github.com/Calazansmacchiutti/Calazansmacchiutti.github.io.git
+   cd Calazansmacchiutti.github.io
    ```
 
 2. Install dependencies:
