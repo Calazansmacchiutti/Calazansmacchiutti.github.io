@@ -3,13 +3,15 @@
 /* Variables */
 :root {
   --global-bg-color: #ffffff;
-  --global-text-color: #000000;
-  --global-text-color-light: #828282;
-  --global-theme-color: #b509ac;
-  --global-hover-color: #b509ac;
-  --global-footer-bg-color: #424242;
-  --global-footer-text-color: #e8e8e8;
-  --global-icon-color: #2698ba;
+  --global-text-color: #333;
+  --global-text-color-light: #6c757d;
+  --global-theme-color: #2f7f93;
+  --global-hover-color: #1a5a6b;
+  --global-footer-bg-color: #f8f9fa;
+  --global-footer-text-color: #6c757d;
+  --global-icon-color: #2f7f93;
+  --global-sidebar-bg: #f8f9fa;
+  --global-border-color: #e9ecef;
 }
 
 /* Global styles */
@@ -96,9 +98,19 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Profile */
 .profile {
-  width: 300px;
-  margin-left: 2rem;
+  width: 280px;
   margin-bottom: 1rem;
+  background: var(--global-sidebar-bg);
+  border: 1px solid var(--global-border-color);
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 90px;
+  align-self: flex-start;
+  flex-shrink: 0;
+  order: 2;
 }
 
 .profile figure {
@@ -106,8 +118,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .profile img {
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 4px solid var(--global-theme-color);
+  object-fit: cover;
 }
 
 .more-info {
@@ -126,6 +141,22 @@ h1, h2, h3, h4, h5, h6 {
   content: "";
   display: table;
   clear: both;
+}
+
+article {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+/* For pages without profile */
+article.no-profile {
+  display: block;
+}
+
+.clearfix {
+  flex: 1;
+  min-width: 0;
 }
 
 article p {
@@ -159,6 +190,16 @@ article li {
   justify-content: center;
   gap: 1rem;
   flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.profile .contact-icons {
+  gap: 0.8rem;
+  margin-top: 1.2rem;
+}
+
+.profile .contact-icons a {
+  font-size: 1.3rem;
 }
 
 .contact-icons a {
@@ -180,15 +221,16 @@ footer {
   padding: 1rem 0;
   font-size: 0.9rem;
   text-align: center;
+  border-top: 1px solid var(--global-border-color);
 }
 
 footer a {
-  color: var(--global-footer-text-color);
+  color: var(--global-theme-color);
   text-decoration: none;
 }
 
 footer a:hover {
-  color: #ffffff;
+  color: var(--global-hover-color);
   text-decoration: underline;
 }
 
@@ -223,11 +265,21 @@ footer a:hover {
     font-size: 2rem;
   }
 
+  article {
+    flex-direction: column;
+  }
+
   .profile {
-    float: none !important;
     width: 100%;
     margin: 0 0 2rem 0;
     text-align: center;
+    position: static;
+    order: 0;
+  }
+
+  .profile img {
+    width: 120px;
+    height: 120px;
   }
 
   .contact-icons {
@@ -255,21 +307,29 @@ footer a:hover {
 
 /* Hover effects */
 .navbar-nav .nav-link:hover {
-  background-color: rgba(181, 9, 172, 0.1);
+  background-color: rgba(47, 127, 147, 0.1);
   border-radius: 4px;
 }
 
 /* Profile specific styles for different pages */
 .academic-profile {
-  border-left: 4px solid #2196F3;
+  border: 1px solid var(--global-border-color);
+}
+
+.academic-profile img {
+  border-color: var(--global-theme-color);
 }
 
 .datascience-profile {
-  border-left: 4px solid #FF9800;
+  border: 1px solid var(--global-border-color);
+}
+
+.datascience-profile img {
+  border-color: var(--global-theme-color);
 }
 
 .default-profile {
-  border-left: 4px solid var(--global-theme-color);
+  border: 1px solid var(--global-border-color);
 }
 
 /* Publications styles */
@@ -281,11 +341,12 @@ footer a:hover {
 }
 
 .publication-item {
-  background: #f8f9fa;
+  background: var(--global-sidebar-bg);
   padding: 1.5rem;
   margin-bottom: 1.5rem;
-  border-left: 4px solid var(--global-theme-color);
-  border-radius: 0 8px 8px 0;
+  border: 1px solid var(--global-border-color);
+  border-left: 3px solid var(--global-theme-color);
+  border-radius: 6px;
 }
 
 .publication-item h4 {
@@ -329,11 +390,12 @@ footer a:hover {
 
 /* Experience items */
 .experience-item {
-  background: #f8f9fa;
+  background: var(--global-sidebar-bg);
   padding: 1.5rem;
   margin-bottom: 1.5rem;
-  border-left: 4px solid #FF9800;
-  border-radius: 0 8px 8px 0;
+  border: 1px solid var(--global-border-color);
+  border-left: 3px solid var(--global-theme-color);
+  border-radius: 6px;
 }
 
 .experience-item h4 {
@@ -369,11 +431,12 @@ footer a:hover {
 }
 
 .cv-item {
-  background: #f8f9fa;
+  background: var(--global-sidebar-bg);
   padding: 1.5rem;
   margin-bottom: 1.5rem;
-  border-left: 4px solid var(--global-theme-color);
-  border-radius: 0 8px 8px 0;
+  border: 1px solid var(--global-border-color);
+  border-left: 3px solid var(--global-theme-color);
+  border-radius: 6px;
 }
 
 .cv-item h4 {
@@ -394,10 +457,11 @@ footer a:hover {
 }
 
 .skill-category {
-  background: #f8f9fa;
+  background: var(--global-sidebar-bg);
   padding: 1rem;
-  border-radius: 8px;
-  border-left: 4px solid var(--global-theme-color);
+  border: 1px solid var(--global-border-color);
+  border-left: 3px solid var(--global-theme-color);
+  border-radius: 6px;
 }
 
 .skill-category h4 {
@@ -436,11 +500,12 @@ footer a:hover {
 
 /* Repository styles */
 .repo-item {
-  background: #f8f9fa;
+  background: var(--global-sidebar-bg);
   padding: 1.5rem;
   margin-bottom: 1.5rem;
-  border-left: 4px solid var(--global-icon-color);
-  border-radius: 0 8px 8px 0;
+  border: 1px solid var(--global-border-color);
+  border-left: 3px solid var(--global-theme-color);
+  border-radius: 6px;
 }
 
 .repo-item h4 {
