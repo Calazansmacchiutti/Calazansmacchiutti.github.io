@@ -183,16 +183,6 @@ article .profile {
   object-fit: cover;
 }
 
-.more-info {
-  text-align: center;
-  margin-top: 1rem;
-}
-
-.more-info p {
-  margin: 0.2rem 0;
-  font-size: 0.9rem;
-  color: var(--global-text-color-light);
-}
 
 /* Content */
 .clearfix::after {
@@ -302,9 +292,6 @@ footer a:hover {
   border-radius: 0.375rem;
 }
 
-.float-right {
-  float: right;
-}
 
 .text-right {
   text-align: right;
