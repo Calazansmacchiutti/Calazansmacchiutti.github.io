@@ -26,6 +26,7 @@ body {
   color: var(--global-text-color);
   background-color: var(--global-bg-color);
   padding-top: 75px; /* Account for fixed navbar */
+  padding-bottom: 60px; /* Account for fixed footer */
 }
 
 /* Typography */
@@ -117,12 +118,24 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Post styles */
 .post {
-  max-width: 900px;
+  max-width: 1000px;
   margin: 0 auto;
 }
 
 .post-header {
   margin-bottom: 2rem;
+}
+
+.header-content {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.title-section {
+  flex: 1;
+  min-width: 0;
 }
 
 .post-title {
@@ -147,10 +160,14 @@ h1, h2, h3, h4, h5, h6 {
   padding: 1.5rem;
   text-align: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  flex-shrink: 0;
+}
+
+/* Profile sticky when in article */
+article .profile {
   position: sticky;
   top: 90px;
   align-self: flex-start;
-  flex-shrink: 0;
   order: 2;
 }
 
@@ -259,10 +276,11 @@ article li {
 footer {
   background-color: var(--global-footer-bg-color);
   color: var(--global-footer-text-color);
-  padding: 1rem 0;
-  font-size: 0.9rem;
+  padding: 0.75rem 0;
+  font-size: 0.8rem;
   text-align: center;
   border-top: 1px solid var(--global-border-color);
+  line-height: 1.4;
 }
 
 footer a {
@@ -300,10 +318,21 @@ footer a:hover {
 @media (max-width: 768px) {
   body {
     padding-top: 65px;
+    padding-bottom: 50px;
+  }
+
+  footer {
+    font-size: 0.75rem;
+    padding: 0.5rem 0;
   }
 
   .post-title {
     font-size: 2rem;
+  }
+
+  .header-content {
+    flex-direction: column;
+    gap: 1.5rem;
   }
 
   article {
