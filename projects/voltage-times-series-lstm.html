@@ -199,7 +199,7 @@
                 <div class="project-gallery mb-5">
                     <h3 class="mb-4"><i class="fas fa-images me-2"></i>Project Screenshots</h3>
                     <div class="row g-3">
-                        <div class="col-md-6">
+                        <div class="col-lg-4 col-md-6">
                             <div class="gallery-item">
                                 <img src="voltage-time-series-lstm.png" class="img-fluid rounded shadow-sm" alt="Voltage Time Series LSTM Main Interface" data-bs-toggle="modal" data-bs-target="#imageModal1">
                                 <div class="overlay">
@@ -210,13 +210,24 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-lg-4 col-md-6">
                             <div class="gallery-item">
                                 <img src="voltage-time-series-lstm1.png" class="img-fluid rounded shadow-sm" alt="Voltage Time Series LSTM Results" data-bs-toggle="modal" data-bs-target="#imageModal2">
                                 <div class="overlay">
                                     <div class="overlay-text">
                                         <h6>Prediction Results</h6>
                                         <p>Time series forecasting results and analysis</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="gallery-item">
+                                <img src="voltage-time-series-lstm2.png" class="img-fluid rounded shadow-sm" alt="Voltage Time Series LSTM Training Performance" data-bs-toggle="modal" data-bs-target="#imageModal3">
+                                <div class="overlay">
+                                    <div class="overlay-text">
+                                        <h6>Training Performance</h6>
+                                        <p>Model convergence and validation metrics</p>
                                     </div>
                                 </div>
                             </div>
@@ -350,6 +361,21 @@ python predict.py</code></pre>
         </div>
     </div>
 
+    <!-- Modal 3 -->
+    <div class="modal fade" id="imageModal3" tabindex="-1" aria-labelledby="imageModal3Label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="imageModal3Label">Training Performance</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="voltage-time-series-lstm2.png" alt="Voltage Time Series LSTM Training Performance" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer class="fixed-bottom">
         <div class="container mt-0">
@@ -478,3 +504,4 @@ python predict.py</code></pre>
     </script>
 </body>
 </html>
+
