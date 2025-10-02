@@ -529,11 +529,51 @@ footer a:hover {
 
 .skill-category ul {
   margin: 0;
-  padding-left: 1rem;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.6rem;
 }
 
 .skill-category li {
-  margin-bottom: 0.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.skill-name {
+  font-weight: 500;
+  color: var(--global-text-color);
+  flex: 1 1 auto;
+}
+
+.skill-dots {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.skill-dots span {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background-color: var(--global-border-color);
+  opacity: 0.4;
+  transition: opacity 0.2s ease, background-color 0.2s ease;
+}
+
+.skill-item.level-0 .skill-dots span {
+  opacity: 0.2;
+}
+
+.skill-item.level-1 .skill-dots span:nth-child(-n+1),
+.skill-item.level-2 .skill-dots span:nth-child(-n+2),
+.skill-item.level-3 .skill-dots span:nth-child(-n+3),
+.skill-item.level-4 .skill-dots span:nth-child(-n+4),
+.skill-item.level-5 .skill-dots span:nth-child(-n+5) {
+  background-color: var(--global-theme-color);
+  opacity: 1;
 }
 
 .cv-links {
@@ -583,3 +623,5 @@ footer a:hover {
 .repo-item p {
   margin-bottom: 0.5rem;
 }
+
+
