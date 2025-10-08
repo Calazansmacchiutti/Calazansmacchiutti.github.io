@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logistic Data Assessment - Calazans Macchiutti</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <style>
+        .project-gallery .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .project-gallery .gallery-item img {
+            cursor: pointer !important;
+            pointer-events: auto !important;
+        }
+
+        .project-gallery .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .project-gallery .gallery-item img {
+            transition: transform 0.3s ease;
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .project-gallery .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .project-gallery .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(0,123,255,0.8), rgba(0,86,179,0.8));
+            color: white;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .project-gallery .gallery-item:hover .overlay {
+            opacity: 1;
+        }
+
+        .project-gallery .overlay-text h6 {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-gallery .overlay-text p {
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .modal-dialog {
+            max-width: 95%;
+            margin: 1.75rem auto;
+        }
+
+        .modal-xl {
+            max-width: 1140px;
+        }
+
+        .modal-body {
+            padding: 0;
+        }
+
+        .modal-body img {
+            width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+        }
+
+        .gallery-item {
+            user-select: none;
+        }
+
+        .gallery-item img {
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+    </style>
+</head>
+<body class="fixed-top-nav">
+    <!-- Navigation -->
+    <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top">
+        <div class="container">
+            <a class="navbar-brand title font-weight-lighter" href="../index.html">
+                <span class="font-weight-bold">Calazans</span> Macchiutti
+            </a>
+            <button class="navbar-toggler collapsed ml-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse text-right" id="navbarNav">
+                <ul class="navbar-nav ml-auto flex-nowrap">
+                    <li class="nav-item me-3">
+                        <a class="nav-link px-3" href="../index.html">
+                            <i class="fas fa-user me-2"></i>About
+                        </a>
+                    </li>
+                    <li class="nav-item me-3">
+                        <a class="nav-link px-3" href="../academic.html">
+                            <i class="fas fa-graduation-cap me-2"></i>Academic
+                        </a>
+                    </li>
+                    <li class="nav-item me-3">
+                        <a class="nav-link px-3" href="../publications.html">
+                            <i class="fas fa-book-open me-2"></i>Publications
+                        </a>
+                    </li>
+                    <li class="nav-item me-3">
+                        <a class="nav-link px-3" href="../datascience.html">
+                            <i class="fas fa-chart-bar me-2"></i>Data Science
+                        </a>
+                    </li>
+                    <li class="nav-item me-3">
+                        <a class="nav-link px-3" href="../projects.html">
+                            <i class="fas fa-code me-2"></i>Projects
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-3" href="../cv.html">
+                            <i class="fas fa-file-alt me-2"></i>CV
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-5" role="main">
+        <div class="post">
+            <header class="post-header">
+                <h1 class="post-title">Logistic Data Assessment</h1>
+                <p class="desc">Exploratory and predictive analytics for operational efficiency in logistic networks</p>
+            </header>
+
+            <article class="no-profile">
+                <div class="project-navigation">
+                    <a href="../projects.html" class="btn btn-outline-secondary mb-4">
+                        <i class="fas fa-arrow-left"></i> Back to Projects
+                    </a>
+                </div>
+
+                <!-- Project Gallery -->
+                <div class="project-gallery mb-5">
+                    <h3 class="mb-4"><i class="fas fa-images me-2"></i>Project Screenshots</h3>
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <div class="gallery-item">
+                                <img src="Logistic - Departure Delay.png" class="img-fluid rounded shadow-sm" alt="Departure delay distribution" data-bs-toggle="modal" data-bs-target="#imageModal1">
+                                <div class="overlay">
+                                    <div class="overlay-text">
+                                        <h6>Departure Delays</h6>
+                                        <p>Delay profiles per route and shift</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="gallery-item">
+                                <img src="Logistic - Month view.png" class="img-fluid rounded shadow-sm" alt="Monthly performance view" data-bs-toggle="modal" data-bs-target="#imageModal2">
+                                <div class="overlay">
+                                    <div class="overlay-text">
+                                        <h6>Seasonality</h6>
+                                        <p>Monthly performance trends</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="gallery-item">
+                                <img src="Logistic - ML parameters.png" class="img-fluid rounded shadow-sm" alt="Model parameters dashboard" data-bs-toggle="modal" data-bs-target="#imageModal3">
+                                <div class="overlay">
+                                    <div class="overlay-text">
+                                        <h6>Model Insights</h6>
+                                        <p>Feature relevance and tuning</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Project Overview</h3>
+                <p>This project consolidates exploratory analysis, KPI monitoring, and predictive modeling for a logistic operation handling thousands of daily deliveries. The objective is to surface actionable insights for dispatch planning, identify systemic bottlenecks, and forecast risk factors that affect service-level agreements.</p>
+
+                <h3>Key Questions Answered</h3>
+                <ul>
+                    <li>What routes, hubs, and shifts are the main contributors to departure delays?</li>
+                    <li>How do seasonal patterns and workload peaks affect fleet punctuality?</li>
+                    <li>Which operational variables most influence delay risk according to the predictive models?</li>
+                </ul>
+
+                <h3>Analytical Highlights</h3>
+                <ul>
+                    <li>Interactive dashboards covering delay distribution, seasonal effects, and operational KPIs.</li>
+                    <li>Machine learning pipeline (gradient boosting and logistic regression) for delay risk scoring.</li>
+                    <li>Explainability layer with feature importance, SHAP interpretation, and scenario simulation.</li>
+                    <li>Automated data quality checks and anomaly alerts for incoming logistic batches.</li>
+                </ul>
+
+                <h3>Workflow</h3>
+                <ol>
+                    <li>Data ingestion from transactional systems and IoT telemetry with validation routines.</li>
+                    <li>Feature engineering combining route metadata, fleet schedules, weather, and customer SLAs.</li>
+                    <li>Model training and cross-validation with monitoring for drift and performance decay.</li>
+                    <li>Packaging of results into dashboards and API endpoints for operational teams.</li>
+                </ol>
+
+                <h3>Technologies Used</h3>
+                <div class="tech-stack">
+                    <span class="badge bg-primary me-2">Python</span>
+                    <span class="badge bg-success me-2">Pandas</span>
+                    <span class="badge bg-secondary me-2">Polars</span>
+                    <span class="badge bg-info me-2">Scikit-learn</span>
+                    <span class="badge bg-warning me-2">LightGBM</span>
+                    <span class="badge bg-danger me-2">Plotly</span>
+                    <span class="badge bg-dark me-2">FastAPI</span>
+                </div>
+
+                <h3>Repository</h3>
+                <div class="repo-link">
+                    <p>Explore the source code, notebooks, and deployment assets in the dedicated repository.</p>
+                    <a href="https://github.com/Calazansmacchiutti/logistic-data-assesment" target="_blank" class="btn btn-primary">
+                        <i class="fa-brands fa-github me-2"></i>View Project on GitHub
+                    </a>
+                </div>
+
+                <h3>Results &amp; Impact</h3>
+                <p>The combined analytical assets helped reduce average departure delays by 18% in pilot operations, while the predictive service highlighted upcoming high-risk routes with over 80% precision. Operational teams now rely on the dashboards to reallocate resources earlier and plan contingencies for peak seasons.</p>
+            </article>
+        </div>
+    </div>
+
+    <!-- Image Modals -->
+    <div class="modal fade" id="imageModal1" tabindex="-1" aria-labelledby="imageModal1Label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="imageModal1Label">Departure Delays Dashboard</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="Logistic - Departure Delay.png" alt="Expanded view of departure delay distribution charts">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="imageModal2" tabindex="-1" aria-labelledby="imageModal2Label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="imageModal2Label">Monthly Performance Overview</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="Logistic - Month view.png" alt="Expanded seasonal trend analysis">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="imageModal3" tabindex="-1" aria-labelledby="imageModal3Label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="imageModal3Label">Model Parameter Exploration</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="Logistic - ML parameters.png" alt="Expanded model parameter dashboard">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="fixed-bottom">
+        <div class="container mt-0">
+            ?? Copyright 2024 Calazans Macchiutti.
+            Powered by <a href="https://getbootstrap.com/" target="_blank">Bootstrap</a>.
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                if (typeof bootstrap === 'undefined') {
+                    loadFallbackBootstrap();
+                    return;
+                }
+
+                const galleryImages = document.querySelectorAll('.gallery-item img[data-bs-toggle="modal"]');
+
+                const handleImageClick = function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    const modalTarget = this.getAttribute('data-bs-target');
+                    if (!modalTarget) {
+                        return;
+                    }
+
+                    const modal = document.querySelector(modalTarget);
+                    if (!modal) {
+                        return;
+                    }
+
+                    try {
+                        const bootstrapModal = new bootstrap.Modal(modal, {
+                            backdrop: true,
+                            keyboard: true,
+                            focus: true
+                        });
+                        bootstrapModal.show();
+                    } catch (error) {
+                        modal.style.display = 'block';
+                        modal.classList.add('show');
+                        document.body.classList.add('modal-open');
+                    }
+                };
+
+                galleryImages.forEach(function(img) {
+                    img.addEventListener('click', handleImageClick);
+                });
+
+                const galleryItems = document.querySelectorAll('.gallery-item');
+                galleryItems.forEach(function(item) {
+                    item.addEventListener('click', function(e) {
+                        const img = this.querySelector('img[data-bs-toggle="modal"]');
+                        if (img) {
+                            img.dispatchEvent(new Event('click'));
+                        }
+                    });
+                });
+            }, 400);
+        });
+
+        function loadFallbackBootstrap() {
+            const galleryImages = document.querySelectorAll('.gallery-item img[data-bs-toggle="modal"]');
+            galleryImages.forEach(function(img) {
+                img.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const modalTarget = this.getAttribute('data-bs-target');
+                    const modal = document.querySelector(modalTarget);
+                    if (modal) {
+                        modal.style.display = 'block';
+                        modal.classList.add('show');
+                        document.body.classList.add('modal-open');
+
+                        const closeBtn = modal.querySelector('.btn-close');
+                        if (closeBtn) {
+                            closeBtn.onclick = function() {
+                                modal.style.display = 'none';
+                                modal.classList.remove('show');
+                                document.body.classList.remove('modal-open');
+                            };
+                        }
+
+                        modal.onclick = function(event) {
+                            if (event.target === modal) {
+                                modal.style.display = 'none';
+                                modal.classList.remove('show');
+                                document.body.classList.remove('modal-open');
+                            }
+                        };
+                    }
+                });
+            });
+        }
+    </script>
+</body>
+</html>
