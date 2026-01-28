@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fraud Detection in KYC/KYT - Calazans Macchiutti</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <style>
+        .project-gallery .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .project-gallery .gallery-item img {
+            cursor: pointer !important;
+            pointer-events: auto !important;
+        }
+
+        .project-gallery .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .project-gallery .gallery-item img {
+            transition: transform 0.3s ease;
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .project-gallery .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .project-gallery .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(220,53,69,0.8), rgba(155,20,35,0.8));
+            color: white;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .project-gallery .gallery-item:hover .overlay {
+            opacity: 1;
+        }
+
+        .project-gallery .overlay-text h6 {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-gallery .overlay-text p {
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .modal-dialog {
+            max-width: 95%;
+            margin: 1.75rem auto;
+        }
+
+        .modal-xl {
+            max-width: 1140px;
+        }
+
+        .modal-body {
+            padding: 0;
+        }
+
+        .modal-body img {
+            width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+        }
+
+        .gallery-item {
+            user-select: none;
+        }
+
+        .gallery-item img {
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+    </style>
+</head>
+<body class="fixed-top-nav">
+    <!-- Navigation -->
+    <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top">
+        <div class="container">
+            <a class="navbar-brand title font-weight-lighter" href="../index.html">
+                <span class="font-weight-bold">Calazans</span> Macchiutti
+            </a>
+            <button class="navbar-toggler collapsed ml-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse text-right" id="navbarNav">
+                <ul class="navbar-nav ml-auto flex-nowrap">
+                    <li class="nav-item me-3">
+                        <a class="nav-link px-3" href="../index.html">
+                            <i class="fas fa-user me-2"></i>About
+                        </a>
+                    </li>
+                    <li class="nav-item me-3">
+                        <a class="nav-link px-3" href="../academic.html">
+                            <i class="fas fa-graduation-cap me-2"></i>Academic
+                        </a>
+                    </li>
+                    <li class="nav-item me-3">
+                        <a class="nav-link px-3" href="../publications.html">
+                            <i class="fas fa-book-open me-2"></i>Publications
+                        </a>
+                    </li>
+                    <li class="nav-item me-3">
+                        <a class="nav-link px-3" href="../datascience.html">
+                            <i class="fas fa-chart-bar me-2"></i>Data Science
+                        </a>
+                    </li>
+                    <li class="nav-item me-3">
+                        <a class="nav-link px-3" href="../projects.html">
+                            <i class="fas fa-code me-2"></i>Projects
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-3" href="../cv.html">
+                            <i class="fas fa-file-alt me-2"></i>CV
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-5" role="main">
+        <div class="post">
+            <header class="post-header">
+                <h1 class="post-title">Fraud Detection in KYC and KYT</h1>
+                <p class="desc">Data Science approaches for detecting fraudulent transactions using supervised and unsupervised learning</p>
+            </header>
+
+            <article class="no-profile">
+                <div class="project-navigation">
+                    <a href="../index.html#projects" class="btn btn-outline-secondary mb-4">
+                        <i class="fas fa-arrow-left"></i> Back to Projects
+                    </a>
+                </div>
+
+                <!-- Project Gallery -->
+                <div class="project-gallery mb-5">
+                    <h3 class="mb-4"><i class="fas fa-images me-2"></i>Project Visualizations</h3>
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                            <a href="../files/fraud-detection-paper.docx" target="_blank" class="gallery-item" style="text-decoration: none;">
+                                <img src="fraud-detection-paper.png" class="img-fluid rounded shadow-sm" alt="Research Paper">
+                                <div class="overlay" style="background: linear-gradient(135deg, rgba(40,167,69,0.8), rgba(25,100,45,0.8));">
+                                    <div class="overlay-text">
+                                        <h6>📄 Research Paper</h6>
+                                        <p>Click to download DOCX</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="gallery-item">
+                                <img src="fraud-detection-pca.png" class="img-fluid rounded shadow-sm" alt="PCA Features Distribution" data-bs-toggle="modal" data-bs-target="#imageModal1">
+                                <div class="overlay">
+                                    <div class="overlay-text">
+                                        <h6>PCA Features</h6>
+                                        <p>Distribution by class (V1-V28)</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="gallery-item">
+                                <img src="fraud-detection-models.png" class="img-fluid rounded shadow-sm" alt="Model Performance Comparison" data-bs-toggle="modal" data-bs-target="#imageModal2">
+                                <div class="overlay">
+                                    <div class="overlay-text">
+                                        <h6>Model Comparison</h6>
+                                        <p>ROC, PR curves and metrics</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="gallery-item">
+                                <img src="fraud-detection-distribution.png" class="img-fluid rounded shadow-sm" alt="Transaction Amount Distribution" data-bs-toggle="modal" data-bs-target="#imageModal3">
+                                <div class="overlay">
+                                    <div class="overlay-text">
+                                        <h6>Amount Analysis</h6>
+                                        <p>Transaction distribution by class</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Project Overview</h3>
+                <p>This project implements a comprehensive fraud detection system combining Know Your Customer (KYC) and Know Your Transaction (KYT) methodologies. Using the Credit Card Fraud Detection dataset, the system evaluates multiple machine learning approaches including supervised classifiers, unsupervised anomaly detection, and deep learning autoencoders to identify fraudulent transactions in highly imbalanced datasets.</p>
+
+                <h3>Key Questions Answered</h3>
+                <ul>
+                    <li>How do supervised models (XGBoost, Random Forest) compare against unsupervised approaches (Isolation Forest, K-Means, Autoencoders) for fraud detection?</li>
+                    <li>Which PCA-transformed features show the strongest discriminative power between normal and fraudulent transactions?</li>
+                    <li>What is the optimal threshold strategy when dealing with extreme class imbalance (~0.17% fraud rate)?</li>
+                    <li>How can autoencoder reconstruction error be leveraged for anomaly-based fraud detection?</li>
+                </ul>
+
+                <h3>Analytical Highlights</h3>
+                <ul>
+                    <li>Comprehensive model comparison: XGBoost achieved highest Average Precision (0.858) followed by Random Forest (0.826)</li>
+                    <li>ROC-AUC scores above 0.96 for all models, with XGBoost reaching 0.969</li>
+                    <li>Autoencoder-based anomaly detection with tuned threshold achieving AP of 0.510</li>
+                    <li>Feature importance analysis revealing V14, V4, V12, and V10 as top discriminators</li>
+                    <li>Transaction amount analysis showing frauds concentrated in lower value ranges</li>
+                </ul>
+
+                <h3>Methodology</h3>
+                <ol>
+                    <li>Data exploration and visualization of PCA-transformed features by class</li>
+                    <li>Implementation of supervised classifiers: XGBoost and Random Forest with class balancing</li>
+                    <li>Unsupervised anomaly detection: Isolation Forest, K-Means clustering</li>
+                    <li>Deep learning approach: Autoencoder trained on normal transactions for reconstruction error-based detection</li>
+                    <li>Threshold optimization using precision-recall trade-offs</li>
+                    <li>Model evaluation with focus on Average Precision due to class imbalance</li>
+                </ol>
+
+                <h3>Technologies Used</h3>
+                <div class="tech-stack">
+                    <span class="badge bg-primary me-2">Python</span>
+                    <span class="badge bg-success me-2">Scikit-learn</span>
+                    <span class="badge bg-info me-2">XGBoost</span>
+                    <span class="badge bg-warning me-2">TensorFlow/Keras</span>
+                    <span class="badge bg-secondary me-2">Pandas</span>
+                    <span class="badge bg-danger me-2">Matplotlib/Seaborn</span>
+                    <span class="badge bg-dark me-2">NumPy</span>
+                </div>
+
+                <h3>Research Paper</h3>
+                <div class="repo-link mb-4">
+                    <p>Read the full technical paper with detailed methodology, results and conclusions.</p>
+                    <a href="../files/fraud-detection-paper.docx" target="_blank" class="btn btn-success">
+                        <i class="fas fa-file-word me-2"></i>Download Paper (DOCX)
+                    </a>
+                </div>
+
+                <h3>Repository</h3>
+                <div class="repo-link">
+                    <p>Explore the source code, Jupyter notebooks, and model artifacts in the dedicated repository.</p>
+                    <a href="https://github.com/Calazansmacchiutti/FraudDetection" target="_blank" class="btn btn-primary">
+                        <i class="fa-brands fa-github me-2"></i>View Project on GitHub
+                    </a>
+                </div>
+
+                <h3>Results &amp; Impact</h3>
+                <p>The study demonstrates that supervised learning approaches significantly outperform unsupervised methods for fraud detection when labeled data is available. XGBoost emerged as the best performer with 85.8% Average Precision, capable of detecting 86% of fraudulent transactions while maintaining 51% precision. The autoencoder approach, while achieving lower precision, provides a viable alternative when labeled fraud examples are scarce, making it suitable for cold-start scenarios in new fraud detection deployments.</p>
+            </article>
+        </div>
+    </div>
+
+    <!-- Image Modals -->
+    <div class="modal fade" id="imageModal1" tabindex="-1" aria-labelledby="imageModal1Label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="imageModal1Label">PCA Features Distribution by Class (V1-V28)</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="fraud-detection-pca.png" alt="Expanded view of PCA features distribution">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="imageModal2" tabindex="-1" aria-labelledby="imageModal2Label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="imageModal2Label">Model Performance Comparison</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="fraud-detection-models.png" alt="Expanded view of model performance metrics">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="imageModal3" tabindex="-1" aria-labelledby="imageModal3Label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="imageModal3Label">Transaction Amount Distribution</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="fraud-detection-distribution.png" alt="Expanded view of transaction amount distribution">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="fixed-bottom">
+        <div class="container mt-0">
+            © Copyright 2024 Calazans Macchiutti.
+            Powered by <a href="https://getbootstrap.com/" target="_blank">Bootstrap</a>.
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                if (typeof bootstrap === 'undefined') {
+                    loadFallbackBootstrap();
+                    return;
+                }
+
+                const galleryImages = document.querySelectorAll('.gallery-item img[data-bs-toggle="modal"]');
+
+                const handleImageClick = function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    const modalTarget = this.getAttribute('data-bs-target');
+                    if (!modalTarget) {
+                        return;
+                    }
+
+                    const modal = document.querySelector(modalTarget);
+                    if (!modal) {
+                        return;
+                    }
+
+                    try {
+                        const bootstrapModal = new bootstrap.Modal(modal, {
+                            backdrop: true,
+                            keyboard: true,
+                            focus: true
+                        });
+                        bootstrapModal.show();
+                    } catch (error) {
+                        modal.style.display = 'block';
+                        modal.classList.add('show');
+                        document.body.classList.add('modal-open');
+                    }
+                };
+
+                galleryImages.forEach(function(img) {
+                    img.addEventListener('click', handleImageClick);
+                });
+
+                const galleryItems = document.querySelectorAll('.gallery-item');
+                galleryItems.forEach(function(item) {
+                    item.addEventListener('click', function(e) {
+                        const img = this.querySelector('img[data-bs-toggle="modal"]');
+                        if (img) {
+                            img.dispatchEvent(new Event('click'));
+                        }
+                    });
+                });
+            }, 400);
+        });
+
+        function loadFallbackBootstrap() {
+            const galleryImages = document.querySelectorAll('.gallery-item img[data-bs-toggle="modal"]');
+            galleryImages.forEach(function(img) {
+                img.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const modalTarget = this.getAttribute('data-bs-target');
+                    const modal = document.querySelector(modalTarget);
+                    if (modal) {
+                        modal.style.display = 'block';
+                        modal.classList.add('show');
+                        document.body.classList.add('modal-open');
+
+                        const closeBtn = modal.querySelector('.btn-close');
+                        if (closeBtn) {
+                            closeBtn.onclick = function() {
+                                modal.style.display = 'none';
+                                modal.classList.remove('show');
+                                document.body.classList.remove('modal-open');
+                            };
+                        }
+
+                        modal.onclick = function(event) {
+                            if (event.target === modal) {
+                                modal.style.display = 'none';
+                                modal.classList.remove('show');
+                                document.body.classList.remove('modal-open');
+                            }
+                        };
+                    }
+                });
+            });
+        }
+    </script>
+</body>
+</html>

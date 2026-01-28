@@ -375,6 +375,20 @@
                 <ul>
                     <li><strong>Docker</strong> for containerization and portability</li>
                     <li><strong>AWS</strong> and <strong>Azure</strong> for scalable cloud architectures</li>
+                    <li><strong>GitHub</strong> for version control and collaboration</li>
+                    <li><strong>Hugging Face</strong> for model deployment and sharing</li>
+                </ul>
+
+                <h4>Computer Vision &amp; Media Processing</h4>
+                <ul>
+                    <li><strong>OpenCV</strong> for image and video processing</li>
+                    <li><strong>MoviePy</strong> and <strong>FFmpeg</strong> for video automation</li>
+                    <li><strong>Pillow</strong> for image manipulation</li>
+                </ul>
+
+                <h4>Generative AI</h4>
+                <ul>
+                    <li><strong>LLMs</strong> (Claude, ChatGPT, Gemini) - Advanced proficiency</li>
                 </ul>
 
                 <h3>Professional Experience</h3>
@@ -527,6 +541,17 @@
             <!-- Projects -->
             <article id="projects">
                 <h2 class="major">Projects</h2>
+
+                <div class="project-card" onclick="location.href='#project-fraud'">
+                    <h4>Fraud Detection (KYC/KYT)</h4>
+                    <p>ML-based fraud detection comparing supervised and unsupervised approaches.</p>
+                    <div>
+                        <span class="tech-badge">Python</span>
+                        <span class="tech-badge">XGBoost</span>
+                        <span class="tech-badge">TensorFlow</span>
+                        <span class="tech-badge">Scikit-learn</span>
+                    </div>
+                </div>
 
                 <div class="project-card" onclick="location.href='#project-logistic'">
                     <h4>Logistic Data Assessment</h4>
@@ -804,6 +829,70 @@ python main.py
                 </p>
             </article>
 
+            <!-- Project: Fraud Detection -->
+            <article id="project-fraud">
+                <h2 class="major">Fraud Detection (KYC/KYT)</h2>
+                <p style="font-style: italic;">Data Science approaches for detecting fraudulent transactions using supervised and unsupervised learning</p>
+
+                <h3>Screenshots</h3>
+                <div class="gallery-grid">
+                    <div class="gallery-item" onclick="window.open('files/fraud-detection-paper.docx', '_blank')">
+                        <img src="projects/fraud-detection-paper.png" alt="Research Paper">
+                        <div class="gallery-caption">📄 Research Paper (click to download)</div>
+                    </div>
+                    <div class="gallery-item" onclick="openLightbox('projects/fraud-detection-pca.png')">
+                        <img src="projects/fraud-detection-pca.png" alt="PCA Features">
+                        <div class="gallery-caption">PCA Features</div>
+                    </div>
+                    <div class="gallery-item" onclick="openLightbox('projects/fraud-detection-models.png')">
+                        <img src="projects/fraud-detection-models.png" alt="Model Comparison">
+                        <div class="gallery-caption">Model Comparison</div>
+                    </div>
+                    <div class="gallery-item" onclick="openLightbox('projects/fraud-detection-distribution.png')">
+                        <img src="projects/fraud-detection-distribution.png" alt="Amount Distribution">
+                        <div class="gallery-caption">Amount Analysis</div>
+                    </div>
+                </div>
+
+                <h3>Project Overview</h3>
+                <p>This project implements a comprehensive fraud detection system combining Know Your Customer (KYC) and Know Your Transaction (KYT) methodologies. Using the Credit Card Fraud Detection dataset, the system evaluates multiple machine learning approaches including supervised classifiers, unsupervised anomaly detection, and deep learning autoencoders to identify fraudulent transactions in highly imbalanced datasets.</p>
+
+                <h3>Key Questions Answered</h3>
+                <ul>
+                    <li>How do supervised models (XGBoost, Random Forest) compare against unsupervised approaches?</li>
+                    <li>Which PCA-transformed features show the strongest discriminative power?</li>
+                    <li>What is the optimal threshold strategy for extreme class imbalance (~0.17% fraud rate)?</li>
+                    <li>How can autoencoder reconstruction error be leveraged for anomaly detection?</li>
+                </ul>
+
+                <h3>Analytical Highlights</h3>
+                <ul>
+                    <li>XGBoost achieved highest Average Precision (0.858) followed by Random Forest (0.826)</li>
+                    <li>ROC-AUC scores above 0.96 for all models, with XGBoost reaching 0.969</li>
+                    <li>Autoencoder-based anomaly detection with tuned threshold achieving AP of 0.510</li>
+                    <li>Feature importance analysis revealing V14, V4, V12, V10 as top discriminators</li>
+                </ul>
+
+                <h3>Technologies</h3>
+                <div>
+                    <span class="tech-badge">Python</span>
+                    <span class="tech-badge">Scikit-learn</span>
+                    <span class="tech-badge">XGBoost</span>
+                    <span class="tech-badge">TensorFlow/Keras</span>
+                    <span class="tech-badge">Pandas</span>
+                    <span class="tech-badge">Matplotlib</span>
+                </div>
+
+                <h3>Results &amp; Impact</h3>
+                <p>Supervised learning significantly outperforms unsupervised methods when labeled data is available. XGBoost emerged as the best performer with <strong>85.8% Average Precision</strong>, detecting 86% of fraudulent transactions while maintaining 51% precision. The autoencoder approach provides a viable alternative for cold-start scenarios when labeled fraud examples are scarce.</p>
+
+                <p style="margin-top: 2rem;">
+                    <a href="files/fraud-detection-paper.docx" target="_blank" class="btn-link"><i class="fa fa-file-word"></i> Download Paper</a>
+                    <a href="https://github.com/Calazansmacchiutti/FraudDetection" target="_blank" class="btn-link"><i class="fa fa-github"></i> View on GitHub</a>
+                    <a href="#projects" class="btn-link">← Back to Projects</a>
+                </p>
+            </article>
+
             <!-- CV -->
             <article id="cv">
                 <h2 class="major">Curriculum Vitae</h2>
@@ -913,41 +1002,56 @@ python main.py
         function openLightbox(src) {
             event.preventDefault();
             event.stopPropagation();
+            event.stopImmediatePropagation();
             lightboxOpen = true;
             document.getElementById('lightbox-img').src = src;
             document.getElementById('lightbox').classList.add('active');
             document.body.style.overflow = 'hidden';
+            // Prevent any hash change
+            return false;
         }
         
         function closeLightbox(e) {
             if (e) {
                 e.preventDefault();
                 e.stopPropagation();
+                e.stopImmediatePropagation();
             }
             lightboxOpen = false;
             document.getElementById('lightbox').classList.remove('active');
             document.body.style.overflow = '';
+            // Prevent any hash change
+            return false;
         }
         
-        // Prevent lightbox clicks from closing the article
+        // Prevent lightbox clicks from closing the article or changing hash
         document.getElementById('lightbox').addEventListener('click', function(e) {
+            e.preventDefault();
             e.stopPropagation();
+            e.stopImmediatePropagation();
             // Only close if clicking on background, not the image
             if (e.target === this || e.target.classList.contains('lightbox-close')) {
                 closeLightbox(e);
             }
-        });
+            return false;
+        }, true);
         
-        // Prevent image click from closing
+        // Prevent image click from closing or triggering anything
         document.getElementById('lightbox-img').addEventListener('click', function(e) {
+            e.preventDefault();
             e.stopPropagation();
-        });
+            e.stopImmediatePropagation();
+            return false;
+        }, true);
         
         // Handle ESC key - close lightbox first, then article
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape' && lightboxOpen) {
+                e.preventDefault();
                 e.stopPropagation();
+                e.stopImmediatePropagation();
                 closeLightbox();
+                return false;
             }
         }, true);
         
@@ -955,7 +1059,8 @@ python main.py
         document.querySelectorAll('.gallery-item').forEach(function(item) {
             item.addEventListener('click', function(e) {
                 e.stopPropagation();
-            });
+                e.stopImmediatePropagation();
+            }, true);
         });
         
         // Language toggle
