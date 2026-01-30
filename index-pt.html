@@ -984,10 +984,10 @@ python main.py
     <!-- Background -->
     <div id="bg"></div>
 
-    <!-- Lightbox (outside wrapper to prevent click propagation issues) -->
+    <!-- Lightbox -->
     <div class="lightbox" id="lightbox">
-        <span class="lightbox-close" onclick="closeLightbox(event)">&times;</span>
-        <img id="lightbox-img" src="" alt="">
+        <span class="lightbox-close" onclick="event.stopPropagation(); closeLightbox();">&times;</span>
+        <img id="lightbox-img" src="" alt="" onclick="event.stopPropagation();">
     </div>
 
     <!-- Scripts -->
@@ -998,69 +998,42 @@ python main.py
     <script src="assets/js/main.js"></script>
     <script>
         var lightboxOpen = false;
+        var savedHash = '';
         
         function openLightbox(src) {
-            event.preventDefault();
-            event.stopPropagation();
-            event.stopImmediatePropagation();
+            savedHash = window.location.hash;
             lightboxOpen = true;
             document.getElementById('lightbox-img').src = src;
             document.getElementById('lightbox').classList.add('active');
             document.body.style.overflow = 'hidden';
-            // Prevent any hash change
-            return false;
         }
         
-        function closeLightbox(e) {
-            if (e) {
-                e.preventDefault();
-                e.stopPropagation();
-                e.stopImmediatePropagation();
-            }
+        function closeLightbox() {
             lightboxOpen = false;
             document.getElementById('lightbox').classList.remove('active');
             document.body.style.overflow = '';
-            // Prevent any hash change
-            return false;
+            // Restore hash to stay on same article
+            setTimeout(function() {
+                if (savedHash && window.location.hash !== savedHash) {
+                    window.location.hash = savedHash;
+                }
+            }, 10);
         }
         
-        // Prevent lightbox clicks from closing the article or changing hash
+        // Close lightbox when clicking on background (not on image or close button)
         document.getElementById('lightbox').addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            e.stopImmediatePropagation();
-            // Only close if clicking on background, not the image
-            if (e.target === this || e.target.classList.contains('lightbox-close')) {
-                closeLightbox(e);
+            if (e.target === this) {
+                e.stopPropagation();
+                closeLightbox();
             }
-            return false;
-        }, true);
+        });
         
-        // Prevent image click from closing or triggering anything
-        document.getElementById('lightbox-img').addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            e.stopImmediatePropagation();
-            return false;
-        }, true);
-        
-        // Handle ESC key - close lightbox first, then article
+        // Close on ESC key
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape' && lightboxOpen) {
-                e.preventDefault();
                 e.stopPropagation();
-                e.stopImmediatePropagation();
                 closeLightbox();
-                return false;
             }
-        }, true);
-        
-        // Prevent gallery items from triggering article close
-        document.querySelectorAll('.gallery-item').forEach(function(item) {
-            item.addEventListener('click', function(e) {
-                e.stopPropagation();
-                e.stopImmediatePropagation();
-            }, true);
         });
         
         // Language toggle
