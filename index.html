@@ -542,6 +542,18 @@
             <article id="projects">
                 <h2 class="major">Projects</h2>
 
+                <div class="project-card" onclick="location.href='#project-handwriting'">
+                    <h4>Handwriting RAG (pt-BR HTR)</h4>
+                    <p>From-scratch handwriting recognition for Brazilian Portuguese &mdash; 9.57% CER on CPU, chosen by an empirical bakeoff and wired into a document-RAG pipeline.</p>
+                    <div>
+                        <span class="tech-badge">PyTorch</span>
+                        <span class="tech-badge">CRNN+CTC</span>
+                        <span class="tech-badge">TrOCR</span>
+                        <span class="tech-badge">Qdrant</span>
+                        <span class="tech-badge">RAG</span>
+                    </div>
+                </div>
+
                 <div class="project-card" onclick="location.href='#project-fraud'">
                     <h4>Fraud Detection (KYC/KYT)</h4>
                     <p>ML-based fraud detection comparing supervised and unsupervised approaches.</p>
@@ -595,6 +607,98 @@
                 </div>
 
                 <p style="margin-top: 2rem;"><a href="https://github.com/Calazansmacchiutti" target="_blank"><i class="fa fa-github"></i> View all repositories on GitHub</a></p>
+            </article>
+
+            <!-- Project: Handwriting RAG -->
+            <article id="project-handwriting">
+                <h2 class="major">Handwriting RAG</h2>
+                <p style="font-style: italic;">From-scratch handwritten-text recognition (HTR) for Brazilian Portuguese, chosen by an empirical bakeoff and wired into a document-RAG pipeline</p>
+
+                <h3>Figures &amp; Results</h3>
+                <div class="gallery-grid">
+                    <div class="gallery-item" onclick="openLightbox('projects/stratifile-cer-benchmark.svg')">
+                        <img src="projects/stratifile-cer-benchmark.svg" alt="CER benchmark vs baselines">
+                        <div class="gallery-caption">Benchmark: 9.57% CER</div>
+                    </div>
+                    <div class="gallery-item" onclick="openLightbox('projects/stratifile-architecture.svg')">
+                        <img src="projects/stratifile-architecture.svg" alt="Document-to-answer pipeline">
+                        <div class="gallery-caption">Architecture</div>
+                    </div>
+                    <div class="gallery-item" onclick="openLightbox('projects/stratifile-evolution.svg')">
+                        <img src="projects/stratifile-evolution.svg" alt="Bakeoff CER progression">
+                        <div class="gallery-caption">Progression</div>
+                    </div>
+                </div>
+
+                <h3>Project Overview</h3>
+                <p>The core system is an agent that structures PDFs for retrieval-augmented generation. Printed-text OCR handles typed pages, but handwriting it cannot &mdash; and no public HTR model exists for Brazilian Portuguese. So I built the handwriting reader from scratch and plugged it in behind the same interface as the existing OCR, selectable at runtime. Nothing downstream needs to know whether a page was typed or handwritten.</p>
+
+                <h3>Main Products / Deliverables</h3>
+                <ul>
+                    <li><strong>pt-BR HTR model</strong> &mdash; a versioned artifact (weights + alphabet, sha256), 4.3M params, 17&nbsp;MB; CPU-friendly inference, no GPU required to serve.</li>
+                    <li><strong>Pluggable reading backend</strong> &mdash; a drop-in OCR/HTR reader behind <code>available()</code> + <code>ocr_blocks()</code>, swappable with Tesseract without touching the pipeline.</li>
+                    <li><strong>Document-to-answer pipeline</strong> &mdash; PDF structuring, vector retrieval, and an agentic RAG loop that turns scanned documents into cited answers.</li>
+                    <li><strong>Reproducible bakeoff harness</strong> &mdash; the evaluation and promotion-gate system that picks models by metric, plus a parametrized Colab notebook for managed GPU training.</li>
+                </ul>
+
+                <h3>Key Questions Answered</h3>
+                <ul>
+                    <li>Can a competitive Portuguese handwriting reader be trained with <strong>no pre-existing model and no local GPU</strong>?</li>
+                    <li>Which architecture actually wins &mdash; decided by a <strong>metric on the official split</strong>, not by intuition?</li>
+                    <li>How does a research model become a <strong>swappable component of a cloud pipeline</strong>?</li>
+                </ul>
+
+                <h3>Methodology &mdash; how the 9.57% was reached</h3>
+                <p>The number is the output of a disciplined, reproducible procedure. The metric was written <em>before</em> the models: CER is aggregated across the corpus (edits and lengths summed before dividing, as in the ICDAR&nbsp;2024 evaluation) so the result is directly comparable to published work.</p>
+                <ol>
+                    <li><strong>Fixed the ground rules.</strong> Official BRESSAY splits (19,565 train / 4,609 validation lines), never a custom partition. The alphabet (96 classes) is built from the training split only and travels with the checkpoint.</li>
+                    <li><strong>Framed a bakeoff with a promotion gate.</strong> A challenger only replaces the baseline if it beats its validation CER. Baseline: CRNN&nbsp;+&nbsp;CTC (no autoregressive decoder, so it cannot hallucinate). Challenger: a fine-tuned TrOCR.</li>
+                    <li><strong>Trained with stable, cheap choices.</strong> Adam, <code>ReduceLROnPlateau</code> on validation CER, gradient clipping, and the checkpoint saved is the <em>best</em> epoch, not the last; resumes are anchored so a noisy epoch never overwrites a good checkpoint.</li>
+                    <li><strong>Read the curve, not the folklore.</strong> The epoch 8&ndash;10 oscillation was not overfitting but a learning rate too high &mdash; cutting it 1e-3&rarr;5e-4 moved crnn-small's 15.40% down to crnn-large's <strong>9.57%</strong>.</li>
+                    <li><strong>Evaluated at three levels.</strong> Line CER guides training, the segmenter count is checked against ground truth, and page-level CER is measured end-to-end.</li>
+                </ol>
+
+                <h3>How the Technologies Were Used</h3>
+                <ul>
+                    <li><strong>PyTorch</strong> &mdash; the CRNN reader (CNN &rarr; bidirectional LSTM) and a custom training loop with best-checkpoint saving, LR scheduling, and anchored resume.</li>
+                    <li><strong>CTC loss</strong> &mdash; alignment-free line recognition with greedy decoding; the reason the baseline is trustworthy.</li>
+                    <li><strong>Hugging Face Transformers / TrOCR</strong> &mdash; the challenger, fine-tuned with AMP/fp16, LR warmup + cosine decay, and gradient accumulation on GPU.</li>
+                    <li><strong>PyMuPDF &amp; Tesseract</strong> &mdash; PDF structuring and the printed-text OCR backend, behind the same contract as the HTR reader.</li>
+                    <li><strong>Qdrant + FastAPI + Claude</strong> &mdash; vector retrieval, service layer, and an agentic RAG loop that cites its source.</li>
+                    <li><strong>pytest &amp; Colab</strong> &mdash; 105+ tests (hermetic and smoke) and a parametrized notebook for managed GPU training.</li>
+                </ul>
+
+                <h3>Technologies</h3>
+                <div>
+                    <span class="tech-badge">PyTorch</span>
+                    <span class="tech-badge">CRNN + CTC</span>
+                    <span class="tech-badge">TrOCR</span>
+                    <span class="tech-badge">Qdrant</span>
+                    <span class="tech-badge">FastAPI</span>
+                    <span class="tech-badge">Claude / RAG</span>
+                    <span class="tech-badge">PyMuPDF</span>
+                    <span class="tech-badge">Tesseract</span>
+                    <span class="tech-badge">pytest</span>
+                </div>
+
+                <h3>Getting Started</h3>
+                <div class="code-block">
+git clone https://github.com/Calazansmacchiutti/Stratifile-Agent-PDF.git
+cd Stratifile-Agent-PDF
+pip install -e .
+python scripts/train_trocr.py --smoke                 # validate the pipeline on CPU
+python scripts/train_bressay_local.py --model crnn-large --epochs 12
+python scripts/train_trocr.py --epochs 8 --batch 8    # TrOCR challenger (GPU)
+                </div>
+
+                <h3>Results &amp; Impact</h3>
+                <p>A Brazilian-Portuguese handwriting reader that stands among published academic baselines <strong>despite CPU-only training</strong> (9.57% line CER, beating Flor and Bluche), delivered as a 17&nbsp;MB versioned artifact ready to ship as a small containerized service. Because every stage is isolated by contract, the recognizer can be swapped &mdash; the moment the TrOCR challenger clears the gate &mdash; without touching the rest of the pipeline.</p>
+
+                <p style="margin-top: 2rem;">
+                    <a href="projects/stratifile-handwriting-rag.html" class="btn-link">Full case study</a>
+                    <a href="https://github.com/Calazansmacchiutti/Stratifile-Agent-PDF" target="_blank" class="btn-link"><i class="fa fa-github"></i> View on GitHub</a>
+                    <a href="#projects" class="btn-link">&larr; Back to Projects</a>
+                </p>
             </article>
 
             <!-- Project: Logistic Data Assessment -->

@@ -542,6 +542,18 @@
             <article id="projects">
                 <h2 class="major">Projetos</h2>
 
+                <div class="project-card" onclick="location.href='#project-handwriting'">
+                    <h4>Handwriting RAG (HTR pt-BR)</h4>
+                    <p>Reconhecimento de escrita manual do zero para o português brasileiro &mdash; 9,57% de CER em CPU, escolhido por um bakeoff empírico e integrado a um pipeline de RAG documental.</p>
+                    <div>
+                        <span class="tech-badge">PyTorch</span>
+                        <span class="tech-badge">CRNN+CTC</span>
+                        <span class="tech-badge">TrOCR</span>
+                        <span class="tech-badge">Qdrant</span>
+                        <span class="tech-badge">RAG</span>
+                    </div>
+                </div>
+
                 <div class="project-card" onclick="location.href='#project-fraud'">
                     <h4>Detecção de Fraudes (KYC/KYT)</h4>
                     <p>Detecção de fraudes com ML comparando abordagens supervisionadas e não supervisionadas.</p>
@@ -595,6 +607,98 @@
                 </div>
 
                 <p style="margin-top: 2rem;"><a href="https://github.com/Calazansmacchiutti" target="_blank"><i class="fa fa-github"></i> Ver todos os repositórios no GitHub</a></p>
+            </article>
+
+            <!-- Project: Handwriting RAG -->
+            <article id="project-handwriting">
+                <h2 class="major">Handwriting RAG</h2>
+                <p style="font-style: italic;">Reconhecimento de escrita manual (HTR) para o português brasileiro, construído do zero, escolhido por um bakeoff empírico e integrado a um pipeline de RAG documental</p>
+
+                <h3>Figuras e Resultados</h3>
+                <div class="gallery-grid">
+                    <div class="gallery-item" onclick="openLightbox('projects/stratifile-cer-benchmark.svg')">
+                        <img src="projects/stratifile-cer-benchmark.svg" alt="CER frente aos baselines">
+                        <div class="gallery-caption">Benchmark: 9,57% de CER</div>
+                    </div>
+                    <div class="gallery-item" onclick="openLightbox('projects/stratifile-architecture.svg')">
+                        <img src="projects/stratifile-architecture.svg" alt="Pipeline documento-para-resposta">
+                        <div class="gallery-caption">Arquitetura</div>
+                    </div>
+                    <div class="gallery-item" onclick="openLightbox('projects/stratifile-evolution.svg')">
+                        <img src="projects/stratifile-evolution.svg" alt="Evolução do CER no bakeoff">
+                        <div class="gallery-caption">Evolução</div>
+                    </div>
+                </div>
+
+                <h3>Visão Geral do Projeto</h3>
+                <p>O sistema central é um agente que estrutura PDFs para geração aumentada por recuperação (RAG). O OCR de texto impresso resolve páginas digitadas, mas manuscrito não &mdash; e não existe modelo público de HTR para o português brasileiro. Então construí o leitor de manuscrito do zero e o acoplei atrás da mesma interface do OCR existente, selecionável em tempo de execução. Nada a jusante precisa saber se a página foi digitada ou escrita à mão.</p>
+
+                <h3>Principais Produtos / Entregas</h3>
+                <ul>
+                    <li><strong>Modelo de HTR pt-BR</strong> &mdash; artefato versionado (pesos + alfabeto, sha256), 4,3M de parâmetros, 17&nbsp;MB; inferência amigável a CPU, sem GPU para servir.</li>
+                    <li><strong>Backend de leitura plugável</strong> &mdash; um leitor OCR/HTR de encaixe atrás de <code>available()</code> + <code>ocr_blocks()</code>, substituível pelo Tesseract sem tocar no pipeline.</li>
+                    <li><strong>Pipeline documento-para-resposta</strong> &mdash; estruturação de PDF, recuperação vetorial e um laço de RAG agêntico que transforma documentos digitalizados em respostas com citação da fonte.</li>
+                    <li><strong>Harness de bakeoff reprodutível</strong> &mdash; o sistema de avaliação e gate de promoção que escolhe modelos por métrica, mais um notebook Colab parametrizado para treino gerenciado em GPU.</li>
+                </ul>
+
+                <h3>Perguntas-Chave Respondidas</h3>
+                <ul>
+                    <li>É possível treinar um leitor de manuscrito competitivo em português <strong>sem modelo pré-existente e sem GPU local</strong>?</li>
+                    <li>Qual arquitetura de fato vence &mdash; decidido por uma <strong>métrica no split oficial</strong>, não por intuição?</li>
+                    <li>Como um modelo de pesquisa vira um <strong>componente substituível de um pipeline de nuvem</strong>?</li>
+                </ul>
+
+                <h3>Metodologia &mdash; como cheguei aos 9,57%</h3>
+                <p>O número é resultado de um procedimento disciplinado e reprodutível. A métrica foi escrita <em>antes</em> dos modelos: o CER é agregado por corpus (edições e tamanhos somados antes de dividir, como na avaliação do ICDAR&nbsp;2024), tornando o resultado diretamente comparável à literatura.</p>
+                <ol>
+                    <li><strong>Fixei as regras.</strong> Splits oficiais do BRESSAY (19.565 linhas de treino / 4.609 de validação), nunca uma partição própria. O alfabeto (96 classes) é construído só do split de treino e viaja junto do checkpoint.</li>
+                    <li><strong>Montei um bakeoff com gate de promoção.</strong> Um desafiante só substitui o baseline se bater o CER de validação dele. Baseline: CRNN&nbsp;+&nbsp;CTC (sem decoder autorregressivo, então não alucina). Desafiante: um TrOCR fine-tunado.</li>
+                    <li><strong>Treinei com escolhas estáveis e baratas.</strong> Adam, <code>ReduceLROnPlateau</code> sobre o CER de validação, clipping de gradiente, e o checkpoint salvo é o da <em>melhor</em> época, não a última; retomadas são ancoradas para uma época ruim nunca sobrescrever um checkpoint bom.</li>
+                    <li><strong>Li a curva, não o folclore.</strong> A oscilação nas épocas 8&ndash;10 não era overfitting, e sim learning rate alto &mdash; o corte 1e-3&rarr;5e-4 levou os 15,40% do crnn-small aos <strong>9,57%</strong> do crnn-large.</li>
+                    <li><strong>Avaliei em três níveis.</strong> CER de linha guia o treino, a contagem do segmentador é checada contra o gabarito, e o CER de página é medido ponta a ponta.</li>
+                </ol>
+
+                <h3>Como as Tecnologias Foram Usadas</h3>
+                <ul>
+                    <li><strong>PyTorch</strong> &mdash; o leitor CRNN (CNN &rarr; LSTM bidirecional) e um loop de treino próprio com salvamento do melhor checkpoint, agendamento de LR e retomada ancorada.</li>
+                    <li><strong>Perda CTC</strong> &mdash; reconhecimento de linha sem alinhamento, com decodificação gulosa; a razão de o baseline ser confiável.</li>
+                    <li><strong>Hugging Face Transformers / TrOCR</strong> &mdash; o desafiante, fine-tunado com AMP/fp16, warmup + decaimento cosseno de LR e acumulação de gradiente em GPU.</li>
+                    <li><strong>PyMuPDF e Tesseract</strong> &mdash; estruturação de PDF e o backend de OCR impresso, atrás do mesmo contrato do leitor HTR.</li>
+                    <li><strong>Qdrant + FastAPI + Claude</strong> &mdash; recuperação vetorial, camada de serviço e um laço de RAG agêntico que cita a fonte.</li>
+                    <li><strong>pytest e Colab</strong> &mdash; mais de 105 testes (herméticos e de fumaça) e um notebook parametrizado para o treino gerenciado em GPU.</li>
+                </ul>
+
+                <h3>Tecnologias</h3>
+                <div>
+                    <span class="tech-badge">PyTorch</span>
+                    <span class="tech-badge">CRNN + CTC</span>
+                    <span class="tech-badge">TrOCR</span>
+                    <span class="tech-badge">Qdrant</span>
+                    <span class="tech-badge">FastAPI</span>
+                    <span class="tech-badge">Claude / RAG</span>
+                    <span class="tech-badge">PyMuPDF</span>
+                    <span class="tech-badge">Tesseract</span>
+                    <span class="tech-badge">pytest</span>
+                </div>
+
+                <h3>Primeiros Passos</h3>
+                <div class="code-block">
+git clone https://github.com/Calazansmacchiutti/Stratifile-Agent-PDF.git
+cd Stratifile-Agent-PDF
+pip install -e .
+python scripts/train_trocr.py --smoke                 # valida o pipeline em CPU
+python scripts/train_bressay_local.py --model crnn-large --epochs 12
+python scripts/train_trocr.py --epochs 8 --batch 8    # desafiante TrOCR (GPU)
+                </div>
+
+                <h3>Resultados e Impacto</h3>
+                <p>Um leitor de manuscrito em português brasileiro que se posiciona entre os baselines acadêmicos publicados <strong>apesar do treino apenas em CPU</strong> (9,57% de CER de linha, superando Flor e Bluche), entregue como um artefato versionado de 17&nbsp;MB, pronto para rodar como um pequeno serviço em container. Como cada estágio é isolado por contrato, o reconhecedor pode ser trocado &mdash; assim que o desafiante TrOCR passar pelo gate &mdash; sem tocar no resto do pipeline.</p>
+
+                <p style="margin-top: 2rem;">
+                    <a href="projects/stratifile-handwriting-rag.html" class="btn-link">Estudo de caso completo</a>
+                    <a href="https://github.com/Calazansmacchiutti/Stratifile-Agent-PDF" target="_blank" class="btn-link"><i class="fa fa-github"></i> Ver no GitHub</a>
+                    <a href="#projects" class="btn-link">&larr; Voltar para Projetos</a>
+                </p>
             </article>
 
             <!-- Project: Logistic Data Assessment -->

@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 240" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#adb5bd"></path>
+    </marker>
+  </defs>
+  <rect width="900" height="240" fill="#ffffff"></rect>
+  <text x="30" y="34" font-size="16" font-weight="700" fill="#212529">Document-to-answer pipeline</text>
+  <text x="30" y="53" font-size="11.5" fill="#868e96">Every stage is isolated by contract &#8212; containerizable, testable, swappable</text>
+
+  <!-- arrows -->
+  <g stroke="#adb5bd" stroke-width="1.5">
+    <line x1="184" y1="140" x2="200" y2="140" marker-end="url(#arrow)"></line>
+    <line x1="356" y1="140" x2="372" y2="140" marker-end="url(#arrow)"></line>
+    <line x1="528" y1="140" x2="544" y2="140" marker-end="url(#arrow)"></line>
+    <line x1="700" y1="140" x2="716" y2="140" marker-end="url(#arrow)"></line>
+  </g>
+
+  <!-- box 1 -->
+  <rect x="30" y="88" width="152" height="104" rx="8" fill="#ffffff" stroke="#e9ecef" stroke-width="1"></rect>
+  <text x="46" y="112" font-size="10" font-weight="700" letter-spacing="1" fill="#6c757d">01 &#183; INGEST</text>
+  <text x="46" y="136" font-size="13" font-weight="700" fill="#212529">Document</text>
+  <text x="46" y="157" font-size="10.5" fill="#6c757d">PDF or scan lands</text>
+  <text x="46" y="172" font-size="10.5" fill="#6c757d">in a bucket</text>
+
+  <!-- box 2 (key) -->
+  <rect x="202" y="88" width="152" height="104" rx="8" fill="#f5f9ff" stroke="#0d6efd" stroke-width="1.5"></rect>
+  <text x="218" y="112" font-size="10" font-weight="700" letter-spacing="1" fill="#0d6efd">02 &#183; READ</text>
+  <text x="218" y="136" font-size="13" font-weight="700" fill="#212529">Pluggable backend</text>
+  <text x="218" y="157" font-size="10.5" fill="#495057">Tesseract (print) ·</text>
+  <text x="218" y="172" font-size="10.5" fill="#495057">CRNN-CTC (pt-BR)</text>
+
+  <!-- box 3 -->
+  <rect x="374" y="88" width="152" height="104" rx="8" fill="#ffffff" stroke="#e9ecef" stroke-width="1"></rect>
+  <text x="390" y="112" font-size="10" font-weight="700" letter-spacing="1" fill="#6c757d">03 &#183; STRUCTURE</text>
+  <text x="390" y="136" font-size="13" font-weight="700" fill="#212529">Blocks &amp; text</text>
+  <text x="390" y="157" font-size="10.5" fill="#6c757d">layout → ordered</text>
+  <text x="390" y="172" font-size="10.5" fill="#6c757d">blocks</text>
+
+  <!-- box 4 -->
+  <rect x="546" y="88" width="152" height="104" rx="8" fill="#ffffff" stroke="#e9ecef" stroke-width="1"></rect>
+  <text x="562" y="112" font-size="10" font-weight="700" letter-spacing="1" fill="#6c757d">04 &#183; INDEX</text>
+  <text x="562" y="136" font-size="13" font-weight="700" fill="#212529">Vectors</text>
+  <text x="562" y="157" font-size="10.5" fill="#6c757d">embeddings →</text>
+  <text x="562" y="172" font-size="10.5" fill="#6c757d">Qdrant store</text>
+
+  <!-- box 5 -->
+  <rect x="718" y="88" width="152" height="104" rx="8" fill="#ffffff" stroke="#e9ecef" stroke-width="1"></rect>
+  <text x="734" y="112" font-size="10" font-weight="700" letter-spacing="1" fill="#6c757d">05 &#183; REASON</text>
+  <text x="734" y="136" font-size="13" font-weight="700" fill="#212529">Agentic RAG</text>
+  <text x="734" y="157" font-size="10.5" fill="#6c757d">answer + cite</text>
+  <text x="734" y="172" font-size="10.5" fill="#6c757d">source (Claude)</text>
+</svg>

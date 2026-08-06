@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Handwriting RAG - Calazans Macchiutti</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <style>
+        .project-gallery .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .project-gallery .gallery-item img {
+            cursor: pointer !important;
+            pointer-events: auto !important;
+        }
+
+        .project-gallery .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .project-gallery .gallery-item img {
+            transition: transform 0.3s ease;
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            background: #fff;
+            border: 1px solid #e9ecef;
+        }
+
+        .project-gallery .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .project-gallery .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(0,123,255,0.8), rgba(0,86,179,0.8));
+            color: white;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .project-gallery .gallery-item:hover .overlay {
+            opacity: 1;
+        }
+
+        .project-gallery .overlay-text h6 {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-gallery .overlay-text p {
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .modal-dialog {
+            max-width: 95%;
+            margin: 1.75rem auto;
+        }
+
+        .modal-xl {
+            max-width: 1140px;
+        }
+
+        .modal-body {
+            padding: 0;
+        }
+
+        .modal-body img {
+            width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+        }
+
+        /* Fallback modal styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1055;
+            display: none;
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+            overflow-y: auto;
+            outline: 0;
+        }
+
+        .modal.show {
+            display: block !important;
+        }
+
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1050;
+            width: 100vw;
+            height: 100vh;
+            background-color: #000;
+            opacity: 0.5;
+        }
+
+        body.modal-open {
+            overflow: hidden;
+        }
+
+        .gallery-item {
+            user-select: none;
+        }
+
+        .gallery-item img {
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        /* Content helpers */
+        .tech-role li { margin-bottom: 0.5rem; }
+        .product-card { border: 1px solid #e9ecef; border-radius: 0.5rem; padding: 1rem 1.25rem; height: 100%; background: #fff; }
+        .product-card h5 { font-size: 1rem; margin-bottom: 0.35rem; }
+        .product-card p { font-size: 0.88rem; color: #6c757d; margin: 0; }
+        .getting-started pre { background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 0.5rem; padding: 1rem; overflow-x: auto; }
+    </style>
+</head>
+<body class="fixed-top-nav">
+    <!-- Navigation -->
+    <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top">
+        <div class="container">
+            <a class="navbar-brand title font-weight-lighter" href="../index.html">
+                <span class="font-weight-bold">Calazans</span> Macchiutti
+            </a>
+            <button class="navbar-toggler collapsed ml-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse text-right" id="navbarNav">
+                <ul class="navbar-nav ml-auto flex-nowrap">
+                    <li class="nav-item me-3">
+                        <a class="nav-link px-3" href="../index.html">
+                            <i class="fas fa-user me-2"></i>About
+                        </a>
+                    </li>
+                    <li class="nav-item me-3">
+                        <a class="nav-link px-3" href="../academic.html">
+                            <i class="fas fa-graduation-cap me-2"></i>Academic
+                        </a>
+                    </li>
+                    <li class="nav-item me-3">
+                        <a class="nav-link px-3" href="../publications.html">
+                            <i class="fas fa-book-open me-2"></i>Publications
+                        </a>
+                    </li>
+                    <li class="nav-item me-3">
+                        <a class="nav-link px-3" href="../datascience.html">
+                            <i class="fas fa-chart-bar me-2"></i>Data Science
+                        </a>
+                    </li>
+                    <li class="nav-item me-3">
+                        <a class="nav-link px-3" href="../projects.html">
+                            <i class="fas fa-code me-2"></i>Projects
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-3" href="../cv.html">
+                            <i class="fas fa-file-alt me-2"></i>CV
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-5" role="main">
+        <div class="post">
+            <header class="post-header">
+                <h1 class="post-title">Handwriting RAG</h1>
+                <p class="desc">A from-scratch handwritten-text-recognition (HTR) model for Brazilian Portuguese, chosen by an empirical bakeoff and wired into a document-RAG pipeline</p>
+            </header>
+
+            <article class="no-profile">
+                <div class="project-navigation">
+                    <a href="../index.html#projects" class="btn btn-outline-secondary mb-4">
+                        <i class="fas fa-arrow-left"></i> Back to Projects
+                    </a>
+                </div>
+
+                <!-- Project Gallery -->
+                <div class="project-gallery mb-5">
+                    <h3 class="mb-4"><i class="fas fa-images me-2"></i>Figures &amp; Results</h3>
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <div class="gallery-item">
+                                <img src="stratifile-cer-benchmark.svg" class="img-fluid rounded shadow-sm" alt="Bar chart of line CER against published baselines" data-bs-toggle="modal" data-bs-target="#imageModal1">
+                                <div class="overlay">
+                                    <div class="overlay-text">
+                                        <h6>Benchmark</h6>
+                                        <p>9.57% CER vs. published baselines</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="gallery-item">
+                                <img src="stratifile-architecture.svg" class="img-fluid rounded shadow-sm" alt="Diagram of the document-to-answer pipeline" data-bs-toggle="modal" data-bs-target="#imageModal2">
+                                <div class="overlay">
+                                    <div class="overlay-text">
+                                        <h6>Architecture</h6>
+                                        <p>Document-to-answer pipeline</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="gallery-item">
+                                <img src="stratifile-evolution.svg" class="img-fluid rounded shadow-sm" alt="Line chart of CER improving across bakeoff rounds" data-bs-toggle="modal" data-bs-target="#imageModal3">
+                                <div class="overlay">
+                                    <div class="overlay-text">
+                                        <h6>Progression</h6>
+                                        <p>Bakeoff CER over rounds</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Project Overview</h3>
+                <p>The core system is an agent that structures PDFs for retrieval-augmented generation. Printed-text OCR handles typed pages, but handwriting it cannot &mdash; and no public HTR model exists for Brazilian Portuguese. So I built the handwriting reader from scratch and plugged it in behind the same interface as the existing OCR, selectable at runtime. Nothing downstream needs to know whether a page was typed or handwritten.</p>
+
+                <h3>Main Products / Deliverables</h3>
+                <div class="row g-3 mb-2">
+                    <div class="col-md-6">
+                        <div class="product-card">
+                            <h5><i class="fas fa-cube me-2 text-primary"></i>pt-BR HTR model</h5>
+                            <p>A versioned artifact (weights + alphabet, sha256), 4.3M params, 17&nbsp;MB &mdash; CPU-friendly inference, no GPU required to serve.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="product-card">
+                            <h5><i class="fas fa-plug me-2 text-primary"></i>Pluggable reading backend</h5>
+                            <p>A drop-in OCR/HTR reader behind <code>available()</code> + <code>ocr_blocks()</code>, swappable with Tesseract without touching the pipeline.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="product-card">
+                            <h5><i class="fas fa-diagram-project me-2 text-primary"></i>Document-to-answer pipeline</h5>
+                            <p>PDF structuring, vector retrieval, and an agentic RAG loop that turns scanned documents into cited answers.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="product-card">
+                            <h5><i class="fas fa-flask me-2 text-primary"></i>Reproducible bakeoff harness</h5>
+                            <p>The evaluation and promotion-gate system that picks models by metric &mdash; plus a parametrized Colab notebook for managed GPU training.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Key Questions Answered</h3>
+                <ul>
+                    <li>Can a competitive Portuguese handwriting reader be trained with <strong>no pre-existing model and no local GPU</strong>?</li>
+                    <li>Which architecture actually wins &mdash; decided by a <strong>metric on the official split</strong>, not by intuition?</li>
+                    <li>How does a research model become a <strong>swappable component of a cloud pipeline</strong>?</li>
+                </ul>
+
+                <h3>Methodology &mdash; how the 9.57% was reached</h3>
+                <p>The number is not from a lucky run; it is the output of a disciplined, reproducible procedure. The metric was written <em>before</em> the models: CER is aggregated across the corpus (edits and lengths summed before dividing, exactly as in the ICDAR&nbsp;2024 evaluation) so the result is directly comparable to published work.</p>
+                <ol>
+                    <li><strong>Fixed the ground rules.</strong> Official BRESSAY splits (19,565 train / 4,609 validation lines), never a custom partition. The alphabet (96 classes) is built from the <em>training</em> split only, by frequency, and travels with the checkpoint &mdash; desynchronized indices would make the model "read another language".</li>
+                    <li><strong>Framed a bakeoff with a promotion gate.</strong> Each architecture trains on the same data and is ranked by validation CER; a challenger only replaces the baseline if it beats that CER. The baseline is <strong>CRNN&nbsp;+&nbsp;CTC</strong> (no autoregressive decoder, so it cannot hallucinate); the challenger is a fine-tuned <strong>TrOCR</strong>.</li>
+                    <li><strong>Trained with stable, cheap choices.</strong> Adam (lr&nbsp;1e-3), <code>ReduceLROnPlateau</code> on validation CER, gradient clipping at 5.0, batch 24, and &mdash; critically &mdash; the checkpoint saved is the <em>best</em> epoch, not the last. Resumes are anchored to the loaded model's CER so a noisy first epoch never overwrites a good checkpoint.</li>
+                    <li><strong>Read the curve, not the folklore.</strong> The CER oscillated in epochs 8&ndash;10; the wrong reading was "overfitting". The right one was <strong>learning rate too high</strong> &mdash; cutting it 1e-3&rarr;5e-4 unlocked the best result. That single diagnostic moved crnn-small's 15.40% down to crnn-large's <strong>9.57%</strong>.</li>
+                    <li><strong>Evaluated at three levels.</strong> Line CER guides training; the line segmenter's count is checked against the ground truth; and page-level CER is measured end-to-end &mdash; the number the product actually feels.</li>
+                </ol>
+
+                <h3>How the Technologies Were Used</h3>
+                <ul class="tech-role">
+                    <li><strong>PyTorch</strong> &mdash; the CRNN reader (CNN feature extractor &rarr; bidirectional LSTM) and a custom training loop with best-checkpoint saving, LR scheduling, and anchored resume.</li>
+                    <li><strong>CTC loss</strong> &mdash; alignment-free line recognition with greedy decoding; the design reason the baseline is trustworthy (it emits only what it sees).</li>
+                    <li><strong>Hugging Face Transformers / TrOCR</strong> &mdash; the challenger, a vision encoder-decoder fine-tuned with AMP/fp16, LR warmup + cosine decay, and gradient accumulation for GPU training.</li>
+                    <li><strong>PyMuPDF</strong> &mdash; PDF parsing and layout structuring into ordered text blocks.</li>
+                    <li><strong>Tesseract</strong> &mdash; the printed-text OCR backend, exposed through the same contract as the HTR reader.</li>
+                    <li><strong>Qdrant + FastAPI + Claude</strong> &mdash; vector store for semantic retrieval, service layer, and an agentic RAG loop that answers over retrieved blocks and cites the source.</li>
+                    <li><strong>pytest &amp; Colab</strong> &mdash; 105+ tests (including hermetic and smoke coverage) and a parametrized notebook for the managed GPU training run.</li>
+                </ul>
+
+                <h3>Technologies Used</h3>
+                <div class="tech-stack">
+                    <span class="badge bg-primary me-2">PyTorch</span>
+                    <span class="badge bg-success me-2">CRNN + CTC</span>
+                    <span class="badge bg-secondary me-2">TrOCR</span>
+                    <span class="badge bg-info me-2">Qdrant</span>
+                    <span class="badge bg-warning me-2">FastAPI</span>
+                    <span class="badge bg-danger me-2">Claude / RAG</span>
+                    <span class="badge bg-dark me-2">PyMuPDF</span>
+                    <span class="badge bg-secondary me-2">Tesseract</span>
+                    <span class="badge bg-primary me-2">pytest</span>
+                </div>
+
+                <h3>Getting Started</h3>
+                <div class="getting-started">
+                    <h5>Prerequisites</h5>
+                    <ul>
+                        <li>Python 3.11 or higher</li>
+                        <li>pip package manager</li>
+                        <li>GPU optional &mdash; only needed to fine-tune the TrOCR challenger</li>
+                    </ul>
+
+                    <h5>Installation</h5>
+                    <pre><code>git clone https://github.com/Calazansmacchiutti/Stratifile-Agent-PDF.git
+cd Stratifile-Agent-PDF
+pip install -e .</code></pre>
+
+                    <h5>Running</h5>
+                    <pre><code># validate the whole HTR pipeline end-to-end on CPU (seconds)
+python scripts/train_trocr.py --smoke
+
+# train the CRNN baseline locally on CPU
+python scripts/train_bressay_local.py --model crnn-large --epochs 12
+
+# fine-tune the TrOCR challenger on GPU (Colab/Kaggle)
+python scripts/train_trocr.py --epochs 8 --batch 8</code></pre>
+                </div>
+
+                <h3>Repository</h3>
+                <div class="repo-link">
+                    <p>Explore the model code, the bakeoff harness, the training scripts, and the RAG integration in the repository.</p>
+                    <a href="https://github.com/Calazansmacchiutti/Stratifile-Agent-PDF" target="_blank" class="btn btn-primary">
+                        <i class="fa-brands fa-github me-2"></i>View Project on GitHub
+                    </a>
+                </div>
+
+                <h3>Results &amp; Impact</h3>
+                <p>A Brazilian-Portuguese handwriting reader that stands among published academic baselines <strong>despite CPU-only training</strong> (9.57% line CER, beating Flor and Bluche), delivered as a 17&nbsp;MB versioned artifact ready to ship as a small containerized service. Because every stage is isolated by contract, the recognizer can be swapped &mdash; the moment the TrOCR challenger clears the gate &mdash; without touching the rest of the pipeline. The result is less a single model than a <strong>repeatable method</strong> for turning scanned documents, typed or handwritten, into retrievable and cited answers.</p>
+            </article>
+        </div>
+    </div>
+
+    <!-- Image Modals -->
+    <div class="modal fade" id="imageModal1" tabindex="-1" aria-labelledby="imageModal1Label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="imageModal1Label">Line CER vs. published baselines</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="stratifile-cer-benchmark.svg" alt="Expanded CER benchmark chart">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="imageModal2" tabindex="-1" aria-labelledby="imageModal2Label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="imageModal2Label">Document-to-answer pipeline</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="stratifile-architecture.svg" alt="Expanded pipeline architecture diagram">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="imageModal3" tabindex="-1" aria-labelledby="imageModal3Label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="imageModal3Label">Bakeoff progression &mdash; validation CER</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="stratifile-evolution.svg" alt="Expanded bakeoff progression chart">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="fixed-bottom">
+        <div class="container mt-0">
+            &copy; Copyright 2024 Calazans Macchiutti.
+            Powered by <a href="https://getbootstrap.com/" target="_blank">Bootstrap</a>.
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                if (typeof bootstrap === 'undefined') {
+                    loadFallbackBootstrap();
+                    return;
+                }
+
+                const galleryImages = document.querySelectorAll('.gallery-item img[data-bs-toggle="modal"]');
+
+                const handleImageClick = function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    const modalTarget = this.getAttribute('data-bs-target');
+                    if (!modalTarget) {
+                        return;
+                    }
+
+                    const modal = document.querySelector(modalTarget);
+                    if (!modal) {
+                        return;
+                    }
+
+                    try {
+                        const bootstrapModal = new bootstrap.Modal(modal, {
+                            backdrop: true,
+                            keyboard: true,
+                            focus: true
+                        });
+                        bootstrapModal.show();
+                    } catch (error) {
+                        modal.style.display = 'block';
+                        modal.classList.add('show');
+                        document.body.classList.add('modal-open');
+                    }
+                };
+
+                galleryImages.forEach(function(img) {
+                    img.addEventListener('click', handleImageClick);
+                });
+
+                const galleryItems = document.querySelectorAll('.gallery-item');
+                galleryItems.forEach(function(item) {
+                    item.addEventListener('click', function(e) {
+                        const img = this.querySelector('img[data-bs-toggle="modal"]');
+                        if (img) {
+                            img.dispatchEvent(new Event('click'));
+                        }
+                    });
+                });
+            }, 400);
+        });
+
+        function loadFallbackBootstrap() {
+            const galleryImages = document.querySelectorAll('.gallery-item img[data-bs-toggle="modal"]');
+            galleryImages.forEach(function(img) {
+                img.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const modalTarget = this.getAttribute('data-bs-target');
+                    const modal = document.querySelector(modalTarget);
+                    if (modal) {
+                        modal.style.display = 'block';
+                        modal.classList.add('show');
+                        document.body.classList.add('modal-open');
+
+                        const closeBtn = modal.querySelector('.btn-close');
+                        if (closeBtn) {
+                            closeBtn.onclick = function() {
+                                modal.style.display = 'none';
+                                modal.classList.remove('show');
+                                document.body.classList.remove('modal-open');
+                            };
+                        }
+
+                        modal.onclick = function(event) {
+                            if (event.target === modal) {
+                                modal.style.display = 'none';
+                                modal.classList.remove('show');
+                                document.body.classList.remove('modal-open');
+                            }
+                        };
+                    }
+                });
+            });
+        }
+    </script>
+</body>
+</html>
