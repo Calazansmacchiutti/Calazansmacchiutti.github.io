@@ -7,8 +7,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-    <link rel="stylesheet" href="../css/main.css">
-    <style>
+<style>
         .project-gallery .gallery-item {
             position: relative;
             overflow: hidden;
@@ -244,14 +243,14 @@
                 </div>
 
                 <h3>Project Overview</h3>
-                <p>The core system is an agent that structures PDFs for retrieval-augmented generation. Printed-text OCR handles typed pages, but handwriting it cannot &mdash; and no public HTR model exists for Brazilian Portuguese. So I built the handwriting reader from scratch and plugged it in behind the same interface as the existing OCR, selectable at runtime. Nothing downstream needs to know whether a page was typed or handwritten.</p>
+                <p>The core system is an agent that structures PDFs for retrieval-augmented generation. Printed-text OCR handles typed pages, but handwriting it cannot - and no public HTR model exists for Brazilian Portuguese. So I built the handwriting reader from scratch and plugged it in behind the same interface as the existing OCR, selectable at runtime. Nothing downstream needs to know whether a page was typed or handwritten.</p>
 
                 <h3>Main Products / Deliverables</h3>
                 <div class="row g-3 mb-2">
                     <div class="col-md-6">
                         <div class="product-card">
                             <h5><i class="fas fa-cube me-2 text-primary"></i>pt-BR HTR model</h5>
-                            <p>A versioned artifact (weights + alphabet, sha256), 4.3M params, 17&nbsp;MB &mdash; CPU-friendly inference, no GPU required to serve.</p>
+                            <p>A versioned artifact (weights + alphabet, sha256), 4.3M params, 17&nbsp;MB - CPU-friendly inference, no GPU required to serve.</p>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -269,7 +268,7 @@
                     <div class="col-md-6">
                         <div class="product-card">
                             <h5><i class="fas fa-flask me-2 text-primary"></i>Reproducible bakeoff harness</h5>
-                            <p>The evaluation and promotion-gate system that picks models by metric &mdash; plus a parametrized Colab notebook for managed GPU training.</p>
+                            <p>The evaluation and promotion-gate system that picks models by metric - plus a parametrized Colab notebook for managed GPU training.</p>
                         </div>
                     </div>
                 </div>
@@ -277,29 +276,29 @@
                 <h3>Key Questions Answered</h3>
                 <ul>
                     <li>Can a competitive Portuguese handwriting reader be trained with <strong>no pre-existing model and no local GPU</strong>?</li>
-                    <li>Which architecture actually wins &mdash; decided by a <strong>metric on the official split</strong>, not by intuition?</li>
+                    <li>Which architecture actually wins - decided by a <strong>metric on the official split</strong>, not by intuition?</li>
                     <li>How does a research model become a <strong>swappable component of a cloud pipeline</strong>?</li>
                 </ul>
 
-                <h3>Methodology &mdash; how the 9.57% was reached</h3>
+                <h3>Methodology - how the 9.57% was reached</h3>
                 <p>The number is not from a lucky run; it is the output of a disciplined, reproducible procedure. The metric was written <em>before</em> the models: CER is aggregated across the corpus (edits and lengths summed before dividing, exactly as in the ICDAR&nbsp;2024 evaluation) so the result is directly comparable to published work.</p>
                 <ol>
-                    <li><strong>Fixed the ground rules.</strong> Official BRESSAY splits (19,565 train / 4,609 validation lines), never a custom partition. The alphabet (96 classes) is built from the <em>training</em> split only, by frequency, and travels with the checkpoint &mdash; desynchronized indices would make the model "read another language".</li>
+                    <li><strong>Fixed the ground rules.</strong> Official BRESSAY splits (19,565 train / 4,609 validation lines), never a custom partition. The alphabet (96 classes) is built from the <em>training</em> split only, by frequency, and travels with the checkpoint - desynchronized indices would make the model "read another language".</li>
                     <li><strong>Framed a bakeoff with a promotion gate.</strong> Each architecture trains on the same data and is ranked by validation CER; a challenger only replaces the baseline if it beats that CER. The baseline is <strong>CRNN&nbsp;+&nbsp;CTC</strong> (no autoregressive decoder, so it cannot hallucinate); the challenger is a fine-tuned <strong>TrOCR</strong>.</li>
-                    <li><strong>Trained with stable, cheap choices.</strong> Adam (lr&nbsp;1e-3), <code>ReduceLROnPlateau</code> on validation CER, gradient clipping at 5.0, batch 24, and &mdash; critically &mdash; the checkpoint saved is the <em>best</em> epoch, not the last. Resumes are anchored to the loaded model's CER so a noisy first epoch never overwrites a good checkpoint.</li>
-                    <li><strong>Read the curve, not the folklore.</strong> The CER oscillated in epochs 8&ndash;10; the wrong reading was "overfitting". The right one was <strong>learning rate too high</strong> &mdash; cutting it 1e-3&rarr;5e-4 unlocked the best result. That single diagnostic moved crnn-small's 15.40% down to crnn-large's <strong>9.57%</strong>.</li>
-                    <li><strong>Evaluated at three levels.</strong> Line CER guides training; the line segmenter's count is checked against the ground truth; and page-level CER is measured end-to-end &mdash; the number the product actually feels.</li>
+                    <li><strong>Trained with stable, cheap choices.</strong> Adam (lr&nbsp;1e-3), <code>ReduceLROnPlateau</code> on validation CER, gradient clipping at 5.0, batch 24, and - critically - the checkpoint saved is the <em>best</em> epoch, not the last. Resumes are anchored to the loaded model's CER so a noisy first epoch never overwrites a good checkpoint.</li>
+                    <li><strong>Read the curve, not the folklore.</strong> The CER oscillated in epochs 8 - 10; the wrong reading was "overfitting". The right one was <strong>learning rate too high</strong> - cutting it 1e-3&rarr;5e-4 unlocked the best result. That single diagnostic moved crnn-small's 15.40% down to crnn-large's <strong>9.57%</strong>.</li>
+                    <li><strong>Evaluated at three levels.</strong> Line CER guides training; the line segmenter's count is checked against the ground truth; and page-level CER is measured end-to-end - the number the product actually feels.</li>
                 </ol>
 
                 <h3>How the Technologies Were Used</h3>
                 <ul class="tech-role">
-                    <li><strong>PyTorch</strong> &mdash; the CRNN reader (CNN feature extractor &rarr; bidirectional LSTM) and a custom training loop with best-checkpoint saving, LR scheduling, and anchored resume.</li>
-                    <li><strong>CTC loss</strong> &mdash; alignment-free line recognition with greedy decoding; the design reason the baseline is trustworthy (it emits only what it sees).</li>
-                    <li><strong>Hugging Face Transformers / TrOCR</strong> &mdash; the challenger, a vision encoder-decoder fine-tuned with AMP/fp16, LR warmup + cosine decay, and gradient accumulation for GPU training.</li>
-                    <li><strong>PyMuPDF</strong> &mdash; PDF parsing and layout structuring into ordered text blocks.</li>
-                    <li><strong>Tesseract</strong> &mdash; the printed-text OCR backend, exposed through the same contract as the HTR reader.</li>
-                    <li><strong>Qdrant + FastAPI + Claude</strong> &mdash; vector store for semantic retrieval, service layer, and an agentic RAG loop that answers over retrieved blocks and cites the source.</li>
-                    <li><strong>pytest &amp; Colab</strong> &mdash; 105+ tests (including hermetic and smoke coverage) and a parametrized notebook for the managed GPU training run.</li>
+                    <li><strong>PyTorch</strong> - the CRNN reader (CNN feature extractor &rarr; bidirectional LSTM) and a custom training loop with best-checkpoint saving, LR scheduling, and anchored resume.</li>
+                    <li><strong>CTC loss</strong> - alignment-free line recognition with greedy decoding; the design reason the baseline is trustworthy (it emits only what it sees).</li>
+                    <li><strong>Hugging Face Transformers / TrOCR</strong> - the challenger, a vision encoder-decoder fine-tuned with AMP/fp16, LR warmup + cosine decay, and gradient accumulation for GPU training.</li>
+                    <li><strong>PyMuPDF</strong> - PDF parsing and layout structuring into ordered text blocks.</li>
+                    <li><strong>Tesseract</strong> - the printed-text OCR backend, exposed through the same contract as the HTR reader.</li>
+                    <li><strong>Qdrant + FastAPI + Claude</strong> - vector store for semantic retrieval, service layer, and an agentic RAG loop that answers over retrieved blocks and cites the source.</li>
+                    <li><strong>pytest &amp; Colab</strong> - 105+ tests (including hermetic and smoke coverage) and a parametrized notebook for the managed GPU training run.</li>
                 </ul>
 
                 <h3>Technologies Used</h3>
@@ -321,7 +320,7 @@
                     <ul>
                         <li>Python 3.11 or higher</li>
                         <li>pip package manager</li>
-                        <li>GPU optional &mdash; only needed to fine-tune the TrOCR challenger</li>
+                        <li>GPU optional - only needed to fine-tune the TrOCR challenger</li>
                     </ul>
 
                     <h5>Installation</h5>
@@ -349,7 +348,7 @@ python scripts/train_trocr.py --epochs 8 --batch 8</code></pre>
                 </div>
 
                 <h3>Results &amp; Impact</h3>
-                <p>A Brazilian-Portuguese handwriting reader that stands among published academic baselines <strong>despite CPU-only training</strong> (9.57% line CER, beating Flor and Bluche), delivered as a 17&nbsp;MB versioned artifact ready to ship as a small containerized service. Because every stage is isolated by contract, the recognizer can be swapped &mdash; the moment the TrOCR challenger clears the gate &mdash; without touching the rest of the pipeline. The result is less a single model than a <strong>repeatable method</strong> for turning scanned documents, typed or handwritten, into retrievable and cited answers.</p>
+                <p>A Brazilian-Portuguese handwriting reader that stands among published academic baselines <strong>despite CPU-only training</strong> (9.57% line CER, beating Flor and Bluche), delivered as a 17&nbsp;MB versioned artifact ready to ship as a small containerized service. Because every stage is isolated by contract, the recognizer can be swapped - the moment the TrOCR challenger clears the gate - without touching the rest of the pipeline. The result is less a single model than a <strong>repeatable method</strong> for turning scanned documents, typed or handwritten, into retrievable and cited answers.</p>
             </article>
         </div>
     </div>
@@ -387,7 +386,7 @@ python scripts/train_trocr.py --epochs 8 --batch 8</code></pre>
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="imageModal3Label">Bakeoff progression &mdash; validation CER</h5>
+                    <h5 class="modal-title" id="imageModal3Label">Bakeoff progression - validation CER</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -400,7 +399,7 @@ python scripts/train_trocr.py --epochs 8 --batch 8</code></pre>
     <!-- Footer -->
     <footer class="fixed-bottom">
         <div class="container mt-0">
-            &copy; Copyright 2024 Calazans Macchiutti.
+            &copy; Copyright 2026 Calazans Macchiutti.
             Powered by <a href="https://getbootstrap.com/" target="_blank">Bootstrap</a>.
         </div>
     </footer>

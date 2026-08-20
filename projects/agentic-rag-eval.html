@@ -7,8 +7,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-    <link rel="stylesheet" href="../css/main.css">
-    <style>
+<style>
         .project-gallery .gallery-item {
             position: relative;
             overflow: hidden;
@@ -233,37 +232,37 @@
                 </div>
 
                 <h3>Project Overview</h3>
-                <p>Most RAG demos answer well and stop there. In a bank, an insurer, or an asset manager, answering well is table stakes &mdash; the questions that decide whether a system can be deployed are different: <strong>did it refuse when it had no evidence? could it leak one client's data into another's answer? can you reconstruct, months later, why it said what it said?</strong></p>
+                <p>Most RAG demos answer well and stop there. In a bank, an insurer, or an asset manager, answering well is table stakes - the questions that decide whether a system can be deployed are different: <strong>did it refuse when it had no evidence? could it leak one client's data into another's answer? can you reconstruct, months later, why it said what it said?</strong></p>
                 <p>This project is a production-style agentic RAG pipeline built around those three questions. It is the public, sanitised rewrite of a content-curation platform I designed and took to production, extended with the guarantees a regulated context demands.</p>
 
                 <h3>The Central Design Decision</h3>
-                <p>The model explains; it never computes and never decides. Any figure in an answer must appear literally in a retrieved passage, and every claim carries the passage that supports it. The practical consequence: <strong>swap the model and the numbers do not move</strong> &mdash; only the wording. A system where changing the model changes the figures is not auditable.</p>
+                <p>The model explains; it never computes and never decides. Any figure in an answer must appear literally in a retrieved passage, and every claim carries the passage that supports it. The practical consequence: <strong>swap the model and the numbers do not move</strong> - only the wording. A system where changing the model changes the figures is not auditable.</p>
                 <p>Scope follows the same principle. A user's permissions become a <strong>metadata filter applied during retrieval</strong>, not an instruction in the prompt. Out-of-scope text never reaches the model, so it cannot leak it. Restricting by prompt (&ldquo;do not discuss X&rdquo;) is a request, not access control.</p>
 
                 <h3>Main Products / Deliverables</h3>
                 <ul>
-                    <li><strong>Agentic RAG pipeline</strong> &mdash; tool-use loop (retrieve &rarr; reason &rarr; answer &rarr; self-check) with structured output and a hard budget of two LLM calls per question.</li>
-                    <li><strong>Guardrails with four refusal decisions</strong> &mdash; off-policy request, no supporting evidence, no citation, fabricated citation. Off-policy is caught <em>before</em> any LLM call is spent.</li>
-                    <li><strong>Append-only audit trail</strong> &mdash; one record per answer: passage IDs, prompt version, model, user, role, decision. It stores the hash of each passage, never the text, so the log never duplicates a confidential corpus.</li>
-                    <li><strong>Two-layer evaluation harness</strong> &mdash; deterministic oracles first, LLM judge second and only on what was answered.</li>
-                    <li><strong>Multi-agent PDF structurer</strong> &mdash; a deterministic probe that profiles each document, plus two agents (adaptive chunking and field extraction) in an eval-driven loop.</li>
+                    <li><strong>Agentic RAG pipeline</strong> - tool-use loop (retrieve &rarr; reason &rarr; answer &rarr; self-check) with structured output and a hard budget of two LLM calls per question.</li>
+                    <li><strong>Guardrails with four refusal decisions</strong> - off-policy request, no supporting evidence, no citation, fabricated citation. Off-policy is caught <em>before</em> any LLM call is spent.</li>
+                    <li><strong>Append-only audit trail</strong> - one record per answer: passage IDs, prompt version, model, user, role, decision. It stores the hash of each passage, never the text, so the log never duplicates a confidential corpus.</li>
+                    <li><strong>Two-layer evaluation harness</strong> - deterministic oracles first, LLM judge second and only on what was answered.</li>
+                    <li><strong>Multi-agent PDF structurer</strong> - a deterministic probe that profiles each document, plus two agents (adaptive chunking and field extraction) in an eval-driven loop.</li>
                 </ul>
 
                 <h3>How It Is Evaluated</h3>
-                <p>The harness runs deterministic checks before the judge, because the properties that matter most in a regulated setting are binary and verifiable without a model: <em>did it refuse when it should? did it leak?</em> Running an LLM judge over a refusal costs a call and adds nothing &mdash; the refusal was already verified exactly. Of 18 golden cases, 8 never reach the judge.</p>
+                <p>The harness runs deterministic checks before the judge, because the properties that matter most in a regulated setting are binary and verifiable without a model: <em>did it refuse when it should? did it leak?</em> Running an LLM judge over a refusal costs a call and adds nothing - the refusal was already verified exactly. Of 18 golden cases, 8 never reach the judge.</p>
                 <p>Against a keyword-matching floor using the same scope filter, the agentic system scored <strong>18/18 with zero scope leaks</strong>:</p>
                 <ul>
-                    <li><strong>Refusal for lack of evidence: 0/3 &rarr; 3/3.</strong> This is the row that justifies the model. A search always finds <em>something</em> and answers &mdash; refusing requires comprehension, not retrieval.</li>
+                    <li><strong>Refusal for lack of evidence: 0/3 &rarr; 3/3.</strong> This is the row that justifies the model. A search always finds <em>something</em> and answers - refusing requires comprehension, not retrieval.</li>
                     <li><strong>Scope isolation held even at the floor.</strong> Zero leaks with a naive responder, because the restriction happens during retrieval, before any LLM sees the text. That guarantee is structural, not model-dependent.</li>
                 </ul>
                 <p>Judge metrics over the 10 answered items: faithfulness 1.000, answer relevancy 1.000, context precision 0.243. The last one is reported rather than hidden: <code>top_k=5</code> retrieves five passages where most questions need one, so context precision measures retrieval noise and falls by construction on a small corpus. Cross-encoder reranking was implemented, A/B tested live, and <strong>left off</strong> because the deltas sat inside the noise.</p>
 
-                <h3>An Error the Evaluation Caught &mdash; in the Evaluation Itself</h3>
+                <h3>An Error the Evaluation Caught - in the Evaluation Itself</h3>
                 <p>The first live run flagged a scope leak. Investigating before accepting it: the question was &ldquo;what was the 2019 return?&rdquo;, and I had listed <code>2019</code> as a forbidden term. The system refused correctly and, while explaining that only 2025 data existed, <strong>echoed the year from the question</strong>. The defect was in my golden set, not the system. A forbidden term must describe data from <em>another scope</em>, never a word the user just typed. A regression test now blocks that class of error permanently.</p>
 
                 <h3>Architecture</h3>
-                <p>The domain layer knows no vendor. It defines entities, rules, and <strong>ports</strong>; adapters implement each port (Anthropic, Qdrant, a JSONL ledger); wiring lives in a single composition root. Changing LLM or vector database means writing an adapter &mdash; no domain file changes. That is what lets the entire business rule be tested with doubles, <strong>without network, without Qdrant, and without an API key</strong>.</p>
-                <p>The system prompt lives in a versioned file, outside the code, and its <strong>version is the hash of its content</strong> &mdash; recorded in every audit entry. Months later you can tell exactly which prompt text produced which answer, without anyone having to remember to bump a number.</p>
+                <p>The domain layer knows no vendor. It defines entities, rules, and <strong>ports</strong>; adapters implement each port (Anthropic, Qdrant, a JSONL ledger); wiring lives in a single composition root. Changing LLM or vector database means writing an adapter - no domain file changes. That is what lets the entire business rule be tested with doubles, <strong>without network, without Qdrant, and without an API key</strong>.</p>
+                <p>The system prompt lives in a versioned file, outside the code, and its <strong>version is the hash of its content</strong> - recorded in every audit entry. Months later you can tell exactly which prompt text produced which answer, without anyone having to remember to bump a number.</p>
 
                 <h3>Technologies Used</h3>
                 <div class="tech-stack mb-3">
@@ -299,7 +298,7 @@ python -m evals.harness            # oracles + judge, real model</code></pre>
                 </div>
 
                 <h3>Results &amp; Impact</h3>
-                <p>A retrieval system whose guarantees are testable rather than asserted: <strong>18/18 on a behavioural golden set with zero scope leaks</strong>, 112 passing tests, and a governance document that states plainly what the system does <em>not</em> guarantee &mdash; no authentication layer, prompt injection through indexed content unmitigated, an append-only trail by convention rather than by storage. Listing the gaps is part of the deliverable; a governance section that only lists virtues is not one.</p>
+                <p>A retrieval system whose guarantees are testable rather than asserted: <strong>18/18 on a behavioural golden set with zero scope leaks</strong>, 112 passing tests, and a governance document that states plainly what the system does <em>not</em> guarantee - no authentication layer, prompt injection through indexed content unmitigated, an append-only trail by convention rather than by storage. Listing the gaps is part of the deliverable; a governance section that only lists virtues is not one.</p>
             </article>
         </div>
     </div>
