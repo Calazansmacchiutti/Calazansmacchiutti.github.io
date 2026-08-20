@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 300" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif">
+  <rect width="900" height="300" fill="#ffffff"></rect>
+  <text x="30" y="34" font-size="16" font-weight="700" fill="#212529">What the LLM actually adds</text>
+  <text x="30" y="53" font-size="11.5" fill="#868e96">Same golden set, same scope filter &#8212; keyword floor vs. the agentic system</text>
+
+  <!-- legend -->
+  <g>
+    <rect x="640" y="26" width="11" height="11" rx="2" fill="#ced4da"></rect>
+    <text x="657" y="36" font-size="11" fill="#868e96">keyword floor</text>
+    <rect x="750" y="26" width="11" height="11" rx="2" fill="#1971c2"></rect>
+    <text x="767" y="36" font-size="11" fill="#868e96">with LLM</text>
+  </g>
+
+  <!-- axis -->
+  <g stroke="#e9ecef" stroke-width="1">
+    <line x1="250" y1="82" x2="250" y2="252"></line>
+    <line x1="400" y1="82" x2="400" y2="252"></line>
+    <line x1="550" y1="82" x2="550" y2="252"></line>
+    <line x1="700" y1="82" x2="700" y2="252"></line>
+  </g>
+  <g font-size="10" fill="#adb5bd" text-anchor="middle">
+    <text x="250" y="268">0</text><text x="400" y="268">1</text>
+    <text x="550" y="268">2</text><text x="700" y="268">3</text>
+  </g>
+
+  <!-- rows: grounded 9/9, unsupported 3/3, off-policy 3/3, cross-scope 3/3 -->
+  <g font-size="11.5" fill="#212529">
+    <text x="30" y="100" font-weight="600">grounded answer</text>
+    <text x="30" y="114" font-size="10" fill="#868e96">9 cases &#183; scaled</text>
+    <rect x="250" y="88" width="116" height="13" rx="2" fill="#ced4da"></rect>
+    <rect x="250" y="103" width="150" height="13" rx="2" fill="#1971c2"></rect>
+    <text x="374" y="99" font-size="10" fill="#868e96">7/9</text>
+    <text x="408" y="114" font-size="10" font-weight="700" fill="#1971c2">9/9</text>
+
+    <text x="30" y="152" font-weight="600">refuse: no support</text>
+    <text x="30" y="166" font-size="10" fill="#868e96">3 cases</text>
+    <rect x="250" y="140" width="2" height="13" rx="1" fill="#ced4da"></rect>
+    <rect x="250" y="155" width="150" height="13" rx="2" fill="#1971c2"></rect>
+    <text x="260" y="151" font-size="10" font-weight="700" fill="#c92a2a">0/3</text>
+    <text x="408" y="166" font-size="10" font-weight="700" fill="#1971c2">3/3</text>
+
+    <text x="30" y="204" font-weight="600">refuse: off-policy</text>
+    <text x="30" y="218" font-size="10" fill="#868e96">3 cases</text>
+    <rect x="250" y="192" width="150" height="13" rx="2" fill="#ced4da"></rect>
+    <rect x="250" y="207" width="150" height="13" rx="2" fill="#1971c2"></rect>
+    <text x="408" y="203" font-size="10" fill="#868e96">3/3</text>
+    <text x="408" y="218" font-size="10" font-weight="700" fill="#1971c2">3/3</text>
+
+    <text x="30" y="246" font-weight="600">no cross-scope leak</text>
+    <text x="30" y="260" font-size="10" fill="#868e96">3 cases</text>
+    <rect x="250" y="234" width="100" height="13" rx="2" fill="#ced4da"></rect>
+    <rect x="250" y="249" width="150" height="13" rx="2" fill="#1971c2"></rect>
+    <text x="358" y="245" font-size="10" fill="#868e96">2/3</text>
+    <text x="408" y="260" font-size="10" font-weight="700" fill="#1971c2">3/3</text>
+  </g>
+
+  <!-- callout -->
+  <rect x="470" y="132" width="400" height="76" rx="6" fill="#f8f9fa" stroke="#dee2e6"></rect>
+  <text x="486" y="153" font-size="11.5" font-weight="700" fill="#212529">The row that justifies the model: 0/3 &#8594; 3/3</text>
+  <text x="486" y="171" font-size="10.5" fill="#868e96">A keyword search always finds something and answers.</text>
+  <text x="486" y="186" font-size="10.5" fill="#868e96">Refusing requires comprehension, not retrieval.</text>
+  <text x="486" y="201" font-size="10.5" fill="#868e96">Scope isolation, by contrast, held even at the floor.</text>
+</svg>

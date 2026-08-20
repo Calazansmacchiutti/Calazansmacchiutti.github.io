@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Handwriting RAG - Calazans Macchiutti</title>
+    <title>Auditable Agentic RAG - Calazans Macchiutti</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
@@ -192,8 +192,8 @@
     <div class="container mt-5" role="main">
         <div class="post">
             <header class="post-header">
-                <h1 class="post-title">Handwriting RAG</h1>
-                <p class="desc">A from-scratch handwritten-text-recognition (HTR) model for Brazilian Portuguese, chosen by an empirical bakeoff and wired into a document-RAG pipeline</p>
+                <h1 class="post-title">Auditable Agentic RAG</h1>
+                <p class="desc">A retrieval-augmented agent built for regulated use: it refuses without evidence, never answers outside a user's scope, and writes every decision to an audit trail</p>
             </header>
 
             <article class="no-profile">
@@ -207,35 +207,24 @@
                 <div class="project-gallery mb-5">
                     <h3 class="mb-4"><i class="fas fa-images me-2"></i>Figures &amp; Results</h3>
                     <div class="row g-3">
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="gallery-item">
-                                <img src="stratifile-cer-benchmark.svg" class="img-fluid rounded shadow-sm" alt="Bar chart of line CER against published baselines" data-bs-toggle="modal" data-bs-target="#imageModal1">
+                                <img src="agentic-rag-flow.svg" class="img-fluid rounded shadow-sm" alt="Diagram of the answering flow with input guard, retrieval scope filter, output guard and audit trail" data-bs-toggle="modal" data-bs-target="#imageModal1">
                                 <div class="overlay">
                                     <div class="overlay-text">
-                                        <h6>Benchmark</h6>
-                                        <p>9.57% CER vs. published baselines</p>
+                                        <h6>Flow</h6>
+                                        <p>Two gates and one ledger</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="gallery-item">
-                                <img src="stratifile-architecture.svg" class="img-fluid rounded shadow-sm" alt="Diagram of the document-to-answer pipeline" data-bs-toggle="modal" data-bs-target="#imageModal2">
+                                <img src="agentic-rag-eval-results.svg" class="img-fluid rounded shadow-sm" alt="Bar chart comparing a keyword floor against the agentic system across four evaluation categories" data-bs-toggle="modal" data-bs-target="#imageModal2">
                                 <div class="overlay">
                                     <div class="overlay-text">
-                                        <h6>Architecture</h6>
-                                        <p>Document-to-answer pipeline</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="gallery-item">
-                                <img src="stratifile-evolution.svg" class="img-fluid rounded shadow-sm" alt="Line chart of CER improving across bakeoff rounds" data-bs-toggle="modal" data-bs-target="#imageModal3">
-                                <div class="overlay">
-                                    <div class="overlay-text">
-                                        <h6>Progression</h6>
-                                        <p>Bakeoff CER over rounds</p>
+                                        <h6>Evaluation</h6>
+                                        <p>18/18, zero scope leaks</p>
                                     </div>
                                 </div>
                             </div>
@@ -244,112 +233,73 @@
                 </div>
 
                 <h3>Project Overview</h3>
-                <p>The core system is an agent that structures PDFs for retrieval-augmented generation. Printed-text OCR handles typed pages, but handwriting it cannot &mdash; and no public HTR model exists for Brazilian Portuguese. So I built the handwriting reader from scratch and plugged it in behind the same interface as the existing OCR, selectable at runtime. Nothing downstream needs to know whether a page was typed or handwritten.</p>
+                <p>Most RAG demos answer well and stop there. In a bank, an insurer, or an asset manager, answering well is table stakes &mdash; the questions that decide whether a system can be deployed are different: <strong>did it refuse when it had no evidence? could it leak one client's data into another's answer? can you reconstruct, months later, why it said what it said?</strong></p>
+                <p>This project is a production-style agentic RAG pipeline built around those three questions. It is the public, sanitised rewrite of a content-curation platform I designed and took to production, extended with the guarantees a regulated context demands.</p>
+
+                <h3>The Central Design Decision</h3>
+                <p>The model explains; it never computes and never decides. Any figure in an answer must appear literally in a retrieved passage, and every claim carries the passage that supports it. The practical consequence: <strong>swap the model and the numbers do not move</strong> &mdash; only the wording. A system where changing the model changes the figures is not auditable.</p>
+                <p>Scope follows the same principle. A user's permissions become a <strong>metadata filter applied during retrieval</strong>, not an instruction in the prompt. Out-of-scope text never reaches the model, so it cannot leak it. Restricting by prompt (&ldquo;do not discuss X&rdquo;) is a request, not access control.</p>
 
                 <h3>Main Products / Deliverables</h3>
-                <div class="row g-3 mb-2">
-                    <div class="col-md-6">
-                        <div class="product-card">
-                            <h5><i class="fas fa-cube me-2 text-primary"></i>pt-BR HTR model</h5>
-                            <p>A versioned artifact (weights + alphabet, sha256), 4.3M params, 17&nbsp;MB &mdash; CPU-friendly inference, no GPU required to serve.</p>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="product-card">
-                            <h5><i class="fas fa-plug me-2 text-primary"></i>Pluggable reading backend</h5>
-                            <p>A drop-in OCR/HTR reader behind <code>available()</code> + <code>ocr_blocks()</code>, swappable with Tesseract without touching the pipeline.</p>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="product-card">
-                            <h5><i class="fas fa-diagram-project me-2 text-primary"></i>Document-to-answer pipeline</h5>
-                            <p>PDF structuring, vector retrieval, and an agentic RAG loop that turns scanned documents into cited answers.</p>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="product-card">
-                            <h5><i class="fas fa-flask me-2 text-primary"></i>Reproducible bakeoff harness</h5>
-                            <p>The evaluation and promotion-gate system that picks models by metric &mdash; plus a parametrized Colab notebook for managed GPU training.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <h3>Key Questions Answered</h3>
                 <ul>
-                    <li>Can a competitive Portuguese handwriting reader be trained with <strong>no pre-existing model and no local GPU</strong>?</li>
-                    <li>Which architecture actually wins &mdash; decided by a <strong>metric on the official split</strong>, not by intuition?</li>
-                    <li>How does a research model become a <strong>swappable component of a cloud pipeline</strong>?</li>
+                    <li><strong>Agentic RAG pipeline</strong> &mdash; tool-use loop (retrieve &rarr; reason &rarr; answer &rarr; self-check) with structured output and a hard budget of two LLM calls per question.</li>
+                    <li><strong>Guardrails with four refusal decisions</strong> &mdash; off-policy request, no supporting evidence, no citation, fabricated citation. Off-policy is caught <em>before</em> any LLM call is spent.</li>
+                    <li><strong>Append-only audit trail</strong> &mdash; one record per answer: passage IDs, prompt version, model, user, role, decision. It stores the hash of each passage, never the text, so the log never duplicates a confidential corpus.</li>
+                    <li><strong>Two-layer evaluation harness</strong> &mdash; deterministic oracles first, LLM judge second and only on what was answered.</li>
+                    <li><strong>Multi-agent PDF structurer</strong> &mdash; a deterministic probe that profiles each document, plus two agents (adaptive chunking and field extraction) in an eval-driven loop.</li>
                 </ul>
 
-                <h3>Methodology &mdash; how the 9.57% was reached</h3>
-                <p>The number is not from a lucky run; it is the output of a disciplined, reproducible procedure. The metric was written <em>before</em> the models: CER is aggregated across the corpus (edits and lengths summed before dividing, exactly as in the ICDAR&nbsp;2024 evaluation) so the result is directly comparable to published work.</p>
-                <ol>
-                    <li><strong>Fixed the ground rules.</strong> Official BRESSAY splits (19,565 train / 4,609 validation lines), never a custom partition. The alphabet (96 classes) is built from the <em>training</em> split only, by frequency, and travels with the checkpoint &mdash; desynchronized indices would make the model "read another language".</li>
-                    <li><strong>Framed a bakeoff with a promotion gate.</strong> Each architecture trains on the same data and is ranked by validation CER; a challenger only replaces the baseline if it beats that CER. The baseline is <strong>CRNN&nbsp;+&nbsp;CTC</strong> (no autoregressive decoder, so it cannot hallucinate); the challenger is a fine-tuned <strong>TrOCR</strong>.</li>
-                    <li><strong>Trained with stable, cheap choices.</strong> Adam (lr&nbsp;1e-3), <code>ReduceLROnPlateau</code> on validation CER, gradient clipping at 5.0, batch 24, and &mdash; critically &mdash; the checkpoint saved is the <em>best</em> epoch, not the last. Resumes are anchored to the loaded model's CER so a noisy first epoch never overwrites a good checkpoint.</li>
-                    <li><strong>Read the curve, not the folklore.</strong> The CER oscillated in epochs 8&ndash;10; the wrong reading was "overfitting". The right one was <strong>learning rate too high</strong> &mdash; cutting it 1e-3&rarr;5e-4 unlocked the best result. That single diagnostic moved crnn-small's 15.40% down to crnn-large's <strong>9.57%</strong>.</li>
-                    <li><strong>Evaluated at three levels.</strong> Line CER guides training; the line segmenter's count is checked against the ground truth; and page-level CER is measured end-to-end &mdash; the number the product actually feels.</li>
-                </ol>
-
-                <h3>How the Technologies Were Used</h3>
-                <ul class="tech-role">
-                    <li><strong>PyTorch</strong> &mdash; the CRNN reader (CNN feature extractor &rarr; bidirectional LSTM) and a custom training loop with best-checkpoint saving, LR scheduling, and anchored resume.</li>
-                    <li><strong>CTC loss</strong> &mdash; alignment-free line recognition with greedy decoding; the design reason the baseline is trustworthy (it emits only what it sees).</li>
-                    <li><strong>Hugging Face Transformers / TrOCR</strong> &mdash; the challenger, a vision encoder-decoder fine-tuned with AMP/fp16, LR warmup + cosine decay, and gradient accumulation for GPU training.</li>
-                    <li><strong>PyMuPDF</strong> &mdash; PDF parsing and layout structuring into ordered text blocks.</li>
-                    <li><strong>Tesseract</strong> &mdash; the printed-text OCR backend, exposed through the same contract as the HTR reader.</li>
-                    <li><strong>Qdrant + FastAPI + Claude</strong> &mdash; vector store for semantic retrieval, service layer, and an agentic RAG loop that answers over retrieved blocks and cites the source.</li>
-                    <li><strong>pytest &amp; Colab</strong> &mdash; 105+ tests (including hermetic and smoke coverage) and a parametrized notebook for the managed GPU training run.</li>
+                <h3>How It Is Evaluated</h3>
+                <p>The harness runs deterministic checks before the judge, because the properties that matter most in a regulated setting are binary and verifiable without a model: <em>did it refuse when it should? did it leak?</em> Running an LLM judge over a refusal costs a call and adds nothing &mdash; the refusal was already verified exactly. Of 18 golden cases, 8 never reach the judge.</p>
+                <p>Against a keyword-matching floor using the same scope filter, the agentic system scored <strong>18/18 with zero scope leaks</strong>:</p>
+                <ul>
+                    <li><strong>Refusal for lack of evidence: 0/3 &rarr; 3/3.</strong> This is the row that justifies the model. A search always finds <em>something</em> and answers &mdash; refusing requires comprehension, not retrieval.</li>
+                    <li><strong>Scope isolation held even at the floor.</strong> Zero leaks with a naive responder, because the restriction happens during retrieval, before any LLM sees the text. That guarantee is structural, not model-dependent.</li>
                 </ul>
+                <p>Judge metrics over the 10 answered items: faithfulness 1.000, answer relevancy 1.000, context precision 0.243. The last one is reported rather than hidden: <code>top_k=5</code> retrieves five passages where most questions need one, so context precision measures retrieval noise and falls by construction on a small corpus. Cross-encoder reranking was implemented, A/B tested live, and <strong>left off</strong> because the deltas sat inside the noise.</p>
+
+                <h3>An Error the Evaluation Caught &mdash; in the Evaluation Itself</h3>
+                <p>The first live run flagged a scope leak. Investigating before accepting it: the question was &ldquo;what was the 2019 return?&rdquo;, and I had listed <code>2019</code> as a forbidden term. The system refused correctly and, while explaining that only 2025 data existed, <strong>echoed the year from the question</strong>. The defect was in my golden set, not the system. A forbidden term must describe data from <em>another scope</em>, never a word the user just typed. A regression test now blocks that class of error permanently.</p>
+
+                <h3>Architecture</h3>
+                <p>The domain layer knows no vendor. It defines entities, rules, and <strong>ports</strong>; adapters implement each port (Anthropic, Qdrant, a JSONL ledger); wiring lives in a single composition root. Changing LLM or vector database means writing an adapter &mdash; no domain file changes. That is what lets the entire business rule be tested with doubles, <strong>without network, without Qdrant, and without an API key</strong>.</p>
+                <p>The system prompt lives in a versioned file, outside the code, and its <strong>version is the hash of its content</strong> &mdash; recorded in every audit entry. Months later you can tell exactly which prompt text produced which answer, without anyone having to remember to bump a number.</p>
 
                 <h3>Technologies Used</h3>
-                <div class="tech-stack">
-                    <span class="badge bg-primary me-2">PyTorch</span>
-                    <span class="badge bg-success me-2">CRNN + CTC</span>
-                    <span class="badge bg-secondary me-2">TrOCR</span>
-                    <span class="badge bg-info me-2">Qdrant</span>
-                    <span class="badge bg-warning me-2">FastAPI</span>
-                    <span class="badge bg-danger me-2">Claude / RAG</span>
-                    <span class="badge bg-dark me-2">PyMuPDF</span>
-                    <span class="badge bg-secondary me-2">Tesseract</span>
-                    <span class="badge bg-primary me-2">pytest</span>
+                <div class="tech-stack mb-3">
+                    <span class="badge bg-secondary me-1 mb-1">Python</span>
+                    <span class="badge bg-secondary me-1 mb-1">Claude (Anthropic SDK)</span>
+                    <span class="badge bg-secondary me-1 mb-1">Qdrant</span>
+                    <span class="badge bg-secondary me-1 mb-1">sentence-transformers</span>
+                    <span class="badge bg-secondary me-1 mb-1">Pydantic</span>
+                    <span class="badge bg-secondary me-1 mb-1">FastAPI</span>
+                    <span class="badge bg-secondary me-1 mb-1">pytest</span>
+                    <span class="badge bg-secondary me-1 mb-1">Docker</span>
+                    <span class="badge bg-secondary me-1 mb-1">GitHub Actions</span>
+                    <span class="badge bg-secondary me-1 mb-1">PyMuPDF</span>
                 </div>
 
                 <h3>Getting Started</h3>
-                <div class="getting-started">
-                    <h5>Prerequisites</h5>
-                    <ul>
-                        <li>Python 3.11 or higher</li>
-                        <li>pip package manager</li>
-                        <li>GPU optional &mdash; only needed to fine-tune the TrOCR challenger</li>
-                    </ul>
+                <div class="code-block">
+<pre><code>make qdrant                        # vector database on :6333
+python scripts/seed_financeiro.py  # index the synthetic corpus
+uvicorn agentic_rag.api:app        # serve /perguntar and /auditoria
 
-                    <h5>Installation</h5>
-                    <pre><code>git clone https://github.com/Calazansmacchiutti/Stratifile-Agent-PDF.git
-cd Stratifile-Agent-PDF
-pip install -e .</code></pre>
-
-                    <h5>Running</h5>
-                    <pre><code># validate the whole HTR pipeline end-to-end on CPU (seconds)
-python scripts/train_trocr.py --smoke
-
-# train the CRNN baseline locally on CPU
-python scripts/train_bressay_local.py --model crnn-large --epochs 12
-
-# fine-tune the TrOCR challenger on GPU (Colab/Kaggle)
-python scripts/train_trocr.py --epochs 8 --batch 8</code></pre>
+python -m evals.harness --stub     # full harness, no LLM and no key
+python -m evals.harness            # oracles + judge, real model</code></pre>
                 </div>
+                <p class="small text-muted">Every document in the repository is synthetic. Two fictional asset managers exist for a reason: without two, there is nothing to leak, and scope isolation cannot be tested at all.</p>
 
                 <h3>Repository</h3>
                 <div class="repo-link">
-                    <p>Explore the model code, the bakeoff harness, the training scripts, and the RAG integration in the repository.</p>
-                    <a href="https://github.com/Calazansmacchiutti/Stratifile-Agent-PDF" target="_blank" class="btn btn-primary">
+                    <p>Architecture decision records, the eval harness, the governance notes, and the full test suite are in the repository.</p>
+                    <a href="https://github.com/Calazansmacchiutti/agentic-rag-eval" target="_blank" class="btn btn-primary">
                         <i class="fa-brands fa-github me-2"></i>View Project on GitHub
                     </a>
                 </div>
 
                 <h3>Results &amp; Impact</h3>
-                <p>A Brazilian-Portuguese handwriting reader that stands among published academic baselines <strong>despite CPU-only training</strong> (9.57% line CER, beating Flor and Bluche), delivered as a 17&nbsp;MB versioned artifact ready to ship as a small containerized service. Because every stage is isolated by contract, the recognizer can be swapped &mdash; the moment the TrOCR challenger clears the gate &mdash; without touching the rest of the pipeline. The result is less a single model than a <strong>repeatable method</strong> for turning scanned documents, typed or handwritten, into retrievable and cited answers.</p>
+                <p>A retrieval system whose guarantees are testable rather than asserted: <strong>18/18 on a behavioural golden set with zero scope leaks</strong>, 112 passing tests, and a governance document that states plainly what the system does <em>not</em> guarantee &mdash; no authentication layer, prompt injection through indexed content unmitigated, an append-only trail by convention rather than by storage. Listing the gaps is part of the deliverable; a governance section that only lists virtues is not one.</p>
             </article>
         </div>
     </div>
@@ -359,11 +309,11 @@ python scripts/train_trocr.py --epochs 8 --batch 8</code></pre>
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="imageModal1Label">Line CER vs. published baselines</h5>
+                    <h5 class="modal-title" id="imageModal1Label">Answering with an audit trail</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <img src="stratifile-cer-benchmark.svg" alt="Expanded CER benchmark chart">
+                    <img src="agentic-rag-flow.svg" alt="Expanded diagram of the answering flow">
                 </div>
             </div>
         </div>
@@ -373,37 +323,16 @@ python scripts/train_trocr.py --epochs 8 --batch 8</code></pre>
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="imageModal2Label">Document-to-answer pipeline</h5>
+                    <h5 class="modal-title" id="imageModal2Label">Keyword floor vs. the agentic system</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <img src="stratifile-architecture.svg" alt="Expanded pipeline architecture diagram">
+                    <img src="agentic-rag-eval-results.svg" alt="Expanded evaluation comparison chart">
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="modal fade" id="imageModal3" tabindex="-1" aria-labelledby="imageModal3Label" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="imageModal3Label">Bakeoff progression &mdash; validation CER</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <img src="stratifile-evolution.svg" alt="Expanded bakeoff progression chart">
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer class="fixed-bottom">
-        <div class="container mt-0">
-            &copy; Copyright 2024 Calazans Macchiutti.
-            Powered by <a href="https://getbootstrap.com/" target="_blank">Bootstrap</a>.
-        </div>
-    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>

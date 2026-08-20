@@ -48,17 +48,83 @@
             padding-bottom: 1rem;
             border-bottom: 1px solid rgba(255,255,255,0.1);
         }
+        /* Projetos em GRADE (antes: lista empilhada). Com muitos projetos, a lista
+           obrigava a rolar; a grade deixa tudo visível de uma vez. */
+        .projects-grid {
+            display: grid;
+            /* Colunas EXPLICITAS, nao auto-fill: o tema escala o rem em telas grandes
+               (1rem chega a ~21px), entao minmax em px rendia 5 colunas estreitas de 265px
+               em vez das 3 planejadas. Contar colunas e previsivel; medir nao era. */
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+            margin-bottom: 1rem;
+        }
+        @media screen and (min-width: 1800px) {
+            .projects-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        }
+        @media screen and (max-width: 736px) {
+            .projects-grid { grid-template-columns: 1fr; }
+        }
         .project-card {
             background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.08);
             border-radius: 8px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
+            padding: 1.25rem;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: background .25s ease, transform .25s ease, border-color .25s ease;
+            /* flex em coluna: as badges ficam coladas na base mesmo com textos de
+               tamanhos diferentes, então a grade não fica com cards desalinhados */
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
-        .project-card:hover {
+        /* o card de tese nao tem onclick: nao deve fingir que e clicavel */
+        .project-card:not([onclick]) { cursor: default; }
+        .project-card:hover,
+        .project-card:focus-visible {
             background: rgba(255,255,255,0.1);
+            border-color: rgba(78, 205, 196, 0.5);
             transform: translateY(-3px);
+        }
+        .project-card:focus-visible {
+            outline: 2px solid #4ecdc4;
+            outline-offset: 2px;
+        }
+        .project-card h4 {
+            margin: 0 0 0.5rem;
+            font-size: 0.95rem;
+            line-height: 1.35;
+        }
+        /* #projects na frente para vencer as regras do tema (que usam #main article p e
+           por isso tinham especificidade maior - era por isso que o clamp nao pegava). */
+        #projects .project-card p {
+            font-size: 0.82rem;
+            line-height: 1.5;
+            margin: 0 0 0.9rem;
+            flex-grow: 1;          /* empurra as badges para baixo */
+            /* Teto de 2 linhas: sem isto, descricao longa estica o card e ele fica
+               mais alto que largo - o oposto do formato desejado. */
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            overflow: hidden;
+        }
+        #projects .project-card .tech-badge { font-size: 0.7rem; padding: 0.15rem 0.5rem; }
+        .project-card > div:last-child {
+            margin-top: auto;
+        }
+        /* Só a aba de projetos fica mais larga, para caber 3 colunas em tela grande.
+           O resto do tema (40rem) não muda. */
+        @media screen and (min-width: 1200px) {
+            #main article#projects {
+                /* px, nao rem: o tema aumenta o rem em telas grandes e a largura disparava */
+                width: min(1200px, 92vw);
+                max-width: 100%;
+            }
+        }
+        @media screen and (max-width: 480px) {
+            .projects-grid { grid-template-columns: 1fr; }
         }
         .experience-item {
             margin-bottom: 2rem;
@@ -341,10 +407,6 @@
             <!-- Data Science -->
             <article id="datascience">
                 <h2 class="major">Data Science</h2>
-                <div class="profile-banner datascience-banner">
-                    <img src="images/profile-datascientist.jpg" alt="Cientista de Dados" />
-                </div>
-                
                 <h3>Resumo Profissional</h3>
                 <p>Minha trajetória foi moldada pelo desenvolvimento e aplicação de modelos estatísticos, com forte foco na identificação de padrões, compreensão de tendências e geração de insights acionáveis.</p>
                 
@@ -542,7 +604,23 @@
             <article id="projects">
                 <h2 class="major">Projetos</h2>
 
-                <div class="project-card" onclick="location.href='#project-handwriting'">
+
+                <div class="projects-grid">
+<div class="project-card" tabindex="0" onclick="location.href='#project-auditable-rag'">
+                    <h4>Auditable Agentic RAG</h4>
+                    <p>Agente de recuperação para contexto regulado &mdash; recusa sem lastro, aplica escopo na recuperação e registra cada decisão. 18/18 no golden set de comportamento, zero vazamentos.</p>
+                    <div>
+                        <span class="tech-badge">Python</span>
+                        <span class="tech-badge">Claude</span>
+                        <span class="tech-badge">Qdrant</span>
+                        <span class="tech-badge">RAG</span>
+                        <span class="tech-badge">Evals</span>
+                        <span class="tech-badge">FastAPI</span>
+                    </div>
+                </div>
+
+
+                <div class="project-card" tabindex="0" onclick="location.href='#project-handwriting'">
                     <h4>Handwriting RAG (HTR pt-BR)</h4>
                     <p>Reconhecimento de escrita manual do zero para o português brasileiro &mdash; 9,57% de CER em CPU, escolhido por um bakeoff empírico e integrado a um pipeline de RAG documental.</p>
                     <div>
@@ -554,7 +632,7 @@
                     </div>
                 </div>
 
-                <div class="project-card" onclick="location.href='#project-fraud'">
+                <div class="project-card" tabindex="0" onclick="location.href='#project-fraud'">
                     <h4>Detecção de Fraudes (KYC/KYT)</h4>
                     <p>Detecção de fraudes com ML comparando abordagens supervisionadas e não supervisionadas.</p>
                     <div>
@@ -565,7 +643,7 @@
                     </div>
                 </div>
 
-                <div class="project-card" onclick="location.href='#project-logistic'">
+                <div class="project-card" tabindex="0" onclick="location.href='#project-logistic'">
                     <h4>Logistic Data Assessment</h4>
                     <p>Analytics suite for tracking delays, seasonality, and predictive risk scoring.</p>
                     <div>
@@ -576,7 +654,7 @@
                     </div>
                 </div>
 
-                <div class="project-card" onclick="location.href='#project-streamlit'">
+                <div class="project-card" tabindex="0" onclick="location.href='#project-streamlit'">
                     <h4>Streamlit Applications</h4>
                     <p>Interactive web applications for data visualization and analysis.</p>
                     <div>
@@ -586,7 +664,7 @@
                     </div>
                 </div>
 
-                <div class="project-card" onclick="location.href='#project-lstm'">
+                <div class="project-card" tabindex="0" onclick="location.href='#project-lstm'">
                     <h4>Voltage Time Series LSTM</h4>
                     <p>LSTM neural network for voltage prediction and anomaly detection.</p>
                     <div>
@@ -595,21 +673,52 @@
                         <span class="tech-badge">LSTM</span>
                     </div>
                 </div>
-
-                <div class="project-card">
-                    <h4>Magnetism Techniques Thesis</h4>
-                    <p>Research code and analysis for magnetism techniques thesis work.</p>
-                    <div>
-                        <span class="tech-badge">Research</span>
-                        <span class="tech-badge">Data Analysis</span>
-                    </div>
-                    <a href="https://github.com/Calazansmacchiutti/Magnetism-techniques-thesis" target="_blank" class="btn-link" style="margin-top: 1rem;"><i class="fa fa-github"></i> GitHub</a>
                 </div>
-
                 <p style="margin-top: 2rem;"><a href="https://github.com/Calazansmacchiutti" target="_blank"><i class="fa fa-github"></i> Ver todos os repositórios no GitHub</a></p>
             </article>
 
             <!-- Project: Handwriting RAG -->
+            <!-- Project: Auditable Agentic RAG -->
+            <article id="project-auditable-rag">
+                <h2 class="major">Auditable Agentic RAG</h2>
+                <p style="font-style: italic;">A retrieval-augmented agent built for regulated use: it refuses without evidence, never answers outside a user's scope, and writes every decision to an audit trail</p>
+
+                <h3>Figures &amp; Results</h3>
+                <div class="gallery-grid">
+                    <div class="gallery-item" onclick="openLightbox('projects/agentic-rag-flow.svg')">
+                        <img src="projects/agentic-rag-flow.svg" alt="Answering flow with two guardrails and an audit trail">
+                        <div class="gallery-caption">Two gates and one ledger</div>
+                    </div>
+                    <div class="gallery-item" onclick="openLightbox('projects/agentic-rag-eval-results.svg')">
+                        <img src="projects/agentic-rag-eval-results.svg" alt="Keyword floor versus the agentic system across four categories">
+                        <div class="gallery-caption">18/18, zero scope leaks</div>
+                    </div>
+                </div>
+
+                <h3>Project Overview</h3>
+                <p>Most RAG demos answer well and stop there. In a bank or an asset manager, answering well is table stakes &mdash; the questions that decide deployment are different: <strong>did it refuse when it had no evidence? could it leak one client's data into another's answer? can you reconstruct, months later, why it said what it said?</strong> This pipeline is built around those three.</p>
+
+                <h3>The Central Design Decision</h3>
+                <p>The model explains; it never computes and never decides. Every figure must appear literally in a retrieved passage, and every claim carries its source. Swap the model and the numbers do not move &mdash; only the wording. Scope works the same way: permissions become a <strong>metadata filter applied during retrieval</strong>, so out-of-scope text never reaches the model. Restricting by prompt is a request, not access control.</p>
+
+                <h3>Main Products / Deliverables</h3>
+                <ul>
+                    <li><strong>Agentic RAG pipeline</strong> &mdash; retrieve &rarr; reason &rarr; answer &rarr; self-check, structured output, hard budget of two LLM calls per question.</li>
+                    <li><strong>Guardrails with four refusal decisions</strong> &mdash; off-policy request, no evidence, no citation, fabricated citation. Off-policy is caught before any LLM call is spent.</li>
+                    <li><strong>Append-only audit trail</strong> &mdash; passage IDs, prompt version, model, user, decision. Stores the hash of each passage, never the text.</li>
+                    <li><strong>Two-layer eval harness</strong> &mdash; deterministic oracles first, LLM judge only on what was answered.</li>
+                </ul>
+
+                <h3>Results &amp; Impact</h3>
+                <p>Against a keyword floor using the same scope filter, the system scored <strong>18/18 with zero scope leaks</strong>. The row that justifies the model is refusal for lack of evidence, <strong>0/3 &rarr; 3/3</strong>: a search always finds something and answers &mdash; refusing requires comprehension, not retrieval. Scope isolation, by contrast, held even at the floor, because the restriction is structural. Judge metrics over the 10 answered items: faithfulness 1.000, answer relevancy 1.000, context precision 0.243 &mdash; the last reported rather than hidden, since it measures retrieval noise on a deliberately small corpus.</p>
+
+                <p style="margin-top: 2rem;">
+                    <a href="projects/agentic-rag-eval.html" class="btn-link">Full case study</a>
+                    <a href="https://github.com/Calazansmacchiutti/agentic-rag-eval" target="_blank" class="btn-link"><i class="fa fa-github"></i> View on GitHub</a>
+                    <a href="#projects" class="btn-link">&larr; Back to Projects</a>
+                </p>
+            </article>
+
             <article id="project-handwriting">
                 <h2 class="major">Handwriting RAG</h2>
                 <p style="font-style: italic;">Reconhecimento de escrita manual (HTR) para o português brasileiro, construído do zero, escolhido por um bakeoff empírico e integrado a um pipeline de RAG documental</p>
@@ -760,7 +869,7 @@ python scripts/train_trocr.py --epochs 8 --batch 8    # desafiante TrOCR (GPU)
                 </div>
 
                 <h3>Results &amp; Impact</h3>
-                <p>The combined analytical assets helped reduce average departure delays by <strong>18%</strong> in pilot operations, while the predictive service highlighted upcoming high-risk routes with over <strong>80% precision</strong>. Operational teams now rely on the dashboards to reallocate resources earlier and plan contingencies for peak seasons.</p>
+                <p>The combined analytical assets contributed to a <strong>measurable reduction in average departure delays</strong> during pilot operations, while the predictive service surfaced upcoming high-risk routes for review. Operational teams now rely on the dashboards to reallocate resources earlier and plan contingencies for peak seasons.</p>
 
                 <p style="margin-top: 2rem;">
                     <a href="https://github.com/Calazansmacchiutti/logistic-data-assesment" target="_blank" class="btn-link"><i class="fa fa-github"></i> Ver no GitHub</a>
