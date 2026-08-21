@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 400" width="100%" role="img" aria-labelledby="t d">
+<title id="t">Anomaly detection and forecasting pipeline</title><desc id="d">Raw voltage series feeds feature engineering and a strictly temporal split, which then branches into a SMOTE-balanced classifier for anomalies and an LSTM for forecasting.</desc>
+<defs>
+<marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0,0 L10,5 L0,10 z" fill="#6b7c93"/></marker>
+<style>
+.b{fill:#eef2f7;stroke:#4a6fa5;stroke-width:1.5}
+.acc{fill:#dbe7f5;stroke:#2f5c8f;stroke-width:2}
+.t{fill:#1f2d3d;font-family:'Segoe UI',system-ui,sans-serif;font-size:13px;text-anchor:middle}
+.tb{font-weight:600}
+.s{fill:#5a6b7d;font-family:'Segoe UI',system-ui,sans-serif;font-size:11px;text-anchor:middle}
+.lbl{fill:#5a6b7d;font-family:'Segoe UI',system-ui,sans-serif;font-size:11px;font-style:italic;text-anchor:middle}
+.e{stroke:#6b7c93;stroke-width:1.6;fill:none;marker-end:url(#a)}
+</style></defs>
+<rect x="20" y="150" width="130" height="76" rx="8" class="b"/><text x="85.0" y="186.0" class="t tb">Voltage series</text><text x="85.0" y="216" class="s">4,447 records</text><rect x="190" y="150" width="150" height="76" rx="8" class="b"/><text x="265.0" y="178.0" class="t tb">Feature</text><text x="265.0" y="194.0" class="t">engineering</text><text x="265.0" y="216" class="s">20 features</text><rect x="380" y="150" width="150" height="76" rx="8" class="acc"/><text x="455.0" y="186.0" class="t tb">Temporal split</text><text x="455.0" y="216" class="s">no leakage</text><rect x="600" y="40" width="150" height="76" rx="8" class="b"/><text x="675.0" y="68.0" class="t tb">SMOTE +</text><text x="675.0" y="84.0" class="t">XGBoost</text><text x="675.0" y="106" class="s">31.2% anomalies</text><rect x="600" y="262" width="150" height="76" rx="8" class="b"/><text x="675.0" y="290.0" class="t tb">Windowing +</text><text x="675.0" y="306.0" class="t">LSTM</text><text x="675.0" y="328" class="s">simple / attention</text><rect x="790" y="40" width="130" height="76" rx="8" class="acc"/><text x="855.0" y="76.0" class="t tb">Anomaly</text><text x="855.0" y="106" class="s">F1 0.978</text><rect x="790" y="262" width="130" height="76" rx="8" class="acc"/><text x="855.0" y="298.0" class="t tb">Forecast</text><text x="855.0" y="328" class="s">MAE 0.087</text><path class="e" d="M150,188 L188,188"/><path class="e" d="M340,188 L378,188"/><path class="e" d="M530,175 L598,96"/><text x="564.0" y="129.5" class="lbl">classify</text><path class="e" d="M530,201 L598,292"/><text x="564.0" y="240.5" class="lbl">forecast</text><path class="e" d="M750,78 L788,78"/><path class="e" d="M750,300 L788,300"/></svg>

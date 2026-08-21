@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 340" width="100%" role="img" aria-labelledby="t d">
+<title id="t">Fraud detection: supervised against unsupervised on the same split</title><desc id="d">PCA-transformed transactions are split once, then sent down a supervised branch and an unsupervised branch so the two families are compared on identical data.</desc>
+<defs>
+<marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0,0 L10,5 L0,10 z" fill="#6b7c93"/></marker>
+<style>
+.b{fill:#eef2f7;stroke:#4a6fa5;stroke-width:1.5}
+.acc{fill:#dbe7f5;stroke:#2f5c8f;stroke-width:2}
+.t{fill:#1f2d3d;font-family:'Segoe UI',system-ui,sans-serif;font-size:13px;text-anchor:middle}
+.tb{font-weight:600}
+.s{fill:#5a6b7d;font-family:'Segoe UI',system-ui,sans-serif;font-size:11px;text-anchor:middle}
+.lbl{fill:#5a6b7d;font-family:'Segoe UI',system-ui,sans-serif;font-size:11px;font-style:italic;text-anchor:middle}
+.e{stroke:#6b7c93;stroke-width:1.6;fill:none;marker-end:url(#a)}
+</style></defs>
+<rect x="20" y="130" width="150" height="80" rx="8" class="b"/><text x="95.0" y="168.0" class="t tb">Transactions</text><text x="95.0" y="200" class="s">PCA features, ~0.17% fraud</text><rect x="210" y="130" width="140" height="80" rx="8" class="acc"/><text x="280.0" y="168.0" class="t tb">Single split</text><text x="280.0" y="200" class="s">same data both ways</text><rect x="400" y="40" width="170" height="70" rx="8" class="b"/><text x="485.0" y="72.0" class="t tb">Supervised</text><text x="485.0" y="88.0" class="t">XGBoost / RF</text><rect x="400" y="230" width="170" height="70" rx="8" class="b"/><text x="485.0" y="262.0" class="t tb">Unsupervised</text><text x="485.0" y="278.0" class="t">IForest / autoencoder</text><rect x="620" y="40" width="150" height="70" rx="8" class="b"/><text x="695.0" y="73.0" class="t tb">Ranking quality</text><text x="695.0" y="100" class="s">AP 0.858</text><rect x="620" y="230" width="150" height="70" rx="8" class="b"/><text x="695.0" y="263.0" class="t tb">Cold-start use</text><text x="695.0" y="290" class="s">no labels needed</text><rect x="810" y="130" width="130" height="80" rx="8" class="acc"/><text x="875.0" y="160.0" class="t tb">Threshold</text><text x="875.0" y="176.0" class="t">and policy</text><text x="875.0" y="200" class="s">recall 0.867</text><path class="e" d="M170,170 L208,170"/><path class="e" d="M350,155 L398,90"/><text x="374.0" y="116.5" class="lbl">labels</text><path class="e" d="M350,185 L398,258"/><text x="374.0" y="215.5" class="lbl">no labels</text><path class="e" d="M570,75 L618,75"/><path class="e" d="M570,265 L618,265"/><path class="e" d="M770,85 L830,128"/><path class="e" d="M770,255 L830,212"/></svg>

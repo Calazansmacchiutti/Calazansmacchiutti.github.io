@@ -3,12 +3,49 @@
 <head>
     <title>Calazans Macchiutti</title>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="assets/css/main.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
     <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
     <style>
+        /* ---- nav responsivo (bug PRE-EXISTENTE, achado ao medir o CTA) ----
+           O tema so transforma o menu em coluna abaixo de 480px. Entre ~481 e 736px ele
+           fica com ~764px de largura e ESTOURA a tela, criando scroll horizontal no
+           celular. Aqui so permitimos quebra de linha; o visual do tema fica preservado. */
+        @media screen and (max-width: 736px) {
+            #header nav ul { flex-wrap: wrap; justify-content: center; }
+            #header nav ul li { border-left: 0; }
+            #header nav ul li a { padding: 0 0.9rem; }
+        }
+
+        /* ---- CTA acima da dobra (F7) ----
+           Usa .button do tema (contorno branco, feito p/ o header escuro). Flex com wrap
+           para nao estourar em telas estreitas; o #header .inner tem overflow:hidden e
+           max-height, entao a linha PRECISA quebrar em vez de crescer. */
+        #header .cta-row {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.6rem;
+            padding: 0;
+            margin: 1.25rem 0 0.5rem 0;
+        }
+        #header .cta-row li { padding: 0; }
+        #header .cta-row .button {
+            font-size: 0.7rem;
+            letter-spacing: 0.12rem;
+            height: 2.4rem;
+            line-height: 2.4rem;
+            padding: 0 1.1rem;
+            white-space: nowrap;
+        }
+        #header .social-academic { margin-top: 0.5rem; }
+        #header .social-academic a { margin: 0 0.5rem; font-size: 1.2rem; }
+        @media screen and (max-width: 480px) {
+            #header .cta-row .button { font-size: 0.62rem; padding: 0 0.75rem; letter-spacing: 0.08rem; }
+        }
         .skills-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -297,13 +334,16 @@
                     <h1>Calazans Macchiutti</h1>
                     <img src="images/profile.jpg" style="width:200px; height:200px; object-fit: cover; border-radius: 50%; border: 3px solid rgba(255,255,255,0.3);">
                     <p>Cientista de Dados Sênior | PhD em Física</p>
-                    <div style="margin-top: 1rem;">
-                        <a href="mailto:macchiutti@gmail.com?subject=Consulta%20sobre%20Servi%C3%A7os%20de%20Data%20Science&body=Ol%C3%A1%20Calazans%2C%0A%0AEncontrei%20seu%20site%20e%20tenho%20interesse%20em%20saber%20mais%20sobre%20seus%20servi%C3%A7os%20de%20ci%C3%AAncia%20de%20dados.%0A%0AGostaria%20de%20discutir%3A%0A-%20%5BDescreva%20seu%20projeto%20ou%20desafio%20de%20dados%5D%0A%0AAguardo%20seu%20retorno.%0A%0AAtenciosamente%2C%0A%5BSeu%20Nome%5D" title="Email" style="margin: 0 0.5rem; font-size: 1.3rem;"><i class="fa fa-envelope"></i></a>
-                        <a href="https://github.com/Calazansmacchiutti" title="GitHub" target="_blank" style="margin: 0 0.5rem; font-size: 1.3rem;"><i class="fa fa-github"></i></a>
-                        <a href="http://lattes.cnpq.br/6086240272240823" target="_blank" title="Lattes" style="margin: 0 0.5rem; font-size: 1.3rem;"><i class="ai ai-lattes"></i></a>
-                        <a href="https://www.researchgate.net/profile/Calazans-Macchiutti-2" title="ResearchGate" target="_blank" style="margin: 0 0.5rem; font-size: 1.3rem;"><i class="ai ai-researchgate"></i></a>
-                        <a href="https://scholar.google.com.br/citations?user=v5qKbyEAAAAJ&hl=pt-BR" title="Google Scholar" target="_blank" style="margin: 0 0.5rem; font-size: 1.3rem;"><i class="ai ai-google-scholar"></i></a>
-                        <a href="https://br.linkedin.com/in/calazans-macchiutti-ph-d-a48591237" title="LinkedIn" target="_blank" style="margin: 0 0.5rem; font-size: 1.3rem;"><i class="fa fa-linkedin"></i></a>
+                    <ul class="cta-row">
+                        <li><a href="mailto:macchiutti@gmail.com?subject=Data%20Science%20Services%20Inquiry&body=Hello%20Calazans%2C%0A%0AI%20came%20across%20your%20website%20and%20I%E2%80%99m%20interested%20in%20learning%20more%20about%20your%20data%20science%20services.%0A%0AI%20would%20like%20to%20discuss%3A%0A-%20%5BDescribe%20your%20project%20or%20data%20challenge%5D%0A%0ALooking%20forward%20to%20hearing%20from%20you.%0A%0ABest%20regards%2C%0A%5BYour%20Name%5D" class="button primary small">Fale comigo</a></li>
+                        <li><a href="files/Calazans-Macchiutti-CV.pdf" class="button small" download title="CV completo (PDF, em ingles)">Baixar CV (EN)</a></li>
+                        <li><a href="https://github.com/Calazansmacchiutti" class="button small" target="_blank" rel="noopener">GitHub</a></li>
+                        <li><a href="https://br.linkedin.com/in/calazans-macchiutti-ph-d-a48591237" class="button small" target="_blank" rel="noopener">LinkedIn</a></li>
+                    </ul>
+                    <div class="social-academic">
+                        <a href="http://lattes.cnpq.br/6086240272240823" target="_blank" rel="noopener" title="Lattes"><i class="ai ai-lattes"></i></a>
+                        <a href="https://www.researchgate.net/profile/Calazans-Macchiutti-2" target="_blank" rel="noopener" title="ResearchGate"><i class="ai ai-researchgate"></i></a>
+                        <a href="https://scholar.google.com.br/citations?user=v5qKbyEAAAAJ&amp;hl=pt-BR" target="_blank" rel="noopener" title="Google Scholar"><i class="ai ai-google-scholar"></i></a>
                     </div>
                 </div>
             </div>

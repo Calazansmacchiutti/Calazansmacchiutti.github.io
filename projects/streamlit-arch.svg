@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" width="100%" role="img" aria-labelledby="t d">
+<title id="t">Water treatment monitoring architecture</title><desc id="d">Sensor readings from three plants flow through loading and preprocessing into a time-series module and an anomaly module, which feed the dashboard pages, the alerting channels and the report writer.</desc>
+<defs>
+<marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0,0 L10,5 L0,10 z" fill="#6b7c93"/></marker>
+<style>
+.b{fill:#eef2f7;stroke:#4a6fa5;stroke-width:1.5}
+.acc{fill:#dbe7f5;stroke:#2f5c8f;stroke-width:2}
+.t{fill:#1f2d3d;font-family:'Segoe UI',system-ui,sans-serif;font-size:13px;text-anchor:middle}
+.tb{font-weight:600}
+.s{fill:#5a6b7d;font-family:'Segoe UI',system-ui,sans-serif;font-size:11px;text-anchor:middle}
+.lbl{fill:#5a6b7d;font-family:'Segoe UI',system-ui,sans-serif;font-size:11px;font-style:italic;text-anchor:middle}
+.e{stroke:#6b7c93;stroke-width:1.6;fill:none;marker-end:url(#a)}
+</style></defs>
+<rect x="20" y="170" width="140" height="80" rx="8" class="b"/><text x="90.0" y="208.0" class="t tb">Plant sensors</text><text x="90.0" y="240" class="s">3 plants, synthetic</text><rect x="200" y="170" width="130" height="80" rx="8" class="b"/><text x="265.0" y="215.0" class="t tb">data_loader</text><rect x="370" y="170" width="130" height="80" rx="8" class="b"/><text x="435.0" y="215.0" class="t tb">preprocessor</text><rect x="550" y="60" width="160" height="66" rx="8" class="b"/><text x="630.0" y="91.0" class="t tb">time_series</text><text x="630.0" y="116" class="s">ARIMA / Prophet</text><rect x="550" y="170" width="160" height="66" rx="8" class="b"/><text x="630.0" y="201.0" class="t tb">anomaly_detection</text><text x="630.0" y="226" class="s">IForest / DBSCAN / SVM</text><rect x="550" y="280" width="160" height="66" rx="8" class="b"/><text x="630.0" y="318.0" class="t tb">visualizations</text><rect x="770" y="60" width="160" height="66" rx="8" class="acc"/><text x="850.0" y="98.0" class="t tb">6 dashboard pages</text><rect x="770" y="170" width="160" height="66" rx="8" class="acc"/><text x="850.0" y="201.0" class="t tb">alerts</text><text x="850.0" y="226" class="s">email / Slack / Teams</text><rect x="770" y="280" width="160" height="66" rx="8" class="acc"/><text x="850.0" y="311.0" class="t tb">reports + API</text><text x="850.0" y="336" class="s">PDF / Excel / HTML</text><path class="e" d="M160,210 L198,210"/><path class="e" d="M330,210 L368,210"/><path class="e" d="M500,200 L548,100"/><path class="e" d="M500,210 L548,210"/><path class="e" d="M500,222 L548,310"/><path class="e" d="M710,93 L768,93"/><path class="e" d="M710,203 L768,203"/><path class="e" d="M710,313 L768,313"/></svg>
