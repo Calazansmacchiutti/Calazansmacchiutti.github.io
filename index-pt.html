@@ -661,6 +661,7 @@
                     <h4>Handwriting RAG (HTR pt-BR)</h4>
                     <p>Reconhecimento de escrita manual do zero para o português brasileiro - 9,57% de CER em CPU, escolhido por um bakeoff empírico e integrado a um pipeline de RAG documental.</p>
                     <div>
+                        <span class="tech-badge">Python</span>
                         <span class="tech-badge">PyTorch</span>
                         <span class="tech-badge">CRNN+CTC</span>
                         <span class="tech-badge">TrOCR</span>
@@ -685,19 +686,23 @@
                     <p>Analytics suite for tracking delays, seasonality, and predictive risk scoring.</p>
                     <div>
                         <span class="tech-badge">Python</span>
-                        <span class="tech-badge">Pandas</span>
-                        <span class="tech-badge">LightGBM</span>
-                        <span class="tech-badge">FastAPI</span>
+                        <span class="tech-badge">SQL</span>
+                        <span class="tech-badge">Scikit-learn</span>
+                        <span class="tech-badge">Gradient Boosting</span>
+                        <span class="tech-badge">SMOTE</span>
                     </div>
                 </div>
 
                 <div class="project-card" tabindex="0" onclick="location.href='#project-streamlit'">
-                    <h4>Streamlit Applications</h4>
-                    <p>Interactive web applications for data visualization and analysis.</p>
+                    <h4>Monitoramento de Estações de Tratamento</h4>
+                    <p>Monitoramento em tempo real de três estações: previsão, detecção de anomalia e alertas.</p>
                     <div>
                         <span class="tech-badge">Python</span>
+                        <span class="tech-badge">Prophet</span>
+                        <span class="tech-badge">ARIMA</span>
+                        <span class="tech-badge">XGBoost</span>
+                        <span class="tech-badge">Isolation Forest</span>
                         <span class="tech-badge">Streamlit</span>
-                        <span class="tech-badge">Plotly</span>
                     </div>
                 </div>
 
@@ -708,6 +713,8 @@
                         <span class="tech-badge">Python</span>
                         <span class="tech-badge">TensorFlow</span>
                         <span class="tech-badge">LSTM</span>
+                        <span class="tech-badge">XGBoost</span>
+                        <span class="tech-badge">SMOTE</span>
                     </div>
                 </div>
                 </div>
@@ -914,10 +921,10 @@ python scripts/train_trocr.py --epochs 8 --batch 8    # desafiante TrOCR (GPU)
                 </p>
             </article>
 
-            <!-- Project: Streamlit Applications -->
+            <!-- Project: Monitoramento de Estações de Tratamento -->
             <article id="project-streamlit">
-                <h2 class="major">Streamlit Applications</h2>
-                <p style="font-style: italic;">Interactive web applications built with Streamlit for data visualization and analysis</p>
+                <h2 class="major">Monitoramento de Estações de Tratamento</h2>
+                <p style="font-style: italic;">Sistema de monitoramento de estações de tratamento de água: previsão, cinco métodos de detecção de anomalia, alertas e relatórios</p>
 
                 <h3>Capturas de Tela</h3>
                 <div class="gallery-grid">
@@ -936,7 +943,7 @@ python scripts/train_trocr.py --epochs 8 --batch 8    # desafiante TrOCR (GPU)
                 </div>
 
                 <h3>Visão Geral do Projeto</h3>
-                <p>This project showcases a collection of interactive web applications built using Streamlit, a powerful Python framework for creating data applications. These applications demonstrate various aspects of data science, machine learning, and data visualization.</p>
+                <p>Monitoramento em tempo real de tres estacoes de tratamento de agua, cada uma com seu conjunto de sensores. Cerca de 7.900 linhas entre modulos e paginas de dashboard: previsao com Random Forest, XGBoost, Prophet e ARIMA; deteccao de anomalia por cinco metodos independentes; alertas por email, Slack e Teams; relatorios automaticos em PDF, Excel e HTML; alem de auditoria e backup. Os dados sao sinteticos, gerados para demonstracao.</p>
 
                 <h3>Funcionalidades</h3>
                 <ul>

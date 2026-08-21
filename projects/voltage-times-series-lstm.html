@@ -247,6 +247,40 @@
                     <li>Scalable architecture for different time series lengths</li>
                 </ul>
 
+<h3>Architecture</h3>
+                <p>One series, two questions, one split. The same engineered features feed a classifier
+                that labels anomalies and an LSTM that predicts the next values, so both branches are
+                judged on data that was separated in time before either model saw it.</p>
+                <figure class="my-4">
+                    <img src="voltage-lstm-flow.svg" class="img-fluid rounded shadow-sm" alt="Pipeline: series to features to a strictly temporal split, branching into anomaly classification and LSTM forecasting.">
+                    <figcaption class="text-muted small mt-2">Pipeline: series to features to a strictly temporal split, branching into anomaly classification and LSTM forecasting.</figcaption>
+                </figure>
+
+                <h3>Results</h3>
+                <p>Two tasks, measured separately on <strong>4,447 timestamped records</strong> covering
+                22 to 29 April 2024, with <strong>20 engineered features</strong> (lags, rolling statistics,
+                calendar terms) and a split that respects time order, so no future value informs a past one.</p>
+                <div class="table-responsive">
+                <table class="table table-sm align-middle">
+                    <thead><tr><th>Task</th><th>Model</th><th>Metric</th><th>Value</th></tr></thead>
+                    <tbody>
+                        <tr><td rowspan="2">Anomaly detection</td><td><strong>XGBoost</strong></td><td>F1 / precision / recall</td><td><strong>0.978 / 0.968 / 0.991</strong></td></tr>
+                        <tr><td>Gradient Boosting</td><td>F1 / precision / recall</td><td>0.973 / 0.967 / 0.981</td></tr>
+                        <tr><td rowspan="2">Forecasting</td><td><strong>LSTM</strong></td><td>MAE / RMSE</td><td><strong>0.087 / 0.189</strong></td></tr>
+                        <tr><td>LSTM + attention</td><td>MAE / RMSE</td><td>0.128 / 0.195</td></tr>
+                    </tbody>
+                </table>
+                </div>
+                <p><strong>The attention mechanism made the forecast worse</strong>, not better: MAE rose
+                from 0.087 to 0.128. It is reported here because it is the more useful finding. On a series
+                this short, the extra parameters buy variance rather than signal, and the honest conclusion
+                is that the simpler network wins.</p>
+                <p class="text-muted"><strong>Reading the numbers fairly.</strong> Anomalies are
+                <strong>31.2%</strong> of this dataset, so this is a fairly balanced problem, not the
+                rare-event case where high accuracy is an illusion; classes were balanced with SMOTE on the
+                training side only. MAPE is undefined here because the series crosses zero. This is a
+                portfolio project on a short window of data, not a production deployment.</p>
+
                 <h3>Technologies Used</h3>
                 <div class="tech-stack">
                     <span class="badge bg-primary me-2">Python</span>
@@ -376,7 +410,7 @@ python predict.py</code></pre>
     </div>
 
     <!-- Footer -->
-    <footer class="fixed-bottom">
+    <footer class="mt-5 py-3 border-top text-muted small">
         <div class="container mt-0">
             © Copyright 2026 Calazans Macchiutti.
             Powered by <a href="https://getbootstrap.com/" target="_blank">Bootstrap</a>.

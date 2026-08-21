@@ -241,6 +241,15 @@
                     <li>Model evaluation with focus on Average Precision due to class imbalance</li>
                 </ol>
 
+<h3>Architecture</h3>
+                <p>Both families are evaluated on the same split, which is what makes the comparison mean
+                anything: the supervised branch uses the labels, the unsupervised branch never sees them,
+                and the two are scored on identical held-out transactions.</p>
+                <figure class="my-4">
+                    <img src="fraud-flow.svg" class="img-fluid rounded shadow-sm" alt="One split feeding a supervised branch and an unsupervised branch, compared on identical held-out transactions.">
+                    <figcaption class="text-muted small mt-2">One split feeding a supervised branch and an unsupervised branch, compared on identical held-out transactions.</figcaption>
+                </figure>
+
                 <h3>Technologies Used</h3>
                 <div class="tech-stack">
                     <span class="badge bg-primary me-2">Python</span>
@@ -318,7 +327,7 @@
     </div>
 
     <!-- Footer -->
-    <footer class="fixed-bottom">
+    <footer class="mt-5 py-3 border-top text-muted small">
         <div class="container mt-0">
             © Copyright 2026 Calazans Macchiutti.
             Powered by <a href="https://getbootstrap.com/" target="_blank">Bootstrap</a>.

@@ -226,6 +226,12 @@
                     <li>Packaging of results into dashboards and API endpoints for operational teams.</li>
                 </ol>
 
+<h3>Architecture</h3>
+                <figure class="my-4">
+                    <img src="logistic-flow.svg" class="img-fluid rounded shadow-sm" alt="5.2 million flight records through SQL-based ETL and cleaning, then three competing classifiers judged under an 18% base rate.">
+                    <figcaption class="text-muted small mt-2">5.2 million flight records through SQL-based ETL and cleaning, then three competing classifiers judged under an 18% base rate.</figcaption>
+                </figure>
+
                 <h3>Technologies Used</h3>
                 <div class="tech-stack">
                     <span class="badge bg-primary me-2">Python</span>
@@ -245,9 +251,39 @@
                     </a>
                 </div>
 
+                <h3>Results</h3>
+                <p>The task: predict whether a flight departs <strong>more than 15 minutes late</strong>,
+                over <strong>5,245,484 records</strong> and 32 columns, of which 5,244,628 survive cleaning.
+                Delays are <strong>18% of the sample</strong>, and that base rate is the whole story.</p>
+                <div class="table-responsive">
+                <table class="table table-sm align-middle">
+                    <thead><tr><th>Model</th><th>Accuracy</th><th>Precision</th><th>Recall</th><th>F1</th></tr></thead>
+                    <tbody>
+                        <tr><td>Logistic Regression</td><td>0.576</td><td>0.248</td><td><strong>0.649</strong></td><td>0.359</td></tr>
+                        <tr><td>Random Forest</td><td><strong>0.700</strong></td><td>0.270</td><td>0.377</td><td>0.315</td></tr>
+                        <tr><td>Gradient Boosting</td><td>0.610</td><td>0.263</td><td>0.625</td><td><strong>0.370</strong></td></tr>
+                    </tbody>
+                </table>
+                </div>
+                <p><strong>The model with the best accuracy is the worst model here.</strong> Random Forest
+                reaches 0.700 accuracy by predicting "on time" more often, which is easy when 82% of flights
+                are on time, and its recall collapses to 0.377 - it misses nearly two thirds of the delays it
+                exists to catch. Gradient Boosting scores nine points lower on accuracy and finds
+                <strong>0.625</strong> of them. If the point is to warn an operations team, that is the model
+                you ship.</p>
+                <p class="text-muted"><strong>Limitations, stated plainly.</strong> Precision sits near
+                <strong>0.26</strong> across all three: roughly three false alarms for each delay caught,
+                which is a real cost and would need a threshold tuned to what the operation can absorb.
+                Discrimination is modest (AUC around 0.63), which is expected when the features are schedule
+                and route attributes known before departure and the dominant causes of delay - weather,
+                upstream aircraft rotation - are not in the data.</p>
                 <h3>Results &amp; Impact</h3>
-                <p>The combined analytical assets contributed to a measurable reduction in average departure delays during pilot operations, while the predictive service surfaced upcoming high-risk routes for review. Operational teams now rely on the dashboards to reallocate resources earlier and plan contingencies for peak seasons.</p>
-            </article>
+                <p>Delivered end to end as a technical assessment: SQL-based ETL over 5.2 million rows, a
+                derived table of the five worst airports, a set of exploratory views (delay distribution by
+                airline, distance against delay, geographic and temporal breakdowns), and a compared set of
+                classifiers with the trade-off above made explicit rather than hidden behind a single
+                headline number.</p>
+                </article>
         </div>
     </div>
 
@@ -295,7 +331,7 @@
     </div>
 
     <!-- Footer -->
-    <footer class="fixed-bottom">
+    <footer class="mt-5 py-3 border-top text-muted small">
         <div class="container mt-0">
             ?? Copyright 2026 Calazans Macchiutti.
             Powered by <a href="https://getbootstrap.com/" target="_blank">Bootstrap</a>.

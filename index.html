@@ -660,6 +660,7 @@
                     <h4>Handwriting RAG (pt-BR HTR)</h4>
                     <p>From-scratch handwriting recognition for Brazilian Portuguese - 9.57% CER on CPU, chosen by an empirical bakeoff and wired into a document-RAG pipeline.</p>
                     <div>
+                        <span class="tech-badge">Python</span>
                         <span class="tech-badge">PyTorch</span>
                         <span class="tech-badge">CRNN+CTC</span>
                         <span class="tech-badge">TrOCR</span>
@@ -684,19 +685,23 @@
                     <p>Analytics suite for tracking delays, seasonality, and predictive risk scoring.</p>
                     <div>
                         <span class="tech-badge">Python</span>
-                        <span class="tech-badge">Pandas</span>
-                        <span class="tech-badge">LightGBM</span>
-                        <span class="tech-badge">FastAPI</span>
+                        <span class="tech-badge">SQL</span>
+                        <span class="tech-badge">Scikit-learn</span>
+                        <span class="tech-badge">Gradient Boosting</span>
+                        <span class="tech-badge">SMOTE</span>
                     </div>
                 </div>
 
                 <div class="project-card" tabindex="0" onclick="location.href='#project-streamlit'">
-                    <h4>Streamlit Applications</h4>
-                    <p>Interactive web applications for data visualization and analysis.</p>
+                    <h4>Water Treatment Monitoring</h4>
+                    <p>Real-time monitoring of three treatment plants: forecasting, anomaly detection and alerting.</p>
                     <div>
                         <span class="tech-badge">Python</span>
+                        <span class="tech-badge">Prophet</span>
+                        <span class="tech-badge">ARIMA</span>
+                        <span class="tech-badge">XGBoost</span>
+                        <span class="tech-badge">Isolation Forest</span>
                         <span class="tech-badge">Streamlit</span>
-                        <span class="tech-badge">Plotly</span>
                     </div>
                 </div>
 
@@ -707,6 +712,8 @@
                         <span class="tech-badge">Python</span>
                         <span class="tech-badge">TensorFlow</span>
                         <span class="tech-badge">LSTM</span>
+                        <span class="tech-badge">XGBoost</span>
+                        <span class="tech-badge">SMOTE</span>
                     </div>
                 </div>
                 </div>
@@ -913,10 +920,10 @@ python scripts/train_trocr.py --epochs 8 --batch 8    # TrOCR challenger (GPU)
                 </p>
             </article>
 
-            <!-- Project: Streamlit Applications -->
+            <!-- Project: Water Treatment Monitoring -->
             <article id="project-streamlit">
-                <h2 class="major">Streamlit Applications</h2>
-                <p style="font-style: italic;">Interactive web applications built with Streamlit for data visualization and analysis</p>
+                <h2 class="major">Water Treatment Monitoring</h2>
+                <p style="font-style: italic;">Monitoring system for water treatment plants: forecasting, five anomaly-detection methods, alerting and reports</p>
 
                 <h3>Screenshots</h3>
                 <div class="gallery-grid">
@@ -935,7 +942,7 @@ python scripts/train_trocr.py --epochs 8 --batch 8    # TrOCR challenger (GPU)
                 </div>
 
                 <h3>Project Overview</h3>
-                <p>This project showcases a collection of interactive web applications built using Streamlit, a powerful Python framework for creating data applications. These applications demonstrate various aspects of data science, machine learning, and data visualization.</p>
+                <p>Real-time monitoring for three water treatment plants, each with its own sensor set. Around 7,900 lines across modules and dashboard pages: forecasting with Random Forest, XGBoost, Prophet and ARIMA; anomaly detection by five independent methods; alerting over email, Slack and Teams; automatic PDF, Excel and HTML reports; plus audit and backup. The data is synthetic, generated for demonstration.</p>
 
                 <h3>Features</h3>
                 <ul>
