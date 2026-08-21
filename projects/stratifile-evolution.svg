@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif">
   <rect width="720" height="300" fill="#ffffff"></rect>
-  <text x="40" y="30" font-size="16" font-weight="700" fill="#212529">Bakeoff progression &#8212; validation CER</text>
+  <text x="40" y="30" font-size="16" font-weight="700" fill="#212529">Bakeoff progression - validation CER</text>
   <text x="40" y="49" font-size="11.5" fill="#868e96">From the first small model to the promoted baseline, in %</text>
 
   <!-- y gridlines + labels (0..20) -->

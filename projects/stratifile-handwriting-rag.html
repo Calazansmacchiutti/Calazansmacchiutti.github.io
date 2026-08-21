@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Handwriting RAG - Calazans Macchiutti</title>
+    <title>Handwritten Document RAG - Calazans Macchiutti</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
@@ -191,8 +191,8 @@
     <div class="container mt-5" role="main">
         <div class="post">
             <header class="post-header">
-                <h1 class="post-title">Handwriting RAG</h1>
-                <p class="desc">A from-scratch handwritten-text-recognition (HTR) model for Brazilian Portuguese, chosen by an empirical bakeoff and wired into a document-RAG pipeline</p>
+                <h1 class="post-title">Handwritten Document RAG</h1>
+                <p class="desc">A compact Brazilian-Portuguese HTR model trained from scratch, evaluated against alternative architectures, and integrated as a pluggable reader in an end-to-end document-RAG pipeline</p>
             </header>
 
             <article class="no-profile">
@@ -212,7 +212,7 @@
                                 <div class="overlay">
                                     <div class="overlay-text">
                                         <h6>Benchmark</h6>
-                                        <p>9.57% CER vs. published baselines</p>
+                                        <p>Test-split CER against published results</p>
                                     </div>
                                 </div>
                             </div>
@@ -243,7 +243,7 @@
                 </div>
 
                 <h3>Project Overview</h3>
-                <p>The core system is an agent that structures PDFs for retrieval-augmented generation. Printed-text OCR handles typed pages, but handwriting it cannot - and no public HTR model exists for Brazilian Portuguese. So I built the handwriting reader from scratch and plugged it in behind the same interface as the existing OCR, selectable at runtime. Nothing downstream needs to know whether a page was typed or handwritten.</p>
+                <p>The core system is an agent that structures PDFs for retrieval-augmented generation. Printed-text OCR handles typed pages, but handwriting it cannot, and there was no off-the-shelf HTR model that met the project's accuracy, deployment and integration requirements. So I treated the ingestion gap as a machine-learning problem in its own right: a CRNN-CTC recognizer trained from scratch on Brazilian-Portuguese handwriting, plugged in behind the same interface as the existing OCR and selectable at runtime. Nothing downstream needs to know whether a page was typed or handwritten.</p>
 
                 <h3>Main Products / Deliverables</h3>
                 <div class="row g-3 mb-2">
@@ -280,21 +280,21 @@
                     <li>How does a research model become a <strong>swappable component of a cloud pipeline</strong>?</li>
                 </ul>
 
-                <h3>Methodology - how the 9.57% was reached</h3>
-                <p>The number is not from a lucky run; it is the output of a disciplined, reproducible procedure. The metric was written <em>before</em> the models: CER is aggregated across the corpus (edits and lengths summed before dividing, exactly as in the ICDAR&nbsp;2024 evaluation) so the result is directly comparable to published work.</p>
+                <h3>Methodology - how the model was selected</h3>
+                <p>The evaluation protocol was fixed before model comparison. CER is aggregated across the corpus, with edits and lengths summed before dividing, following the ICDAR&nbsp;2024 convention. The two numbers are kept apart on purpose. <strong>9.57% is validation CER, used only for model selection</strong>; the benchmark figure is <strong>10.35% CER on the official BRESSAY test split</strong> (5,916 lines), measured once after the model was frozen. Reporting a validation number against published test results would have flattered the model by roughly 0.8 points.</p>
                 <ol>
-                    <li><strong>Fixed the ground rules.</strong> Official BRESSAY splits (19,565 train / 4,609 validation lines), never a custom partition. The alphabet (96 classes) is built from the <em>training</em> split only, by frequency, and travels with the checkpoint - desynchronized indices would make the model "read another language".</li>
-                    <li><strong>Framed a bakeoff with a promotion gate.</strong> Each architecture trains on the same data and is ranked by validation CER; a challenger only replaces the baseline if it beats that CER. The baseline is <strong>CRNN&nbsp;+&nbsp;CTC</strong> (no autoregressive decoder, so it cannot hallucinate); the challenger is a fine-tuned <strong>TrOCR</strong>.</li>
+                    <li><strong>Fixed the ground rules.</strong> Official BRESSAY splits (19,565 train / 4,609 validation lines), never a custom partition. The alphabet is built from the <em>training</em> split only, keeping 95 characters that clear a minimum-frequency cutoff, plus the CTC blank, for 96 output classes. It travels with the checkpoint, because desynchronized indices would make the model read another language. A character outside this set cannot be emitted, so rarer symbols appearing elsewhere in the corpus are counted as errors rather than quietly excused.</li>
+                    <li><strong>Framed a bakeoff with a promotion gate.</strong> Each architecture trains on the same data and is ranked by validation CER; a challenger only replaces the baseline if it beats that CER. The baseline is <strong>CRNN&nbsp;+&nbsp;CTC</strong> with greedy decoding, which avoids an autoregressive language decoder and keeps the transcription tied to the visual signal. The challenger is <strong>TrOCR</strong>, a pretrained vision encoder-decoder. <strong>To date it has only been run as a one-epoch smoke test</strong> proving the training path works end to end; it has not been fine-tuned to convergence and has not cleared the gate.</li>
                     <li><strong>Trained with stable, cheap choices.</strong> Adam (lr&nbsp;1e-3), <code>ReduceLROnPlateau</code> on validation CER, gradient clipping at 5.0, batch 24, and - critically - the checkpoint saved is the <em>best</em> epoch, not the last. Resumes are anchored to the loaded model's CER so a noisy first epoch never overwrites a good checkpoint.</li>
-                    <li><strong>Read the curve, not the folklore.</strong> The CER oscillated in epochs 8 - 10; the wrong reading was "overfitting". The right one was <strong>learning rate too high</strong> - cutting it 1e-3&rarr;5e-4 unlocked the best result. That single diagnostic moved crnn-small's 15.40% down to crnn-large's <strong>9.57%</strong>.</li>
+                    <li><strong>Used training diagnostics to separate optimization instability from overfitting.</strong> The CER oscillated in epochs 8 to 10, which pointed to a learning rate that was too high rather than to overfitting. The final configuration combined a larger CRNN with a lower learning rate (1e-3&rarr;5e-4), reducing validation CER from 15.40% to <strong>9.57%</strong>. Both the capacity and the learning rate changed between those runs, so the gain is not attributable to the learning rate alone.</li>
                     <li><strong>Evaluated at three levels.</strong> Line CER guides training; the line segmenter's count is checked against the ground truth; and page-level CER is measured end-to-end - the number the product actually feels.</li>
                 </ol>
 
                 <h3>How the Technologies Were Used</h3>
                 <ul class="tech-role">
                     <li><strong>PyTorch</strong> - the CRNN reader (CNN feature extractor &rarr; bidirectional LSTM) and a custom training loop with best-checkpoint saving, LR scheduling, and anchored resume.</li>
-                    <li><strong>CTC loss</strong> - alignment-free line recognition with greedy decoding; the design reason the baseline is trustworthy (it emits only what it sees).</li>
-                    <li><strong>Hugging Face Transformers / TrOCR</strong> - the challenger, a vision encoder-decoder fine-tuned with AMP/fp16, LR warmup + cosine decay, and gradient accumulation for GPU training.</li>
+                    <li><strong>CTC loss</strong> - alignment-free line recognition with greedy decoding, so the transcription depends on the visual signal rather than on a learned language model over previously emitted tokens.</li>
+                    <li><strong>Hugging Face Transformers / TrOCR</strong> - the challenger path, wired for GPU fine-tuning with AMP/fp16, LR warmup and cosine decay, and gradient accumulation. Exercised so far only as a one-epoch smoke run.</li>
                     <li><strong>PyMuPDF</strong> - PDF parsing and layout structuring into ordered text blocks.</li>
                     <li><strong>Tesseract</strong> - the printed-text OCR backend, exposed through the same contract as the HTR reader.</li>
                     <li><strong>Qdrant + FastAPI + Claude</strong> - vector store for semantic retrieval, service layer, and an agentic RAG loop that answers over retrieved blocks and cites the source.</li>
@@ -347,8 +347,8 @@ python scripts/train_trocr.py --epochs 8 --batch 8</code></pre>
                     </a>
                 </div>
 
-                <h3>Results &amp; Impact</h3>
-                <p>A Brazilian-Portuguese handwriting reader that stands among published academic baselines <strong>despite CPU-only training</strong> (9.57% line CER, beating Flor and Bluche), delivered as a 17&nbsp;MB versioned artifact ready to ship as a small containerized service. Because every stage is isolated by contract, the recognizer can be swapped - the moment the TrOCR challenger clears the gate - without touching the rest of the pipeline. The result is less a single model than a <strong>repeatable method</strong> for turning scanned documents, typed or handwritten, into retrievable and cited answers.</p>
+                <h3>Results &amp; Deployment</h3>
+                <p>A compact <strong>4.3M-parameter</strong> CRNN trained from scratch on Brazilian-Portuguese handwriting, reaching <strong>10.35% line CER on the BRESSAY test split</strong> and delivered as a 17&nbsp;MB versioned artifact that serves on CPU, with no GPU needed for inference. On the same split it comes in ahead of Bluche (18.02%), marginally behind Flor (10.26%), and behind Puigcerver (8.94%) and the ICDAR&nbsp;2024 winner PERO (2.88%). The gap between validation and test is 0.78 points, which suggests the model generalizes rather than having been tuned into its validation set. It is a deliberate trade-off: small enough to ship inside the pipeline rather than built for a leaderboard. Because every stage is isolated by contract, the recognizer can be swapped - the moment the TrOCR challenger clears the gate - without touching the rest of the pipeline. The result is less a single model than a <strong>repeatable method</strong> for turning scanned documents, typed or handwritten, into retrievable and cited answers.</p>
             </article>
         </div>
     </div>
