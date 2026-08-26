@@ -333,7 +333,6 @@
                 <div class="inner">
                     <h1>Calazans Macchiutti</h1>
                     <img src="images/profile.jpg" style="width:200px; height:200px; object-fit: cover; border-radius: 50%; border: 3px solid rgba(255,255,255,0.3);">
-                    <p>Cientista de Dados Sênior | PhD em Física</p>
                     <ul class="cta-row">
                         <li><a href="mailto:macchiutti@gmail.com?subject=Data%20Science%20Services%20Inquiry&body=Hello%20Calazans%2C%0A%0AI%20came%20across%20your%20website%20and%20I%E2%80%99m%20interested%20in%20learning%20more%20about%20your%20data%20science%20services.%0A%0AI%20would%20like%20to%20discuss%3A%0A-%20%5BDescribe%20your%20project%20or%20data%20challenge%5D%0A%0ALooking%20forward%20to%20hearing%20from%20you.%0A%0ABest%20regards%2C%0A%5BYour%20Name%5D" class="button primary small">Fale comigo</a></li>
                         <li><a href="https://github.com/Calazansmacchiutti" class="button small" target="_blank" rel="noopener">GitHub</a></li>
@@ -942,7 +941,7 @@ python scripts/train_trocr.py --epochs 8 --batch 8    # desafiante TrOCR (GPU)
                 </div>
 
                 <h3>Visão Geral do Projeto</h3>
-                <p>Monitoramento em tempo real de tres estacoes de tratamento de agua, cada uma com seu conjunto de sensores. Cerca de 7.900 linhas entre modulos e paginas de dashboard: previsao com Random Forest, XGBoost, Prophet e ARIMA; deteccao de anomalia por cinco metodos independentes; alertas por email, Slack e Teams; relatorios automaticos em PDF, Excel e HTML; alem de auditoria e backup. Roda sobre dados operacionais de sensor: 105.223 leituras por estacao, a partir de 2022, com as tags originais do SCADA.</p>
+                <p>Monitoramento em tempo real de tres estacoes de tratamento de agua, cada uma com seu conjunto de sensores. Cerca de 7.900 linhas entre modulos e paginas de dashboard: previsao com Random Forest, XGBoost, Prophet e ARIMA; deteccao de anomalia por cinco metodos independentes; alertas por email, Slack e Teams; relatorios automaticos em PDF, Excel e HTML; alem de auditoria e backup. O painel roda sobre dados sinteticos gerados para demonstracao; um repositorio separado guarda dados reais de SCADA da mesma concessionaria.</p>
 
                 <h3>Funcionalidades</h3>
                 <ul>
@@ -1254,7 +1253,7 @@ python main.py
     </div>
 
     <!-- Background -->
-    <div id="bg"></div>
+    <div id="bg"><canvas id="bg-particles" aria-hidden="true"></canvas></div>
 
     <!-- Lightbox -->
     <div class="lightbox" id="lightbox">
@@ -1268,6 +1267,7 @@ python main.py
     <script src="assets/js/breakpoints.min.js"></script>
     <script src="assets/js/util.js"></script>
     <script src="assets/js/main.js"></script>
+    <script src="assets/js/particles.js"></script>
     <script>
         var lightboxOpen = false;
         var savedHash = '';
