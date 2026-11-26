@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UrbanSim · Fleet sizing for on-demand mobility</title>
+<meta name="description" content="Discrete-event simulation that finds the smallest fleet meeting a service target, with confidence intervals, paired A/B tests, theory checks and validation against real trip data.">
+<meta name="author" content="Calazans Macchiutti">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/theme.css">
+<script>try { const t = new URLSearchParams(location.search).get("theme") || localStorage.getItem("uc-theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}</script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14.5' fill='%230a0c0f' stroke='%23c8f560'/%3E%3Cpath d='M9 21h14M9 11h14M11 9v14M21 9v14' stroke='%23c8f560' stroke-width='2'/%3E%3C/svg%3E">
+</head>
+<body>
+<a class="sr-only" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="#overview" data-goto="overview" aria-label="UrbanSim, overview">
+      <span class="mark" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M3 7h14M3 13h14M7 3v14M13 3v14"/><circle cx="13" cy="7" r="2.1" fill="#c8f560" stroke="none"/></svg></span>
+      <span id="site-title">UrbanSim</span>
+      <span class="ver" id="site-ver">fleet sizing</span>
+    </a>
+    <nav class="links" aria-label="External">
+      <a class="hide-sm" href="https://github.com/Calazansmacchiutti/UrbanSims" target="_blank" rel="noopener">GitHub</a>
+      <a class="hide-sm" href="https://calazansmacchiutti.github.io/projects/urbansim-fleet-sizing.html" target="_blank" rel="noopener">Case study</a>
+      <button class="icon-btn" id="theme-toggle" aria-label="Switch to light theme" title="Switch theme">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.2M12 19.8V22M2 12h2.2M19.8 12H22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<nav class="tabbar" aria-label="Sections">
+  <div class="inner">
+    <div class="tabs" role="tablist" id="tablist">
+      <button role="tab" id="t-overview" aria-controls="panel-overview">Overview</button>
+      <button role="tab" id="t-live" aria-controls="panel-live">Live simulation</button>
+      <button role="tab" id="t-sizing" aria-controls="panel-sizing">Fleet sizing</button>
+      <button role="tab" id="t-behavior" aria-controls="panel-behavior">Driver behavior</button>
+      <button role="tab" id="t-experiments" aria-controls="panel-experiments">A/B experiments</button>
+      <button role="tab" id="t-theory" aria-controls="panel-theory">Theory checks</button>
+      <button role="tab" id="t-realdata" aria-controls="panel-realdata">Real-data validation</button>
+      <button role="tab" id="t-cities" aria-controls="panel-cities">Cities</button>
+      <button role="tab" id="t-methods" aria-controls="panel-methods">Methods &amp; roadmap</button>
+    </div>
+  </div>
+</nav>
+
+<main id="main">
+  <section role="tabpanel" id="panel-overview" aria-labelledby="t-overview" tabindex="0"></section>
+  <section role="tabpanel" id="panel-live" aria-labelledby="t-live" tabindex="0" hidden></section>
+  <section role="tabpanel" id="panel-sizing" aria-labelledby="t-sizing" tabindex="0" hidden></section>
+  <section role="tabpanel" id="panel-behavior" aria-labelledby="t-behavior" tabindex="0" hidden></section>
+  <section role="tabpanel" id="panel-experiments" aria-labelledby="t-experiments" tabindex="0" hidden></section>
+  <section role="tabpanel" id="panel-theory" aria-labelledby="t-theory" tabindex="0" hidden></section>
+  <section role="tabpanel" id="panel-realdata" aria-labelledby="t-realdata" tabindex="0" hidden></section>
+  <section role="tabpanel" id="panel-cities" aria-labelledby="t-cities" tabindex="0" hidden></section>
+  <section role="tabpanel" id="panel-methods" aria-labelledby="t-methods" tabindex="0" hidden></section>
+</main>
+
+<footer class="site-footer">
+  <div class="inner">
+    <span id="foot-meta"></span>
+    <span><a id="foot-home" href="https://calazansmacchiutti.github.io/">Calazans Macchiutti</a> · Map data © OpenStreetMap contributors (ODbL) · Trip data: NYC TLC</span>
+  </div>
+  <div class="wordmark" aria-hidden="true">UrbanSim</div>
+</footer>
+
+<script src="data.js"></script>
+<script src="assets/charts.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
