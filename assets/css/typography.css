@@ -1,0 +1,253 @@
+/* =====================================================================
+   TIPOGRAFIA DO SITE (camada sobre o tema HTML5 UP Dimension)
+   Newsreader (nome e títulos) + Inter (texto) + JetBrains Mono (rótulos),
+   acento âmbar. Carregada por último no <head> de todas as páginas.
+   Só fonte, hierarquia e cor do texto mudam; fundo, layout e animações do
+   tema ficam como estão. O prefixo "html" mantém a especificidade acima
+   dos <style> inline das páginas.
+   ===================================================================== */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap");
+
+/* ---------- Tokens ---------- */
+html {
+	--t-display: "Newsreader", Georgia, "Times New Roman", serif;
+	--t-display-weight: 400;
+	--t-display-track: -0.02em;
+	--t-accent: #e3b778;
+	--t-accent-rgb: 227, 183, 120;
+	--t-accent-ink: #8a5a14;
+	--t-strong: #f6f3ee;
+	--t-ink-light: #17130e;
+	--t-sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+	--t-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+	--t-text: #b6c1c6;        /* parágrafos */
+	--t-muted: #8a979e;       /* metadados, legendas */
+}
+
+/* =====================================================================
+   HOME (tema Dimension, fundo escuro)
+   ===================================================================== */
+html body,
+html input,
+html select,
+html textarea {
+	font-family: var(--t-sans);
+	font-weight: 400;
+	color: var(--t-text);
+	font-feature-settings: "cv11", "ss01";
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+html strong,
+html b {
+	font-weight: 500;
+	color: var(--t-strong);
+}
+
+html a {
+	border-bottom-color: rgba(var(--t-accent-rgb), 0.45);
+}
+html #main article a:not(.button):not(.btn-link):hover {
+	color: var(--t-accent);
+}
+
+/* Títulos: fim da CAIXA ALTA espaçada; hierarquia por tamanho e peso */
+html h1,
+html h2,
+html h3,
+html h4,
+html h5,
+html h6 {
+	text-transform: none;
+	color: var(--t-strong);
+	font-family: var(--t-sans);
+	font-weight: 600;
+	letter-spacing: -0.01em;
+	line-height: 1.3;
+}
+
+html #header h1 {
+	font-family: var(--t-display);
+	font-weight: var(--t-display-weight);
+	letter-spacing: var(--t-display-track);
+	font-size: 2.9rem;
+	line-height: 1.05;
+	margin-bottom: 1.25rem;
+}
+html #header h1 { font-size: 3.2rem; }
+
+html h2,
+html h2.major {
+	font-family: var(--t-display);
+	font-weight: var(--t-display-weight);
+	letter-spacing: var(--t-display-track);
+	font-size: 2rem;
+	line-height: 1.1;
+}
+html h2,
+html h2.major { font-size: 2.3rem; }
+
+/* sublinhado do h2.major vira um traço curto no acento */
+html h2.major {
+	border-bottom: 0;
+	padding-bottom: 0;
+	position: relative;
+	margin-bottom: 2rem;
+}
+html h2.major::after {
+	content: "";
+	display: block;
+	width: 2.25rem;
+	height: 2px;
+	margin-top: 0.85rem;
+	background: var(--t-accent);
+}
+
+html h3 { font-size: 1.15rem; letter-spacing: -0.015em; }
+html h4 { font-size: 1rem; letter-spacing: -0.01em; }
+html h5,
+html h6 { font-size: 0.9rem; }
+
+html #main article p,
+html #main article li {
+	color: var(--t-text);
+	line-height: 1.7;
+}
+
+/* Rótulos (nav, botões, rodapé): mono, caixa alta discreta */
+html #header nav ul li a,
+html .button,
+html button,
+html input[type="submit"],
+html label,
+html #footer .copyright {
+	font-family: var(--t-mono);
+	font-weight: 500;
+	letter-spacing: 0.06em;
+}
+html #header nav ul li a { font-size: 0.72rem; color: #e9edef; }
+html #header .cta-row .button { font-size: 0.68rem; letter-spacing: 0.06em; }
+html #footer .copyright { font-size: 0.6rem; font-weight: 400; color: var(--t-muted); opacity: 1; }
+
+html .button.primary {
+	background-color: var(--t-strong);
+	color: #0b1013 !important;
+	font-weight: 500;
+}
+
+html code,
+html pre,
+html .code-block {
+	font-family: var(--t-mono);
+}
+
+/* ---------- Componentes da home: teal fixo -> acento ---------- */
+html .skill-category h4 {
+	font-family: var(--t-mono);
+	font-weight: 500;
+	font-size: 0.72rem;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	color: var(--t-accent);
+	border-bottom-color: rgba(255, 255, 255, 0.12);
+}
+html .skill-item { color: var(--t-text); }
+html .skill-item.level-5 .skill-dots span:nth-child(-n+5),
+html .skill-item.level-4 .skill-dots span:nth-child(-n+4),
+html .skill-item.level-3 .skill-dots span:nth-child(-n+3) {
+	background: var(--t-accent);
+}
+
+html .tech-badge {
+	font-family: var(--t-mono);
+	font-weight: 400;
+	color: var(--t-strong);
+	background: rgba(var(--t-accent-rgb), 0.12);
+	border: 1px solid rgba(var(--t-accent-rgb), 0.3);
+	border-radius: 999px;
+}
+html #projects .project-card .tech-badge { font-size: 0.66rem; }
+
+html .btn-link {
+	font-family: var(--t-mono);
+	font-size: 0.75rem;
+	letter-spacing: 0.02em;
+	background: rgba(var(--t-accent-rgb), 0.12);
+	border-color: rgba(var(--t-accent-rgb), 0.55);
+	color: var(--t-strong);
+}
+html .btn-link:hover { background: rgba(var(--t-accent-rgb), 0.28); color: var(--t-strong); }
+
+html .experience-item { border-left-color: var(--t-accent); }
+html .component-item h5 { color: var(--t-accent); }
+
+html .project-card h4 {
+	font-family: var(--t-display);
+	font-weight: var(--t-display-weight);
+	letter-spacing: -0.01em;
+	font-size: 1.05rem;
+}
+html .project-card h4 { font-size: 1.2rem; }
+html .project-card:hover,
+html .project-card:focus-visible { border-color: rgba(var(--t-accent-rgb), 0.5); }
+html .project-card:focus-visible { outline-color: var(--t-accent); }
+
+html .gallery-caption { font-family: var(--t-mono); }
+
+/* =====================================================================
+   PÁGINAS DE PROJETO (Bootstrap, fundo claro): mesma família tipográfica
+   ===================================================================== */
+html body.fixed-top-nav {
+	font-family: var(--t-sans);
+	color: #3a4449;
+	font-weight: 400;
+}
+html body.fixed-top-nav strong,
+html body.fixed-top-nav b { color: var(--t-ink-light); }
+html body.fixed-top-nav h1,
+html body.fixed-top-nav h2,
+html body.fixed-top-nav h3,
+html body.fixed-top-nav h4,
+html body.fixed-top-nav h5,
+html body.fixed-top-nav h6 { color: var(--t-ink-light); }
+html body.fixed-top-nav .post-title {
+	font-family: var(--t-display);
+	font-weight: var(--t-display-weight);
+	letter-spacing: var(--t-display-track);
+	font-size: clamp(2rem, 4vw, 3rem);
+	line-height: 1.08;
+}
+html body.fixed-top-nav h2,
+html body.fixed-top-nav h3 {
+	font-family: var(--t-display);
+	font-weight: var(--t-display-weight);
+	letter-spacing: var(--t-display-track);
+}
+html body.fixed-top-nav h2 { font-size: 1.9rem; margin-top: 2.5rem; }
+html body.fixed-top-nav h3 { font-size: 1.45rem; }
+html body.fixed-top-nav h2 { font-size: 2.2rem; }
+html body.fixed-top-nav h3 { font-size: 1.65rem; }
+html body.fixed-top-nav .navbar-brand {
+	font-family: var(--t-display);
+	letter-spacing: -0.02em;
+	color: var(--t-ink-light);
+}
+html body.fixed-top-nav .nav-link,
+html body.fixed-top-nav .badge,
+html body.fixed-top-nav .btn {
+	font-family: var(--t-mono);
+	font-size: 0.78rem;
+	letter-spacing: 0.04em;
+	font-weight: 500;
+}
+html body.fixed-top-nav .badge {
+	font-weight: 400;
+	background: rgba(var(--t-accent-rgb), 0.16) !important;
+	color: var(--t-accent-ink) !important;
+	border: 1px solid rgba(var(--t-accent-rgb), 0.45);
+	border-radius: 999px;
+}
+html body.fixed-top-nav a:not(.btn):not(.nav-link):not(.navbar-brand) { color: var(--t-accent-ink); }
+html body.fixed-top-nav .text-muted,
+html body.fixed-top-nav .desc { color: #6b767c !important; }
