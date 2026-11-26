@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 340" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif">
+<rect width="900" height="340" fill="#ffffff"/>
+<text x="30" y="34" font-size="16" font-weight="700" fill="#212529">How many cars does the base city need?</text>
+<text x="30" y="53" font-size="11.5" fill="#868e96">p90 wait at peak vs fleet size · 95% CI band · 11,000 simulated runs · target: 90% of riders wait ≤ 7 min</text>
+
+<line x1="80" y1="290.0" x2="860" y2="290.0" stroke="#e9ecef"/><text x="72" y="293.5" font-size="10" fill="#adb5bd" text-anchor="end">0</text>
+<line x1="80" y1="255.0" x2="860" y2="255.0" stroke="#e9ecef"/><text x="72" y="258.5" font-size="10" fill="#adb5bd" text-anchor="end">4</text>
+<line x1="80" y1="220.0" x2="860" y2="220.0" stroke="#e9ecef"/><text x="72" y="223.5" font-size="10" fill="#adb5bd" text-anchor="end">8</text>
+<line x1="80" y1="185.0" x2="860" y2="185.0" stroke="#e9ecef"/><text x="72" y="188.5" font-size="10" fill="#adb5bd" text-anchor="end">12</text>
+<line x1="80" y1="150.0" x2="860" y2="150.0" stroke="#e9ecef"/><text x="72" y="153.5" font-size="10" fill="#adb5bd" text-anchor="end">16</text>
+<line x1="80" y1="115.0" x2="860" y2="115.0" stroke="#e9ecef"/><text x="72" y="118.5" font-size="10" fill="#adb5bd" text-anchor="end">20</text>
+<line x1="80" y1="80.0" x2="860" y2="80.0" stroke="#e9ecef"/><text x="72" y="83.5" font-size="10" fill="#adb5bd" text-anchor="end">24</text>
+<text x="147.8" y="306" font-size="10" fill="#adb5bd" text-anchor="middle">60</text>
+<text x="283.5" y="306" font-size="10" fill="#adb5bd" text-anchor="middle">80</text>
+<text x="419.1" y="306" font-size="10" fill="#adb5bd" text-anchor="middle">100</text>
+<text x="554.8" y="306" font-size="10" fill="#adb5bd" text-anchor="middle">120</text>
+<text x="690.4" y="306" font-size="10" fill="#adb5bd" text-anchor="middle">140</text>
+<text x="826.1" y="306" font-size="10" fill="#adb5bd" text-anchor="middle">160</text>
+<text x="470.0" y="326" font-size="11" fill="#868e96" text-anchor="middle">cars in the fleet</text>
+<text x="22" y="185.0" font-size="11" fill="#868e96" text-anchor="middle" transform="rotate(-90 22 185.0)">p90 wait (min)</text>
+<polygon points="181.7,87.8 263.1,185.0 344.5,211.2 425.9,220.7 500.5,227.4 507.3,227.9 588.7,233.1 670.1,237.3 751.5,240.8 832.9,244.2 832.9,246.4 751.5,243.0 670.1,239.6 588.7,235.5 507.3,230.3 500.5,229.8 425.9,223.6 344.5,214.9 263.1,193.1 181.7,105.4" fill="#1971c2" opacity="0.18"/>
+<polyline points="181.7,96.6 263.1,189.0 344.5,213.0 425.9,222.2 500.5,228.6 507.3,229.1 588.7,234.3 670.1,238.4 751.5,241.9 832.9,245.3" fill="none" stroke="#1971c2" stroke-width="2"/>
+<circle cx="181.7" cy="96.6" r="3.5" fill="#1971c2" stroke="#fff" stroke-width="1.5"/>
+<circle cx="263.1" cy="189.0" r="3.5" fill="#1971c2" stroke="#fff" stroke-width="1.5"/>
+<circle cx="344.5" cy="213.0" r="3.5" fill="#1971c2" stroke="#fff" stroke-width="1.5"/>
+<circle cx="425.9" cy="222.2" r="3.5" fill="#1971c2" stroke="#fff" stroke-width="1.5"/>
+<circle cx="500.5" cy="228.6" r="3.5" fill="#1971c2" stroke="#fff" stroke-width="1.5"/>
+<circle cx="507.3" cy="229.1" r="3.5" fill="#1971c2" stroke="#fff" stroke-width="1.5"/>
+<circle cx="588.7" cy="234.3" r="3.5" fill="#1971c2" stroke="#fff" stroke-width="1.5"/>
+<circle cx="670.1" cy="238.4" r="3.5" fill="#1971c2" stroke="#fff" stroke-width="1.5"/>
+<circle cx="751.5" cy="241.9" r="3.5" fill="#1971c2" stroke="#fff" stroke-width="1.5"/>
+<circle cx="832.9" cy="245.3" r="3.5" fill="#1971c2" stroke="#fff" stroke-width="1.5"/>
+<line x1="80" y1="228.8" x2="860" y2="228.8" stroke="#212529" stroke-dasharray="4 4"/><text x="860" y="222.8" font-size="10.5" fill="#212529" text-anchor="end">target 7 min</text>
+<rect x="493.7" y="80" width="33.9" height="210" fill="#e8590c" opacity="0.10"/><line x1="507.3" y1="80" x2="507.3" y2="290" stroke="#e8590c" stroke-width="2"/><text x="515.3" y="94" font-size="12" font-weight="700" fill="#212529">N* = 113</text><text x="515.3" y="109" font-size="10.5" fill="#868e96">95% CI 111–116</text>
+<line x1="115.3" y1="80" x2="115.3" y2="290" stroke="#868e96" stroke-dasharray="2 3"/><text x="121.3" y="282" font-size="10.5" fill="#868e96">offline lower bound 55</text>
+</svg>

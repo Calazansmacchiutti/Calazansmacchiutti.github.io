@@ -641,7 +641,20 @@
 
 
                 <div class="projects-grid">
-                <div class="project-card" tabindex="0" onclick="location.href='#project-auditable-rag'">
+<div class="project-card" tabindex="0" onclick="location.href='#project-urbansim'">
+                    <h4>UrbanSim: Fleet Sizing Simulator</h4>
+                    <p>Discrete-event simulation that finds the smallest ride-hailing fleet meeting a service target on real street networks, with confidence intervals, paired A/B tests and validation against theory and NYC trip data.</p>
+                    <div>
+                        <span class="tech-badge">Python</span>
+                        <span class="tech-badge">SimPy</span>
+                        <span class="tech-badge">OpenStreetMap</span>
+                        <span class="tech-badge">Queueing theory</span>
+                        <span class="tech-badge">A/B testing</span>
+                        <span class="tech-badge">Bootstrap CI</span>
+                    </div>
+                </div>
+
+                                <div class="project-card" tabindex="0" onclick="location.href='#project-auditable-rag'">
                     <h4>Auditable Agentic RAG</h4>
                     <p>A retrieval agent for regulated use - refuses without evidence, enforces scope during retrieval, and logs every decision. 18/18 on a behavioural golden set, zero scope leaks.</p>
                     <div>
@@ -717,6 +730,50 @@
                 </div>
                 <p style="margin-top: 2rem;"><a href="https://github.com/Calazansmacchiutti" target="_blank"><i class="fa fa-github"></i> View all repositories on GitHub</a></p>
             </article>
+
+            <!-- Project: UrbanSim -->
+            <article id="project-urbansim">
+                <h2 class="major">UrbanSim: Fleet Sizing</h2>
+                <p style="font-style: italic;">A discrete-event simulator that finds the smallest fleet meeting a service target on real street networks, with a confidence interval on every answer and validation against queueing theory and 5.3 million real trips</p>
+
+                <h3>Figures &amp; Results</h3>
+                <div class="gallery-grid">
+                    <div class="gallery-item" onclick="openLightbox('projects/urbansim-dashboard-live.png')">
+                        <img src="projects/urbansim-dashboard-live.png" alt="Replay of two fleets on the Westminster street network">
+                        <div class="gallery-caption">Live replay: same requests, two behaviors</div>
+                    </div>
+                    <div class="gallery-item" onclick="openLightbox('projects/urbansim-sizing-curve.svg')">
+                        <img src="projects/urbansim-sizing-curve.svg" alt="p90 wait against fleet size crossing the target at N* = 113">
+                        <div class="gallery-caption">N* = 113, 95% CI 111&ndash;116</div>
+                    </div>
+                    <div class="gallery-item" onclick="openLightbox('projects/urbansim-behavior.svg')">
+                        <img src="projects/urbansim-behavior.svg" alt="Minimum fleet by driver behavior in three cities">
+                        <div class="gallery-caption">Information pays; coordination barely does</div>
+                    </div>
+                </div>
+
+                <h3>Project Overview</h3>
+                <p>&ldquo;How many cars does this city need?&rdquo; is usually answered with trips per hour times minutes per trip, plus a guessed margin. UrbanSim simulates the fleet minute by minute on OpenStreetMap streets (Cachoeirinha, Westminster, Manhattan) and searches for <strong>N*</strong>, the smallest fleet whose upper confidence bound meets the target: 90% of riders wait at most 7 minutes and at most 5% give up.</p>
+
+                <h3>The Central Design Decision</h3>
+                <p>A simulation always produces a number; the work is in knowing how much to trust it. Every N* carries a <strong>bootstrap confidence interval</strong>. Every comparison is a <strong>paired A/B test</strong> on common random numbers, with a minimum effect registered before the run and shuffled controls. And the model must reproduce <strong>closed-form queueing results</strong> before it is trusted on a city.</p>
+
+                <h3>Results &amp; Impact</h3>
+                <ul>
+                    <li><strong>N* = 113 cars (95% CI 111&ndash;116)</strong> on the base city, from 11,000 runs, against an offline floor of 55.</li>
+                    <li><strong>Information pays more than control:</strong> drivers who weigh demand against free cars need 79 cars, against 111 when they stay put. A central platform needs 80, so the price of anarchy is about 1.</li>
+                    <li><strong>6 of 6 theory checks pass:</strong> Erlang C, Little&rsquo;s law, the square-root law of search, and market equilibrium.</li>
+                    <li><strong>Manhattan does not validate yet</strong>, and the project says so. Little&rsquo;s law holds within 2% against TLC data, but zone ranking, the wait distribution and travel times fail. The diagnosis sets the next round.</li>
+                </ul>
+
+                <p style="margin-top: 2rem;">
+                    <a href="projects/urbansim-fleet-sizing.html" class="btn-link">Full case study</a>
+                    <a href="https://calazansmacchiutti.github.io/UrbanSims/" target="_blank" class="btn-link">Live dashboard</a>
+                    <a href="https://github.com/Calazansmacchiutti/UrbanSims" target="_blank" class="btn-link"><i class="fa fa-github"></i> View on GitHub</a>
+                    <a href="#projects" class="btn-link">&larr; Back to Projects</a>
+                </p>
+            </article>
+
 
             <!-- Project: Handwritten Document RAG -->
             <!-- Project: Auditable Agentic RAG -->

@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 230" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif">
+<rect width="900" height="230" fill="#ffffff"/>
+<text x="30" y="34" font-size="16" font-weight="700" fill="#212529">From a scenario file to a fleet size you can defend</text>
+<text x="30" y="53" font-size="11.5" fill="#868e96">Six stages · every number on the dashboard is read from a result file one of them wrote</text>
+
+<rect x="30" y="84" width="130" height="112" rx="6" fill="#f8f9fa" stroke="#ced4da"/>
+<text x="42" y="106" font-size="10" fill="#868e96">01</text><text x="42" y="126" font-size="13.5" font-weight="700" fill="#212529">Scenario</text>
+<text x="42" y="148" font-size="10.5" fill="#868e96">YAML: network,</text>
+<text x="42" y="163" font-size="10.5" fill="#868e96">demand, patience,</text>
+<text x="42" y="178" font-size="10.5" fill="#868e96">dispatch, drivers</text>
+<path d="M162 140 l9 0 m-4 -4 l4 4 l-4 4" fill="none" stroke="#adb5bd" stroke-width="1.5"/>
+<rect x="174" y="84" width="130" height="112" rx="6" fill="#f8f9fa" stroke="#ced4da"/>
+<text x="186" y="106" font-size="10" fill="#868e96">02</text><text x="186" y="126" font-size="13.5" font-weight="700" fill="#212529">Simulate</text>
+<text x="186" y="148" font-size="10.5" fill="#868e96">SimPy event engine</text>
+<text x="186" y="163" font-size="10.5" fill="#868e96">on OSM streets</text>
+<text x="186" y="178" font-size="10.5" fill="#868e96">one event log</text>
+<path d="M306 140 l9 0 m-4 -4 l4 4 l-4 4" fill="none" stroke="#adb5bd" stroke-width="1.5"/>
+<rect x="318" y="84" width="130" height="112" rx="6" fill="#f8f9fa" stroke="#ced4da"/>
+<text x="330" y="106" font-size="10" fill="#868e96">03</text><text x="330" y="126" font-size="13.5" font-weight="700" fill="#212529">Measure</text>
+<text x="330" y="148" font-size="10.5" fill="#868e96">peak window only:</text>
+<text x="330" y="163" font-size="10.5" fill="#868e96">p90 wait, gave up,</text>
+<text x="330" y="178" font-size="10.5" fill="#868e96">utilization</text>
+<path d="M450 140 l9 0 m-4 -4 l4 4 l-4 4" fill="none" stroke="#adb5bd" stroke-width="1.5"/>
+<rect x="462" y="84" width="130" height="112" rx="6" fill="#e7f1fb" stroke="#1971c2"/>
+<text x="474" y="106" font-size="10" fill="#868e96">04</text><text x="474" y="126" font-size="13.5" font-weight="700" fill="#212529">Size</text>
+<text x="474" y="148" font-size="10.5" fill="#868e96">bisection on fleet</text>
+<text x="474" y="163" font-size="10.5" fill="#868e96">common random nos.</text>
+<text x="474" y="178" font-size="10.5" fill="#868e96">bootstrap CI</text>
+<path d="M594 140 l9 0 m-4 -4 l4 4 l-4 4" fill="none" stroke="#adb5bd" stroke-width="1.5"/>
+<rect x="606" y="84" width="130" height="112" rx="6" fill="#f8f9fa" stroke="#ced4da"/>
+<text x="618" y="106" font-size="10" fill="#868e96">05</text><text x="618" y="126" font-size="13.5" font-weight="700" fill="#212529">Compare</text>
+<text x="618" y="148" font-size="10.5" fill="#868e96">paired A/B on N*</text>
+<text x="618" y="163" font-size="10.5" fill="#868e96">registered 1% effect</text>
+<text x="618" y="178" font-size="10.5" fill="#868e96">shuffled controls</text>
+<path d="M738 140 l9 0 m-4 -4 l4 4 l-4 4" fill="none" stroke="#adb5bd" stroke-width="1.5"/>
+<rect x="750" y="84" width="130" height="112" rx="6" fill="#e7f1fb" stroke="#1971c2"/>
+<text x="762" y="106" font-size="10" fill="#868e96">06</text><text x="762" y="126" font-size="13.5" font-weight="700" fill="#212529">Validate</text>
+<text x="762" y="148" font-size="10.5" fill="#868e96">Erlang C, Little,</text>
+<text x="762" y="163" font-size="10.5" fill="#868e96">search law, then</text>
+<text x="762" y="178" font-size="10.5" fill="#868e96">NYC TLC trips</text>
+</svg>

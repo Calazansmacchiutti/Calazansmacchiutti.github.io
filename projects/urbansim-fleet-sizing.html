@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UrbanSim: Fleet Sizing - Calazans Macchiutti</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+<style>
+        .project-gallery .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .project-gallery .gallery-item img {
+            cursor: pointer !important;
+            pointer-events: auto !important;
+        }
+
+        .project-gallery .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .project-gallery .gallery-item img {
+            transition: transform 0.3s ease;
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            background: #fff;
+            border: 1px solid #e9ecef;
+        }
+
+        .project-gallery .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .project-gallery .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(0,123,255,0.8), rgba(0,86,179,0.8));
+            color: white;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .project-gallery .gallery-item:hover .overlay {
+            opacity: 1;
+        }
+
+        .project-gallery .overlay-text h6 {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-gallery .overlay-text p {
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .modal-dialog {
+            max-width: 95%;
+            margin: 1.75rem auto;
+        }
+
+        .modal-xl {
+            max-width: 1140px;
+        }
+
+        .modal-body {
+            padding: 0;
+        }
+
+        .modal-body img {
+            width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+        }
+
+        /* Fallback modal styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1055;
+            display: none;
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+            overflow-y: auto;
+            outline: 0;
+        }
+
+        .modal.show {
+            display: block !important;
+        }
+
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1050;
+            width: 100vw;
+            height: 100vh;
+            background-color: #000;
+            opacity: 0.5;
+        }
+
+        body.modal-open {
+            overflow: hidden;
+        }
+
+        .gallery-item {
+            user-select: none;
+        }
+
+        .gallery-item img {
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        /* Content helpers */
+        .tech-role li { margin-bottom: 0.5rem; }
+        .product-card { border: 1px solid #e9ecef; border-radius: 0.5rem; padding: 1rem 1.25rem; height: 100%; background: #fff; }
+        .product-card h5 { font-size: 1rem; margin-bottom: 0.35rem; }
+        .product-card p { font-size: 0.88rem; color: #6c757d; margin: 0; }
+        .getting-started pre { background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 0.5rem; padding: 1rem; overflow-x: auto; }
+    </style>
+</head>
+<body class="fixed-top-nav">
+    <!-- Navigation -->
+    <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top">
+        <div class="container">
+            <a class="navbar-brand title font-weight-lighter" href="../index.html">
+                <span class="font-weight-bold">Calazans</span> Macchiutti
+            </a>
+            <button class="navbar-toggler collapsed ml-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse text-right" id="navbarNav">
+                <ul class="navbar-nav ml-auto flex-nowrap">
+                    <li class="nav-item me-3">
+                        <a class="nav-link px-3" href="../index.html">
+                            <i class="fas fa-user me-2"></i>About
+                        </a>
+                    </li>
+                    <li class="nav-item me-3">
+                        <a class="nav-link px-3" href="../index.html#academic">
+                            <i class="fas fa-graduation-cap me-2"></i>Academic
+                        </a>
+                    </li>
+                    <li class="nav-item me-3">
+                        <a class="nav-link px-3" href="../index.html#publications">
+                            <i class="fas fa-book-open me-2"></i>Publications
+                        </a>
+                    </li>
+                    <li class="nav-item me-3">
+                        <a class="nav-link px-3" href="../index.html#datascience">
+                            <i class="fas fa-chart-bar me-2"></i>Data Science
+                        </a>
+                    </li>
+                    <li class="nav-item me-3">
+                        <a class="nav-link px-3" href="../index.html#projects">
+                            <i class="fas fa-code me-2"></i>Projects
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-3" href="../index.html#cv">
+                            <i class="fas fa-file-alt me-2"></i>CV
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-5" role="main">
+        <div class="post">
+            <header class="post-header">
+                <h1 class="post-title">UrbanSim: Fleet Sizing for On-Demand Mobility</h1>
+                <p class="desc">A discrete-event simulator that finds the smallest fleet meeting a service target on real street networks, with a confidence interval on every answer, a paired A/B test on every comparison, and validation against queueing theory and 5.3 million real trips</p>
+            </header>
+
+            <article class="no-profile">
+                <div class="project-navigation">
+                    <a href="../index.html#projects" class="btn btn-outline-secondary mb-4">
+                        <i class="fas fa-arrow-left"></i> Back to Projects
+                    </a>
+                </div>
+
+                <!-- Project Gallery -->
+                <div class="project-gallery mb-5">
+                    <h3 class="mb-4"><i class="fas fa-images me-2"></i>Figures &amp; Results</h3>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="gallery-item">
+                                <img src="urbansim-dashboard-live.png" class="img-fluid rounded shadow-sm" alt="Replay of two fleets on the Westminster street network, side by side, with cars colored by state" data-bs-toggle="modal" data-bs-target="#imageModal1">
+                                <div class="overlay"><div class="overlay-text"><h6>Live replay</h6><p>Same requests, two driver behaviors</p></div></div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="gallery-item">
+                                <img src="urbansim-dashboard-overview.png" class="img-fluid rounded shadow-sm" alt="Overview tab of the project dashboard with the minimum fleet, theory checks and real-data validation status" data-bs-toggle="modal" data-bs-target="#imageModal2">
+                                <div class="overlay"><div class="overlay-text"><h6>Dashboard</h6><p>Nine tabs, every number from a result file</p></div></div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="gallery-item">
+                                <img src="urbansim-sizing-curve.svg" class="img-fluid rounded shadow-sm" alt="p90 wait against fleet size with a confidence band, crossing the 7-minute target at N* = 113" data-bs-toggle="modal" data-bs-target="#imageModal3">
+                                <div class="overlay"><div class="overlay-text"><h6>Sizing curve</h6><p>N* = 113, 95% CI 111&ndash;116</p></div></div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="gallery-item">
+                                <img src="urbansim-behavior.svg" class="img-fluid rounded shadow-sm" alt="Minimum fleet by driver behavior in three cities, with confidence intervals" data-bs-toggle="modal" data-bs-target="#imageModal4">
+                                <div class="overlay"><div class="overlay-text"><h6>Driver behavior</h6><p>Information pays; coordination barely does</p></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Project Overview</h3>
+                <p>&ldquo;How many cars does this city need?&rdquo; is usually answered with a spreadsheet: trips per hour times minutes per trip, plus a margin. That number ignores where the cars are when a request arrives, so it is always too low, and the margin on top is a guess. UrbanSim answers the question by <strong>simulating the fleet minute by minute on the real street network</strong> and searching for <strong>N*</strong>, the smallest fleet whose service meets a target. For ride-hailing the target is: 90% of riders wait at most 7 minutes and at most 5% give up.</p>
+                <p>The engine is generic: a scenario is one YAML file (network, demand profile, rider patience, dispatch rule, driver behavior), and the same code sizes ride-hailing, demand-responsive transit and rental fleets.</p>
+
+                <h3>The Central Design Decision</h3>
+                <p>A simulation always produces a number. The work is in knowing <strong>how much to trust it</strong>. So no result leaves the project without three things:</p>
+                <ul>
+                    <li><strong>An interval, not a point.</strong> N* is the smallest fleet whose <em>upper</em> confidence bound meets the target. Each candidate fleet runs 10 to 200 replications until the interval is tight, and the interval on N* itself comes from 2,000 bootstrap resamples.</li>
+                    <li><strong>A paired comparison, not two runs.</strong> Every candidate and every variant reuses the same random seeds (common random numbers). Any difference comes from the one thing that changed, not from luck. Comparisons are A/B tests on N* with a <strong>minimum effect registered before the run</strong> (1%) and with shuffled and uniform controls. A forecast must beat a shuffled forecast, or it is not information.</li>
+                    <li><strong>A check against something the simulator did not produce.</strong> The model must reproduce closed-form queueing results before it is trusted on a city, and then it is tested against real trips.</li>
+                </ul>
+
+                <img src="urbansim-flow.svg" class="img-fluid rounded border my-3" alt="Six-stage pipeline: scenario, simulate, measure, size, compare, validate">
+
+                <h3>Main Products / Deliverables</h3>
+                <ul>
+                    <li><strong>Discrete-event engine</strong> (SimPy): requests, dispatch (nearest car or batch Hungarian assignment), pickups, abandonment, repositioning. Every leg and decision goes to one event log, and every metric is computed from it.</li>
+                    <li><strong>Real street networks</strong> from OpenStreetMap, versioned by content hash: Cachoeirinha (Brazil), Westminster (London) and Manhattan. That is 2,000 to 3,700 intersections each, with shortest-path travel times.</li>
+                    <li><strong>Fleet-sizing search</strong>: bisection over fleet size with adaptive replications, bootstrap CI and an <strong>offline lower bound</strong> (the fleet a planner who knew every trip in advance would need, solved as a bipartite matching). The gap between the floor and N* is the price of not knowing the future.</li>
+                    <li><strong>Driver behavior models</strong>: drivers who stay put, who follow recent demand, who choose zones by expected earnings (logit), and a central platform that repositions free cars by solving a transport problem every round.</li>
+                    <li><strong>Demand generator</strong>: non-homogeneous Poisson with a peak, plus a log-Gaussian Cox process calibrated on real trip records.</li>
+                    <li><strong>Interactive dashboard</strong>: nine tabs, including 31 side-by-side replays with clickable driver cards. It is built by one command from the result files, so it can never disagree with them.</li>
+                </ul>
+
+                <h3>How the Model Is Validated</h3>
+                <p><strong>Against theory, 6 of 6 checks pass.</strong> With the street network switched off, the simulator reproduces the Erlang C waiting probability at loads of 0.5, 0.8 and 0.9. It also satisfies Little&rsquo;s law (busy cars = arrival rate &times; service time) to 0.00% error, the square-root law of search (pickup time falls with the number of free cars with slope &minus;0.43, inside the expected &minus;0.35 to &minus;0.65), and the equilibrium of a market where drivers choose zones by earnings.</p>
+                <p><strong>Against real data, Manhattan does not validate yet, and the dashboard says so.</strong> Against 5.3 million NYC TLC ride-hailing requests, four tests were registered before the run:</p>
+                <ul>
+                    <li><strong>Little&rsquo;s law on busy cars passes</strong>: 4,531 simulated against 4,457 real, within 2%.</li>
+                    <li><strong>Where waits are long</strong> (zone ranking) <strong>fails</strong>, with Spearman &rho; = &minus;0.36.</li>
+                    <li><strong>The shape of the wait distribution fails</strong>: p90/median is 1.42 against 2.33 real.</li>
+                    <li><strong>Travel times fail</strong>: the median error is 16% against a 10% limit.</li>
+                </ul>
+                <p>The diagnosis is written down, not hidden. Short trips run too fast, the city boundary is open (cars and riders cross into the other boroughs), and the model has no acceptance delay. That diagnosis sets the next round.</p>
+                <p><strong>Is real demand Poisson?</strong> At the zone scale the simulator uses, yes: the variance-to-mean ratio is 1.07. City-wide it is bursty (2.01 per minute, 3.32 per 5 minutes). That measurement is why a Cox process, calibrated on the same records, is now in the demand generator.</p>
+
+                <h3>What the Experiments Found</h3>
+                <ul>
+                    <li><strong>Information pays more than control.</strong> On the base city, drivers who weigh demand against the free cars already in a zone need <strong>79</strong> cars against <strong>111</strong> for drivers who stay put (&minus;29%). A central platform needs <strong>80</strong>. The price of anarchy is about 1, and the same pattern holds in Westminster and Cachoeirinha.</li>
+                    <li><strong>A smarter platform helps, but not everywhere.</strong> It adds a model forecast, counts incoming cars, sets targets by wait and caps travel at 15 minutes. It beats the first platform in 3 of 5 experiment designs. Coordination over well-informed drivers paid off only where the demand center moves.</li>
+                    <li><strong>Herding is real.</strong> Drivers who all chase the same recent demand need 102 cars, almost as many as drivers who never move.</li>
+                </ul>
+
+                <h3>Technologies Used</h3>
+                <div class="tech-stack mb-3">
+                    <span class="badge bg-secondary me-1 mb-1">Python</span>
+                    <span class="badge bg-secondary me-1 mb-1">SimPy</span>
+                    <span class="badge bg-secondary me-1 mb-1">NumPy / SciPy</span>
+                    <span class="badge bg-secondary me-1 mb-1">OSMnx / NetworkX</span>
+                    <span class="badge bg-secondary me-1 mb-1">Bootstrap CI</span>
+                    <span class="badge bg-secondary me-1 mb-1">Queueing theory</span>
+                    <span class="badge bg-secondary me-1 mb-1">Hungarian / transport LP</span>
+                    <span class="badge bg-secondary me-1 mb-1">pytest</span>
+                    <span class="badge bg-secondary me-1 mb-1">uv</span>
+                    <span class="badge bg-secondary me-1 mb-1">GitHub Actions</span>
+                </div>
+
+                <h3>Getting Started</h3>
+                <div class="code-block">
+<pre><code>git clone https://github.com/Calazansmacchiutti/UrbanSims.git
+cd UrbanSims
+uv sync
+uv run urbansim verify                       # the six theory checks
+uv run urbansim size scenarios/base.yaml     # N* with a confidence interval
+uv run urbansim site                         # rebuild the dashboard into site/</code></pre>
+                </div>
+
+                <h3>Repository &amp; Live Dashboard</h3>
+                <div class="repo-link">
+                    <p>The design notes, every scenario, the result files and 242 tests are in the repository. The dashboard is a static page built from those results.</p>
+                    <a href="https://calazansmacchiutti.github.io/UrbanSims/" target="_blank" class="btn btn-primary me-2 mb-2">
+                        <i class="fas fa-chart-line me-2"></i>Open the Dashboard
+                    </a>
+                    <a href="https://github.com/Calazansmacchiutti/UrbanSims" target="_blank" class="btn btn-outline-primary mb-2">
+                        <i class="fa-brands fa-github me-2"></i>View Project on GitHub
+                    </a>
+                </div>
+
+                <h3>Results &amp; Impact</h3>
+                <p>A fleet-sizing method where every answer carries its uncertainty and every claim has a control: <strong>N* = 113 cars (95% CI 111&ndash;116)</strong> on the base city from 11,000 simulated runs, against an offline floor of 55. The theory checks pass 6 of 6, and the A/B gates are registered before the runs (81 gates across 9 experiment designs). The real-data validation failed, and the project reports it as a failure. Showing where the model breaks, and why, is part of the deliverable. It is also what makes the 113 believable.</p>
+            </article>
+        </div>
+    </div>
+
+    <!-- Image Modals -->
+    <div class="modal fade" id="imageModal1" tabindex="-1" aria-labelledby="imageModal1Label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl"><div class="modal-content">
+            <div class="modal-header"><h5 class="modal-title" id="imageModal1Label">Replay: drivers who stay put vs drivers who follow opportunity (Westminster)</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>
+            <div class="modal-body"><img src="urbansim-dashboard-live.png" alt="Expanded replay screenshot"></div>
+        </div></div>
+    </div>
+    <div class="modal fade" id="imageModal2" tabindex="-1" aria-labelledby="imageModal2Label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl"><div class="modal-content">
+            <div class="modal-header"><h5 class="modal-title" id="imageModal2Label">Project dashboard: overview</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>
+            <div class="modal-body"><img src="urbansim-dashboard-overview.png" alt="Expanded dashboard screenshot"></div>
+        </div></div>
+    </div>
+    <div class="modal fade" id="imageModal3" tabindex="-1" aria-labelledby="imageModal3Label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl"><div class="modal-content">
+            <div class="modal-header"><h5 class="modal-title" id="imageModal3Label">p90 wait vs fleet size on the base city</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>
+            <div class="modal-body"><img src="urbansim-sizing-curve.svg" alt="Expanded sizing curve"></div>
+        </div></div>
+    </div>
+    <div class="modal fade" id="imageModal4" tabindex="-1" aria-labelledby="imageModal4Label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl"><div class="modal-content">
+            <div class="modal-header"><h5 class="modal-title" id="imageModal4Label">Minimum fleet by driver behavior in three cities</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>
+            <div class="modal-body"><img src="urbansim-behavior.svg" alt="Expanded behavior chart"></div>
+        </div></div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                if (typeof bootstrap === 'undefined') {
+                    loadFallbackBootstrap();
+                    return;
+                }
+
+                const galleryImages = document.querySelectorAll('.gallery-item img[data-bs-toggle="modal"]');
+
+                const handleImageClick = function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    const modalTarget = this.getAttribute('data-bs-target');
+                    if (!modalTarget) {
+                        return;
+                    }
+
+                    const modal = document.querySelector(modalTarget);
+                    if (!modal) {
+                        return;
+                    }
+
+                    try {
+                        const bootstrapModal = new bootstrap.Modal(modal, {
+                            backdrop: true,
+                            keyboard: true,
+                            focus: true
+                        });
+                        bootstrapModal.show();
+                    } catch (error) {
+                        modal.style.display = 'block';
+                        modal.classList.add('show');
+                        document.body.classList.add('modal-open');
+                    }
+                };
+
+                galleryImages.forEach(function(img) {
+                    img.addEventListener('click', handleImageClick);
+                });
+
+                const galleryItems = document.querySelectorAll('.gallery-item');
+                galleryItems.forEach(function(item) {
+                    item.addEventListener('click', function(e) {
+                        const img = this.querySelector('img[data-bs-toggle="modal"]');
+                        if (img) {
+                            img.dispatchEvent(new Event('click'));
+                        }
+                    });
+                });
+            }, 400);
+        });
+
+        function loadFallbackBootstrap() {
+            const galleryImages = document.querySelectorAll('.gallery-item img[data-bs-toggle="modal"]');
+            galleryImages.forEach(function(img) {
+                img.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const modalTarget = this.getAttribute('data-bs-target');
+                    const modal = document.querySelector(modalTarget);
+                    if (modal) {
+                        modal.style.display = 'block';
+                        modal.classList.add('show');
+                        document.body.classList.add('modal-open');
+
+                        const closeBtn = modal.querySelector('.btn-close');
+                        if (closeBtn) {
+                            closeBtn.onclick = function() {
+                                modal.style.display = 'none';
+                                modal.classList.remove('show');
+                                document.body.classList.remove('modal-open');
+                            };
+                        }
+
+                        modal.onclick = function(event) {
+                            if (event.target === modal) {
+                                modal.style.display = 'none';
+                                modal.classList.remove('show');
+                                document.body.classList.remove('modal-open');
+                            }
+                        };
+                    }
+                });
+            });
+        }
+    </script>
+    <footer class="mt-5 py-3 border-top text-muted small">
+        <div class="container mt-0">
+            &copy; Copyright 2026 Calazans Macchiutti.
+            Powered by <a href="https://getbootstrap.com/" target="_blank" rel="noopener">Bootstrap</a>.
+        </div>
+    </footer>
+</body>
+</html>
