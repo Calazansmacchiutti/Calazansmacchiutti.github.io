@@ -85,72 +85,6 @@
             padding-bottom: 1rem;
             border-bottom: 1px solid rgba(255,255,255,0.1);
         }
-        /* Projetos em GRADE (antes: lista empilhada). Com muitos projetos, a lista
-           obrigava a rolar; a grade deixa tudo visível de uma vez. */
-        .projects-grid {
-            display: grid;
-            /* Colunas EXPLICITAS, nao auto-fill: o tema escala o rem em telas grandes
-               (1rem chega a ~21px), entao minmax em px rendia 5 colunas estreitas de 265px
-               em vez das 3 planejadas. Contar colunas e previsivel; medir nao era. */
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 20px;
-            margin-bottom: 1rem;
-        }
-        @media screen and (min-width: 1800px) {
-            .projects-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-        }
-        @media screen and (max-width: 736px) {
-            .projects-grid { grid-template-columns: 1fr; }
-        }
-        .project-card {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 8px;
-            padding: 1.25rem;
-            cursor: pointer;
-            transition: background .25s ease, transform .25s ease, border-color .25s ease;
-            /* flex em coluna: as badges ficam coladas na base mesmo com textos de
-               tamanhos diferentes, então a grade não fica com cards desalinhados */
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-        /* o card de tese nao tem onclick: nao deve fingir que e clicavel */
-        .project-card:not([onclick]) { cursor: default; }
-        .project-card:hover,
-        .project-card:focus-visible {
-            background: rgba(255,255,255,0.1);
-            border-color: rgba(78, 205, 196, 0.5);
-            transform: translateY(-3px);
-        }
-        .project-card:focus-visible {
-            outline: 2px solid #4ecdc4;
-            outline-offset: 2px;
-        }
-        .project-card h4 {
-            margin: 0 0 0.5rem;
-            font-size: 0.95rem;
-            line-height: 1.35;
-        }
-        /* #projects na frente para vencer as regras do tema (que usam #main article p e
-           por isso tinham especificidade maior - era por isso que o clamp nao pegava). */
-        #projects .project-card p {
-            font-size: 0.82rem;
-            line-height: 1.5;
-            margin: 0 0 0.9rem;
-            flex-grow: 1;          /* empurra as badges para baixo */
-            /* Teto de 2 linhas: sem isto, descricao longa estica o card e ele fica
-               mais alto que largo - o oposto do formato desejado. */
-            display: -webkit-box;
-            -webkit-box-orient: vertical;
-            -webkit-line-clamp: 2;
-            line-clamp: 2;
-            overflow: hidden;
-        }
-        #projects .project-card .tech-badge { font-size: 0.7rem; padding: 0.15rem 0.5rem; }
-        .project-card > div:last-child {
-            margin-top: auto;
-        }
         /* Só a aba de projetos fica mais larga, para caber 3 colunas em tela grande.
            O resto do tema (40rem) não muda. */
         @media screen and (min-width: 1200px) {
@@ -159,9 +93,6 @@
                 width: min(1200px, 92vw);
                 max-width: 100%;
             }
-        }
-        @media screen and (max-width: 480px) {
-            .projects-grid { grid-template-columns: 1fr; }
         }
         .experience-item {
             margin-bottom: 2rem;
@@ -323,6 +254,8 @@
         }
     </style>
     <link rel="stylesheet" href="assets/css/typography.css" />
+    <link rel="stylesheet" href="assets/css/projects.css" />
+    <script src="assets/js/projects-filter.js" defer></script>
 </head>
 <body class="is-preload">
 
@@ -641,93 +574,100 @@
                 <h2 class="major">Projects</h2>
 
 
-                <div class="projects-grid">
-<div class="project-card" tabindex="0" onclick="location.href='#project-urbansim'">
-                    <h4>UrbanSim: Fleet Sizing Simulator</h4>
-                    <p>Discrete-event simulation that finds the smallest ride-hailing fleet meeting a service target on real street networks, with confidence intervals, paired A/B tests and validation against theory and NYC trip data.</p>
-                    <div>
-                        <span class="tech-badge">Python</span>
-                        <span class="tech-badge">SimPy</span>
-                        <span class="tech-badge">OpenStreetMap</span>
-                        <span class="tech-badge">Queueing theory</span>
-                        <span class="tech-badge">A/B testing</span>
-                        <span class="tech-badge">Bootstrap CI</span>
+                <ul class="pfilter" aria-label="Filter projects by theme">
+                    <li><button type="button" data-filter="all" aria-pressed="true">All <span class="n">7</span></button></li>
+                    <li><button type="button" data-filter="sim" aria-pressed="false">Simulation <span class="n">1</span></button></li>
+                    <li><button type="button" data-filter="llm" aria-pressed="false">LLM &amp; RAG <span class="n">2</span></button></li>
+                    <li><button type="button" data-filter="cv" aria-pressed="false">Computer vision <span class="n">1</span></button></li>
+                    <li><button type="button" data-filter="risk" aria-pressed="false">Fraud &amp; risk <span class="n">2</span></button></li>
+                    <li><button type="button" data-filter="ts" aria-pressed="false">Time series <span class="n">2</span></button></li>
+                    <li><button type="button" data-filter="analytics" aria-pressed="false">Analytics <span class="n">1</span></button></li>
+                </ul>
+
+                <div class="pfeatured" data-themes="sim">
+                    <div class="ptop">
+                        <div>
+                            <div class="phead"><span class="pnum">01</span><span class="ptheme">Featured · Simulation</span></div>
+                            <h3 class="ptitle"><a class="pstretch" href="#project-urbansim">UrbanSim: Fleet Sizing</a></h3>
+                            <p class="pq">What is the smallest fleet that meets a waiting-time target on a real street network, and how much does driver behavior change it?</p>
+                        </div>
+                        <span class="pcover"><img src="projects/urbansim-dashboard-overview.png" alt="" loading="lazy"></span>
                     </div>
+                    <dl class="car">
+                        <div class="c"><dt>Context</dt><dd>Fleet size is usually a spreadsheet estimate: trips times minutes, plus a guessed margin that ignores where the cars are when a request arrives.</dd></div>
+                        <div class="a"><dt>Action</dt><dd>Built a discrete-event simulator on OpenStreetMap networks that searches for the minimum fleet with confidence intervals, compares driver behaviors in paired A/B tests and is checked against queueing theory.</dd></div>
+                        <div class="r"><dt>Result</dt><dd>A minimum fleet with a confidence interval and one finding: informing drivers shrinks the fleet, coordinating them barely does. Validation against real Manhattan trips does not pass yet, and the dashboard says so.</dd></div>
+                    </dl>
+                    <div class="pfoot"><span class="pstack">Python · SimPy · OpenStreetMap · Queueing theory</span><span class="pactions"><a class="pdash" href="urbansim/index.html" target="_blank" rel="noopener">Live dashboard <span aria-hidden="true">&#8599;</span></a><span class="pcta">Case study <span class="parrow" aria-hidden="true">&rarr;</span></span></span></div>
                 </div>
 
-                                <div class="project-card" tabindex="0" onclick="location.href='#project-auditable-rag'">
-                    <h4>Auditable Agentic RAG</h4>
-                    <p>A retrieval agent for regulated use - refuses without evidence, enforces scope during retrieval, and logs every decision. 18/18 on a behavioural golden set, zero scope leaks.</p>
-                    <div>
-                        <span class="tech-badge">Python</span>
-                        <span class="tech-badge">Claude</span>
-                        <span class="tech-badge">Qdrant</span>
-                        <span class="tech-badge">RAG</span>
-                        <span class="tech-badge">Evals</span>
-                        <span class="tech-badge">FastAPI</span>
-                    </div>
-                </div>
-
-                <div class="project-card" tabindex="0" onclick="location.href='#project-handwriting'">
-                    <h4>Handwritten Document RAG (pt-BR HTR)</h4>
-                    <p>A compact 4.3M-parameter CRNN-CTC recognizer trained from scratch for Brazilian Portuguese, benchmarked against a TrOCR challenger and plugged into a document-RAG pipeline as a swappable reader.</p>
-                    <div>
-                        <span class="tech-badge">Python</span>
-                        <span class="tech-badge">PyTorch</span>
-                        <span class="tech-badge">CRNN+CTC</span>
-                        <span class="tech-badge">TrOCR</span>
-                        <span class="tech-badge">Qdrant</span>
-                        <span class="tech-badge">RAG</span>
-                    </div>
-                </div>
-
-                <div class="project-card" tabindex="0" onclick="location.href='#project-fraud'">
-                    <h4>Fraud Detection (KYC/KYT)</h4>
-                    <p>ML-based fraud detection comparing supervised and unsupervised approaches.</p>
-                    <div>
-                        <span class="tech-badge">Python</span>
-                        <span class="tech-badge">XGBoost</span>
-                        <span class="tech-badge">TensorFlow</span>
-                        <span class="tech-badge">Scikit-learn</span>
-                    </div>
-                </div>
-
-                <div class="project-card" tabindex="0" onclick="location.href='#project-logistic'">
-                    <h4>Logistic Data Assessment</h4>
-                    <p>Analytics suite for tracking delays, seasonality, and predictive risk scoring.</p>
-                    <div>
-                        <span class="tech-badge">Python</span>
-                        <span class="tech-badge">SQL</span>
-                        <span class="tech-badge">Scikit-learn</span>
-                        <span class="tech-badge">Gradient Boosting</span>
-                        <span class="tech-badge">SMOTE</span>
-                    </div>
-                </div>
-
-                <div class="project-card" tabindex="0" onclick="location.href='#project-streamlit'">
-                    <h4>Water Treatment Monitoring</h4>
-                    <p>Real-time monitoring of three treatment plants: forecasting, anomaly detection and alerting.</p>
-                    <div>
-                        <span class="tech-badge">Python</span>
-                        <span class="tech-badge">Prophet</span>
-                        <span class="tech-badge">ARIMA</span>
-                        <span class="tech-badge">XGBoost</span>
-                        <span class="tech-badge">Isolation Forest</span>
-                        <span class="tech-badge">Streamlit</span>
-                    </div>
-                </div>
-
-                <div class="project-card" tabindex="0" onclick="location.href='#project-lstm'">
-                    <h4>Voltage Time Series LSTM</h4>
-                    <p>LSTM neural network for voltage prediction and anomaly detection.</p>
-                    <div>
-                        <span class="tech-badge">Python</span>
-                        <span class="tech-badge">TensorFlow</span>
-                        <span class="tech-badge">LSTM</span>
-                        <span class="tech-badge">XGBoost</span>
-                        <span class="tech-badge">SMOTE</span>
-                    </div>
-                </div>
+                <div class="pgrid">
+                    <a class="pcard" href="#project-auditable-rag" data-themes="llm">
+                        <div class="phead"><span class="pnum">02</span><span class="ptheme">LLM &amp; RAG</span></div>
+                        <h4 class="ptitle">Auditable Agentic RAG</h4>
+                        <p class="pq">Can a RAG agent refuse when evidence is missing and keep each client&#x27;s data out of reach, verified by deterministic tests rather than an LLM judge?</p>
+                        <dl class="car">
+                            <div class="c"><dt>Context</dt><dd>In banks and asset managers a good answer is not enough: the system must refuse without evidence, never leak one client&#x27;s data, and explain itself months later.</dd></div>
+                            <div class="a"><dt>Action</dt><dd>Enforced permissions as a filter during retrieval, required a cited passage for every claim, logged each decision to an append-only trail, and ran deterministic checks before the LLM judge.</dd></div>
+                            <div class="r"><dt>Result</dt><dd>It refused every case without evidence and leaked no scope. Isolation held even with a naive responder, because it is structural, not dependent on the model.</dd></div>
+                        </dl>
+                        <div class="pfoot"><span class="pstack">Python · Claude · Qdrant · FastAPI</span><span class="pcta">Case study <span class="parrow" aria-hidden="true">&rarr;</span></span></div>
+                    </a>
+                    <a class="pcard" href="#project-handwriting" data-themes="cv llm">
+                        <div class="phead"><span class="pnum">03</span><span class="ptheme">Computer vision · LLM &amp; RAG</span></div>
+                        <h4 class="ptitle">Handwritten Document RAG</h4>
+                        <p class="pq">Can a compact recognizer trained from scratch, served on CPU, read Brazilian Portuguese handwriting on the official BRESSAY benchmark?</p>
+                        <dl class="car">
+                            <div class="c"><dt>Context</dt><dd>The document pipeline read typed pages, but no off-the-shelf handwriting model met its accuracy, deployment and integration needs for Brazilian Portuguese.</dd></div>
+                            <div class="a"><dt>Action</dt><dd>Trained a CRNN-CTC on the official splits with the evaluation protocol fixed in advance, behind a gate that only promotes a challenger if it beats the baseline.</dd></div>
+                            <div class="r"><dt>Result</dt><dd>Test error measured once on the frozen model, kept apart from the validation score used for selection, and a reader that plugs into the RAG pipeline with nothing downstream changed.</dd></div>
+                        </dl>
+                        <div class="pfoot"><span class="pstack">PyTorch · CRNN + CTC · TrOCR · Qdrant</span><span class="pcta">Case study <span class="parrow" aria-hidden="true">&rarr;</span></span></div>
+                    </a>
+                    <a class="pcard" href="#project-fraud" data-themes="risk">
+                        <div class="phead"><span class="pnum">04</span><span class="ptheme">Fraud &amp; risk</span></div>
+                        <h4 class="ptitle">Fraud Detection (KYC/KYT)</h4>
+                        <p class="pq">With fraud at 0.17% of transactions, how much does a detector trained without labels lose to a supervised one, judged by average precision?</p>
+                        <dl class="car">
+                            <div class="c"><dt>Context</dt><dd>When fraud is this rare, accuracy is meaningless and ROC curves look good for almost any model, so the comparison needs a metric that sees the minority class.</dd></div>
+                            <div class="a"><dt>Action</dt><dd>Compared XGBoost and Random Forest against Isolation Forest, K-Means and an autoencoder on the same held-out split, ranked by precision-recall rather than accuracy.</dd></div>
+                            <div class="r"><dt>Result</dt><dd>Supervised models win clearly when labels exist; the autoencoder remains an option to start without fraud history. Written up as a paper.</dd></div>
+                        </dl>
+                        <div class="pfoot"><span class="pstack">XGBoost · TensorFlow · Scikit-learn</span><span class="pcta">Case study <span class="parrow" aria-hidden="true">&rarr;</span></span></div>
+                    </a>
+                    <a class="pcard" href="#project-logistic" data-themes="analytics risk">
+                        <div class="phead"><span class="pnum">05</span><span class="ptheme">Analytics · Fraud &amp; risk</span></div>
+                        <h4 class="ptitle">Logistic Data Assessment</h4>
+                        <p class="pq">Using only what is known before departure, can a model flag the flights that will leave more than 15 minutes late?</p>
+                        <dl class="car">
+                            <div class="c"><dt>Context</dt><dd>Delays are a minority of flights, so a model can look accurate just by predicting “on time”, and the main causes, weather and the aircraft&#x27;s previous leg, are not in the data.</dd></div>
+                            <div class="a"><dt>Action</dt><dd>Built a SQL pipeline over millions of flight records, explored delays by airline, route and period, and compared three classifiers by recall and precision instead of accuracy.</dd></div>
+                            <div class="r"><dt>Result</dt><dd>The most accurate model was the worst for the job. The chosen one catches most delays at the cost of false alarms, with the limits of the data stated plainly.</dd></div>
+                        </dl>
+                        <div class="pfoot"><span class="pstack">SQL · Python · Scikit-learn · Plotly</span><span class="pcta">Case study <span class="parrow" aria-hidden="true">&rarr;</span></span></div>
+                    </a>
+                    <a class="pcard" href="#project-streamlit" data-themes="ts">
+                        <div class="phead"><span class="pnum">06</span><span class="ptheme">Time series</span></div>
+                        <h4 class="ptitle">Water Treatment Monitoring</h4>
+                        <p class="pq">Can one modular pipeline forecast and flag anomalies across treatment plants that measure different variables?</p>
+                        <dl class="car">
+                            <div class="c"><dt>Context</dt><dd>Each plant measures its own set of water-quality variables, and no single anomaly detector suits every sensor.</dd></div>
+                            <div class="a"><dt>Action</dt><dd>Split loading, preprocessing, forecasting and detection into modules, ran each variable through several independent detectors, and fed alerts and reports from the same modules.</dd></div>
+                            <div class="r"><dt>Result</dt><dd>Swapping a model touches one module, not the interface. Demonstrated on realistic synthetic data, not on plant measurements.</dd></div>
+                        </dl>
+                        <div class="pfoot"><span class="pstack">Prophet · XGBoost · Isolation Forest · Streamlit</span><span class="pcta">Case study <span class="parrow" aria-hidden="true">&rarr;</span></span></div>
+                    </a>
+                    <a class="pcard" href="#project-lstm" data-themes="ts">
+                        <div class="phead"><span class="pnum">07</span><span class="ptheme">Time series</span></div>
+                        <h4 class="ptitle">Voltage Forecasting with LSTM</h4>
+                        <p class="pq">On a short voltage series, does adding attention to an LSTM improve the forecast?</p>
+                        <dl class="car">
+                            <div class="c"><dt>Context</dt><dd>About a week of voltage readings with frequent anomalies, a series that crosses zero, and a real risk of leaking future values into training.</dd></div>
+                            <div class="a"><dt>Action</dt><dd>Split the series in time before anything else, then ran two tasks on it: classifying anomalies with boosting and forecasting with an LSTM, with and without attention.</dd></div>
+                            <div class="r"><dt>Result</dt><dd>Attention made the forecast worse: on a short series the extra parameters add variance, not signal. The simpler network wins.</dd></div>
+                        </dl>
+                        <div class="pfoot"><span class="pstack">TensorFlow · Keras · XGBoost</span><span class="pcta">Case study <span class="parrow" aria-hidden="true">&rarr;</span></span></div>
+                    </a>
                 </div>
                 <p style="margin-top: 2rem;"><a href="https://github.com/Calazansmacchiutti" target="_blank"><i class="fa fa-github"></i> View all repositories on GitHub</a></p>
             </article>
@@ -769,7 +709,7 @@
 
                 <p style="margin-top: 2rem;">
                     <a href="projects/urbansim-fleet-sizing.html" class="btn-link">Full case study</a>
-                    <a href="https://calazansmacchiutti.github.io/UrbanSims/" target="_blank" class="btn-link">Live dashboard</a>
+                    <a href="urbansim/index.html" target="_blank" rel="noopener" class="btn-link">Live dashboard</a>
                     <a href="https://github.com/Calazansmacchiutti/UrbanSims" target="_blank" class="btn-link"><i class="fa fa-github"></i> View on GitHub</a>
                     <a href="#projects" class="btn-link">&larr; Back to Projects</a>
                 </p>

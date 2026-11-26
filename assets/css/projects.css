@@ -1,0 +1,256 @@
+/* =====================================================================
+   PROJETOS: filtros por tema + destaque + cards CAR
+   Cada projeto é contado por uma pergunta-guia e por Contexto, Ação e
+   Resultado (qualitativo; os números ficam no estudo de caso).
+   Referências: portfólios do supahero.io. jinesh (estudos de caso em
+   texto, rótulos mono, divisores), abhay (painel por projeto com missão +
+   "case study" + linha de resultado) e bryn (filtros de trabalho).
+   Depende dos tokens de typography.css (--t-*).
+   ===================================================================== */
+
+/* ---------- Filtros por tema ---------- */
+html #projects .pfilter {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.45rem;
+	margin: -0.5rem 0 2.25rem;
+	padding: 0;
+	list-style: none;
+}
+html #projects .pfilter li { padding: 0; margin: 0; }
+html #projects .pfilter button {
+	/* o tema estiliza todo <button> como botão grande em caixa alta */
+	all: unset;
+	box-sizing: border-box;
+	cursor: pointer;
+	display: inline-flex;
+	align-items: baseline;
+	gap: 0.45em;
+	padding: 0.5rem 0.85rem;
+	border-radius: 999px;
+	border: 1px solid rgba(255, 255, 255, 0.14);
+	box-shadow: none !important;
+	height: auto !important;
+	line-height: 1 !important;
+	font-family: var(--t-mono) !important;
+	font-size: 0.68rem !important;
+	font-weight: 500;
+	letter-spacing: 0.04em;
+	color: var(--t-text) !important;
+	transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+html #projects .pfilter button:hover { border-color: rgba(var(--t-accent-rgb), 0.6); color: var(--t-strong) !important; }
+html #projects .pfilter button:focus-visible { outline: 2px solid var(--t-accent); outline-offset: 2px; }
+html #projects .pfilter button[aria-pressed="true"] {
+	background: var(--t-strong);
+	border-color: var(--t-strong);
+	color: #0b1013 !important;
+}
+html #projects .pfilter .n { opacity: 0.55; font-weight: 400; }
+
+/* ---------- Peças comuns ---------- */
+html #projects .pfeatured,
+html #projects a.pcard {
+	display: flex;
+	flex-direction: column;
+	color: inherit;
+	text-decoration: none;
+	border-radius: 12px;
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	background: rgba(255, 255, 255, 0.025);
+	transition: border-color 0.25s ease, background-color 0.25s ease;
+}
+html #projects .pfeatured:hover,
+html #projects a.pcard:hover {
+	border-color: rgba(var(--t-accent-rgb), 0.55);
+	background: rgba(255, 255, 255, 0.045);
+}
+html #projects .pfeatured:focus-visible,
+html #projects a.pcard:focus-visible { outline: 2px solid var(--t-accent); outline-offset: 3px; }
+
+/* cabeçalho: número + tema, sempre na mesma posição */
+html #projects .phead {
+	display: flex;
+	align-items: baseline;
+	gap: 0.9rem;
+	font-family: var(--t-mono);
+	font-size: 0.64rem;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	line-height: 1.4;
+}
+html #projects .phead .pnum { color: var(--t-muted); }
+html #projects .phead .ptheme { color: var(--t-accent); }
+
+html #projects .ptitle {
+	font-family: var(--t-display);
+	font-weight: var(--t-display-weight);
+	letter-spacing: -0.015em;
+	line-height: 1.15;
+	color: var(--t-strong);
+	margin: 0.7rem 0 0.5rem;
+}
+/* pergunta-guia: o propósito do projeto, em itálico */
+html #projects .pq {
+	font-family: var(--t-display);
+	font-style: italic;
+	font-weight: 400;
+	color: var(--t-strong);
+	opacity: 0.85;
+	line-height: 1.35;
+	margin: 0 0 1.25rem;
+}
+
+/* CAR: rótulo mono à esquerda, texto à direita, linhas finas entre eles */
+html #projects .car { margin: 0; padding: 0; }
+html #projects .car > div {
+	display: grid;
+	grid-template-columns: 5.75rem minmax(0, 1fr);
+	gap: 0.9rem;
+	padding: 0.7rem 0;
+	border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+html #projects .car dt {
+	font-family: var(--t-mono);
+	font-size: 0.6rem;
+	font-weight: 500;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--t-muted);
+	padding-top: 0.2rem;
+	margin: 0;
+}
+html #projects .car dd {
+	margin: 0;
+	font-size: 0.8rem;
+	line-height: 1.6;
+	color: var(--t-text);
+}
+html #projects .car > div.r dd { color: var(--t-strong); }
+
+/* rodapé: tecnologias + chamada, colado na base do card */
+html #projects .pfoot {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 1rem;
+	margin-top: auto;
+	padding-top: 0.9rem;
+	border-top: 1px solid rgba(255, 255, 255, 0.08);
+	font-family: var(--t-mono);
+	font-size: 0.62rem;
+	letter-spacing: 0.03em;
+	line-height: 1.5;
+}
+html #projects .pstack { color: var(--t-muted); }
+html #projects .pcta {
+	flex-shrink: 0;
+	color: var(--t-strong);
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	font-weight: 500;
+	white-space: nowrap;
+}
+html #projects .parrow { display: inline-block; transition: transform 0.25s ease, color 0.25s ease; }
+html #projects a:hover .parrow,
+html #projects a:focus-visible .parrow { transform: translateX(4px); color: var(--t-accent); }
+
+/* ---------- Destaque ---------- */
+html #projects .pfeatured { padding: 2rem; margin-bottom: 1.5rem; gap: 1.75rem; }
+html #projects .pfeatured .ptop {
+	display: grid;
+	grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+	gap: 2.25rem;
+	align-items: center;
+}
+html #projects .pfeatured .ptitle { font-size: 2.1rem; }
+html #projects .pfeatured .pq { font-size: 1.2rem; margin-bottom: 0; }
+html #projects .pfeatured .pcover {
+	display: block;
+	aspect-ratio: 16 / 10;
+	overflow: hidden;
+	border-radius: 8px;
+	border: 1px solid rgba(255, 255, 255, 0.08);
+	background: #0d1215;
+}
+html #projects .pfeatured .pcover img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: top center;
+	transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+html #projects .pfeatured:hover .pcover img { transform: scale(1.03); }
+/* no destaque o CAR vira três colunas */
+html #projects .pfeatured .car {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 1.5rem;
+}
+html #projects .pfeatured .car > div {
+	display: block;
+	padding: 0.9rem 0 0;
+}
+html #projects .pfeatured .car dt { margin-bottom: 0.45rem; padding-top: 0; }
+html #projects .pfeatured .pfoot { margin-top: 0; }
+
+/* ---------- Grade de cards ---------- */
+html #projects .pgrid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 1.5rem;
+	margin-bottom: 1rem;
+}
+html #projects a.pcard { padding: 1.6rem 1.6rem 1.3rem; }
+html #projects .pcard .ptitle { font-size: 1.45rem; }
+html #projects .pcard .pq { font-size: 1rem; }
+html #projects .pcard .car { margin-bottom: 1rem; }
+
+/* filtro: itens fora do tema somem */
+html #projects [data-themes][hidden] { display: none !important; }
+
+/* ---------- Responsivo ---------- */
+@media screen and (max-width: 980px) {
+	html #projects .pfeatured .ptop { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; }
+	html #projects .pfeatured .pcover { order: -1; }
+	html #projects .pfeatured .car { grid-template-columns: minmax(0, 1fr); gap: 0; }
+}
+@media screen and (max-width: 736px) {
+	html #projects .pgrid { grid-template-columns: minmax(0, 1fr); }
+	html #projects .pfeatured { padding: 1.35rem; }
+	html #projects a.pcard { padding: 1.35rem 1.35rem 1.1rem; }
+	html #projects .pfeatured .ptitle { font-size: 1.7rem; }
+	html #projects .car > div { grid-template-columns: minmax(0, 1fr); gap: 0.25rem; }
+	html #projects .pfoot { flex-wrap: wrap; }
+}
+
+/* ---------- Destaque: link esticado + painel ao vivo ---------- */
+html #projects .pfeatured { position: relative; }
+html #projects .pfeatured:focus-within { border-color: rgba(var(--t-accent-rgb), 0.55); }
+html #projects .pstretch { color: inherit; text-decoration: none; border-bottom: 0; }
+html #projects .pstretch:focus-visible { outline: none; }
+html #projects .pstretch::after { content: ""; position: absolute; inset: 0; border-radius: 12px; }
+html #projects .pstretch:focus-visible::after { outline: 2px solid var(--t-accent); outline-offset: 3px; }
+html #projects .pfeatured:hover .parrow { transform: translateX(4px); color: var(--t-accent); }
+html #projects .pactions { display: inline-flex; align-items: center; gap: 1.25rem; flex-shrink: 0; }
+html #projects a.pdash {
+	position: relative;
+	z-index: 1;
+	color: var(--t-accent);
+	border: 1px solid rgba(var(--t-accent-rgb), 0.45);
+	border-bottom: 1px solid rgba(var(--t-accent-rgb), 0.45);
+	border-radius: 999px;
+	padding: 0.4rem 0.8rem;
+	text-decoration: none;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	font-weight: 500;
+	white-space: nowrap;
+	transition: background-color 0.2s ease, color 0.2s ease;
+}
+html #projects a.pdash:hover,
+html #projects a.pdash:focus-visible { background: var(--t-accent); color: #0b1013; outline: none; }
+@media screen and (max-width: 736px) {
+	html #projects .pactions { flex-wrap: wrap; gap: 0.75rem; }
+}
